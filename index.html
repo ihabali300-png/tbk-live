@@ -130,6 +130,40 @@
   .chDots span.ok{border:2px solid #22c55e;background:#dcfce7;animation:pop .5s}
   .chLive .x{border:0;background:none;color:var(--muted);font-family:inherit;font-size:13px;cursor:pointer;margin-top:4px}
   .chip small{opacity:.7;font-weight:700;margin-left:6px}
+  /* ===== HEAT SYSTEM ===== */
+  body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:var(--heat,0);transition:opacity 1.5s;
+    background:radial-gradient(1200px 500px at 50% 115%,rgba(249,115,22,.55),transparent 65%),radial-gradient(700px 400px at 100% 100%,rgba(244,63,94,.35),transparent 60%),radial-gradient(700px 400px at 0% 100%,rgba(251,191,36,.35),transparent 60%)}
+  .heatBar{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;box-shadow:0 6px 20px rgba(60,50,140,.08);min-width:min(420px,100%)}
+  .heatBar .lbl{font-weight:900;font-size:15px;white-space:nowrap}
+  .heatBar .tube{flex:1;height:14px;border-radius:999px;background:#eeedf7;overflow:hidden;position:relative}
+  .heatBar .tube i{position:absolute;inset:0 0 0 auto;width:0;border-radius:999px;transition:width 1s;
+    background:linear-gradient(270deg,#22d3ee,#a3e635,#fbbf24,#f97316,#ef4444,#d946ef);background-size:100% 100%}
+  .heatBar .tube i:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.35) 0 8px,transparent 8px 16px);animation:stripes .8s linear infinite}
+  @keyframes stripes{to{background-position:32px 0}}
+  .heatBar .deg{font-family:'Baloo Bhaijaan 2',sans-serif;font-weight:800;font-size:18px;min-width:84px;text-align:center}
+  .heatBar .fl{font-size:22px;display:inline-block;animation:flick .5s ease-in-out infinite alternate}
+  @keyframes flick{0%{transform:scale(1) rotate(-4deg)}100%{transform:scale(1.18) rotate(4deg)}}
+  /* cards glow hotter */
+  body.hot .card,body.hot .arena{animation:hotGlow calc(2.4s - var(--heat,0)*1.4s) ease-in-out infinite}
+  @keyframes hotGlow{0%,100%{box-shadow:0 6px 24px rgba(60,50,140,.07),0 0 0 rgba(249,115,22,0)}50%{box-shadow:0 6px 24px rgba(60,50,140,.07),0 0 calc(var(--heat,0)*34px) rgba(249,115,22,calc(var(--heat,0)*.55))}}
+  .card,.arena{position:relative}
+  .flames{position:absolute;left:0;right:0;bottom:-2px;height:calc(var(--heat,0)*34px);pointer-events:none;display:flex;justify-content:space-around;align-items:flex-end;overflow:hidden;border-radius:0 0 22px 22px;opacity:calc(var(--heat,0)*.9);transition:height 1s,opacity 1s;z-index:0}
+  .flames span{font-size:calc(12px + var(--heat,0)*14px);line-height:1;animation:dance .7s ease-in-out infinite alternate;transform-origin:bottom center;filter:drop-shadow(0 0 6px rgba(249,115,22,.7))}
+  .flames span:nth-child(2n){animation-duration:.55s;animation-delay:-.2s}
+  .flames span:nth-child(3n){animation-duration:.85s;animation-delay:-.4s}
+  @keyframes dance{0%{transform:scaleY(.75) translateY(4px) rotate(-6deg)}100%{transform:scaleY(1.15) translateY(0) rotate(6deg)}}
+  .card>*:not(.flames),.arena>*:not(.flames):not(.snd){position:relative;z-index:1}
+  .snd{z-index:3}
+  body.hot #hype .card{padding-bottom:calc(18px + var(--heat,0)*22px)}
+  #bgfx{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .bump{animation:bump .5s}
+  @keyframes bump{30%{transform:scale(1.25)}100%{transform:scale(1)}}
+  .shakeG{animation:shakeG .45s}
+  @keyframes shakeG{20%{transform:rotate(-3deg) scale(1.03)}40%{transform:rotate(3deg)}60%{transform:rotate(-2deg)}80%{transform:rotate(1deg)}}
+  .race{margin-top:10px;text-align:center;font-weight:900;font-size:14.5px;color:#ea580c;min-height:22px}
+  .lbr.first .rk{animation:flick .45s ease-in-out infinite alternate}
+  .lbr.first:after{content:"🔥";position:absolute;left:-2px;top:-12px;font-size:22px;animation:flick .4s ease-in-out infinite alternate}
+  .lbr.chase{border-color:#fdba74}
   .bonus{display:none;margin-top:4px}
   .bonus.on{display:block;animation:pop .6s}
   .bonus .miles{justify-content:center;gap:clamp(14px,5vw,60px)}
@@ -198,6 +232,7 @@
 </style>
 </head>
 <body>
+<canvas id="bgfx"></canvas>
 <canvas id="fx"></canvas>
 <div class="combo" id="combo"></div>
 <div class="boom" id="boom"><b id="boomT"></b><span id="boomS"></span></div>
@@ -208,6 +243,7 @@
     <div class="logo">⚡</div>
     <div><h1 dir="ltr">TBK <span>LIVE</span></h1><small>لوحة مبيعات تبوك بارك</small></div>
   </div>
+  <div class="heatBar"><span class="fl" id="hFl">🧊</span><span class="lbl">حرارة الفرع</span><div class="tube"><i id="hTube"></i></div><span class="deg" id="hDeg">بارد</span></div>
   <div class="clock" dir="ltr">TODAY<b id="clk">--:--</b></div>
 </div>
 
@@ -223,6 +259,7 @@
     <div class="card">
       <h2>🏅 لوحة الأبطال <small>(مين قفل أكتر النهارده)</small></h2>
       <div class="lb" id="lb"></div>
+      <div class="race" id="race"></div>
     </div>
     <div class="card exam">
       <h2>👓 الفحوصات</h2>
@@ -426,7 +463,17 @@ function firework(){const x=innerWidth*(.15+Math.random()*.7),y=innerHeight*(.15
   for(let i=0;i<70;i++){const a=i/70*Math.PI*2,s=3+Math.random()*4;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,g:.06,life:70,c:COLS[Math.floor(Math.random()*COLS.length)],r:2.5,rot:0});}
   beep([600+Math.random()*400],.05,"triangle",.04);}
 function emojiRain(em,n=24){for(let i=0;i<n;i++)P.push({x:Math.random()*innerWidth,y:-30-Math.random()*200,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,g:.05,life:240,em,r:24+Math.random()*16,rot:0});}
+let HEAT=0;const bg=$("bgfx"),bx=bg.getContext("2d");let E=[];
+function rsb(){bg.width=innerWidth;bg.height=innerHeight;}rsb();addEventListener("resize",rsb);
+function ember(){const P=E,big=Math.random()<HEAT*.05;
+  if(big)P.push({x:Math.random()*innerWidth,y:innerHeight+20,vx:(Math.random()-.5)*.8,vy:-(1.5+Math.random()*2.5),g:-.01,life:200,em:"🔥",r:18+Math.random()*18,rot:0});
+  else P.push({x:Math.random()*innerWidth,y:innerHeight+5,vx:(Math.random()-.5)*1.2,vy:-(1.5+Math.random()*3*(.5+HEAT)),g:-.015,life:120+Math.random()*120,c:["#f97316","#fbbf24","#ef4444","#fb7185"][Math.floor(Math.random()*4)],r:2+Math.random()*4*(.4+HEAT),rot:0});}
 (function loop(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.life>0&&p.y<cv.height+60);
+  if(HEAT>0&&!$("hype").classList.contains("hide")){const k=HEAT*1.8;for(let i=0;i<Math.floor(k)+(Math.random()<k%1?1:0);i++)ember();}
+  bx.clearRect(0,0,bg.width,bg.height);E=E.filter(p=>p.life>0);
+  for(const p of E){p.x+=p.vx+Math.sin(p.life/12)*.4;p.y+=p.vy;p.vy+=p.g;p.life--;bx.globalAlpha=Math.min(1,p.life/50);
+    if(p.em){bx.font=`${p.r}px serif`;bx.fillText(p.em,p.x,p.y);}else{bx.fillStyle=p.c;bx.shadowColor=p.c;bx.shadowBlur=8;bx.beginPath();bx.arc(p.x,p.y,p.r/2,0,7);bx.fill();bx.shadowBlur=0;}}
+  bx.globalAlpha=1;
   for(const p of P){p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.99;p.life--;p.rot+=.1;cx.globalAlpha=Math.min(1,p.life/40);
     if(p.em){cx.font=`${p.r}px serif`;cx.fillText(p.em,p.x,p.y);}
     else{cx.fillStyle=p.c;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);if(p.sq)cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);else{cx.beginPath();cx.arc(0,0,p.r/2,0,7);cx.fill();}cx.restore();}}
@@ -459,8 +506,17 @@ let lastStage=-1;
 function shout(st){const a=LINES[st],el=$("shout");el.textContent=a[Math.floor(Math.random()*a.length)];el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");}
 function boom(t,s){$("boomT").textContent=t;$("boomS").textContent=s;const b=$("boom");b.classList.remove("on");void b.offsetWidth;b.classList.add("on");}
 
+const HEATN=[[0,"🧊","بارد"],[.15,"🌤️","دافي"],[.35,"🔥","بيسخن"],[.6,"🔥🔥","نار"],[.85,"🌋","بركان"],[1,"☄️","مولّع!!"]];
+function setHeat(p){const h=Math.min(1,Math.max(0,p/100));HEAT=p>=100?1:h;document.body.style.setProperty("--heat",HEAT.toFixed(2));
+  document.body.classList.toggle("hot",HEAT>=.25);
+  let lv=HEATN[0];for(const x of HEATN)if(HEAT>=x[0])lv=x;$("hFl").textContent=lv[1].slice(0,2);$("hDeg").textContent=lv[2]+(p>=100?` ${Math.round(p)}%`:"");
+  $("hTube").style.width=Math.min(100,p)+"%";
+  const nF=Math.round(HEAT*10);document.querySelectorAll(".flames").forEach(f=>{if(+f.dataset.n!==nF){f.dataset.n=nF;f.innerHTML="<span>🔥</span>".repeat(Math.max(nF,0));}});}
+document.querySelectorAll("#hype .card,#hype .arena").forEach(c=>{const f=document.createElement("div");f.className="flames";c.appendChild(f);});
+function bump(id){const e=$(id);e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump");}
 function renderHype(fromAdd){
   const T=target(),tot=total(),p=pctNow(),st=stageOf(p),[em,label,c1,c2,bg]=STAGES[st];
+  setHeat(p);
   $("ring").style.strokeDashoffset=540.35*(1-Math.min(p,100)/100);
   const lap=Math.floor(p/100);
   if(p>=100){const frac=p>=500?1:(p-lap*100)/100,lc=LAPS[(lap-1)%LAPS.length];
@@ -488,7 +544,7 @@ function renderHype(fromAdd){
   document.querySelectorAll(".ms").forEach(m=>m.classList.toggle("done",p>=+m.dataset.p));
   document.querySelectorAll(".ms.bm").forEach(m=>m.classList.toggle("lock",p<+m.dataset.p-100));
   $("chips").innerHTML=n?day.list.map(o=>`<span class="chip">🔥 ${o.v}${o.who?`<small>${o.who}</small>`:""}</span>`).join(""):'<span class="empty">لسه مفيش أوردرات… أول واحد جاي 💪</span>';
-  renderExtras();
+  renderExtras.fromAdd=!!fromAdd;renderExtras();renderExtras.fromAdd=false;
   if(st!==lastStage){shout(st);lastStage=st;}
   if(fromAdd&&T){for(const m of [25,50,75,90,100,...BONUS]){if(p>=m&&!day.hit.includes(m)){day.hit.push(m);saveDay();
     if(m===100){boom("كسّرناه!! 🏆","التارجت اتكسر يا أبطال 🔥");emojiRain("🏆",18);emojiRain("🔥",18);
@@ -511,7 +567,9 @@ function addOrder(v){v=parseFloat(v);if(!v||v<=0){toast("اكتب قيمة ال�
     if(pb>0&&before<=pb&&total()>pb&&!day.recHit){day.recHit=1;saveDay();
       setTimeout(()=>{boom("رقم قياسي جديد!! 🏆","كسّرنا أعلى يوم في تاريخ الفرع");emojiRain("🏆",20);let k=0;const iv=setInterval(()=>{firework();if(++k>10)clearInterval(iv);},260);},1200);}
     challengeCheck();},50);
-  const r=$("add").getBoundingClientRect();confetti(70,r.left+r.width/2,r.top);beep([440,660,880],.07,"square",.05);
+  const r=$("add").getBoundingClientRect();confetti(70,r.left+r.width/2,r.top);
+  {const g=document.querySelector(".gaugeBox");g.classList.remove("shakeG");void g.offsetWidth;g.classList.add("shakeG");}
+  setTimeout(()=>{bump("vTot");bump("hp");},60);beep([440,660,880],.07,"square",.05);
   if(navigator.vibrate)navigator.vibrate(60);shout(stageOf(pctNow()));renderHype(true);syncToReport();}
 $("add").onclick=()=>addOrder($("amt").value);
 $("amt").addEventListener("keydown",e=>{if(e.key==="Enter")addOrder($("amt").value);});
@@ -536,7 +594,11 @@ function renderExtras(){
   // leaderboard
   const m={};SELLERS.forEach(k=>m[k]={v:0,n:0});day.list.forEach(o=>{const k=o.who||"بدون اسم";m[k]=m[k]||{v:0,n:0};m[k].v+=o.v;m[k].n++;});
   const arr=Object.entries(m).filter(([k,o])=>o.n||SELLERS.includes(k)).sort((a,b)=>b[1].v-a[1].v),mx=Math.max(1,arr.length?arr[0][1].v:1),md=["👑","🥈","🥉"];
-  $("lb").innerHTML=arr.length?arr.map(([k,o],i)=>`<div class="lbr${i===0&&o.v>0?" first":""}"><i style="width:${o.v/mx*100}%"></i><div class="rk">${o.v>0?(md[i]||"🔥"):"⏳"}</div><div class="nm">${k}<small>${o.n} أوردر</small></div><div class="vl">${Math.round(o.v).toLocaleString("en-US")}</div></div>`).join("")
+  const ld=arr[0]&&arr[0][1].v>0?arr[0][0]:"";
+  if(ld&&day.leader&&ld!==day.leader&&renderExtras.fromAdd)setTimeout(()=>{comboFx(`🔥 ${ld} خطف الصدارة!`);emojiRain("🔥",14);},700);
+  if(ld)day.leader=ld;
+  {const a=arr.filter(x=>x[1].v>0);$("race").textContent=a.length>=2?`⚔️ ${a[0][0]} قدام ${a[1][0]} بـ ${Math.round(a[0][1].v-a[1][1].v).toLocaleString("en-US")} ريال… الحق يا ${a[1][0]}!`:a.length===1?`👀 ${a[0][0]} لوحده في الصدارة… مين هيلحقه؟`:"";}
+  $("lb").innerHTML=arr.length?arr.map(([k,o],i)=>`<div class="lbr${i===0&&o.v>0?" first":""}${i===1&&o.v>0?" chase":""}"><i style="width:${o.v/mx*100}%"></i><div class="rk">${o.v>0?(md[i]||"🔥"):"⏳"}</div><div class="nm">${k}<small>${o.n} أوردر</small></div><div class="vl">${Math.round(o.v).toLocaleString("en-US")}</div></div>`).join("")
     :'<span class="empty">اختار اسمك قبل ما تسجّل الأوردر وتدخل السباق 🏁</span>';
   renderChallenge();renderExam();}
 function renderExam(){const e=day.ex||0,n=day.list.length;$("exCnt").textContent=e;

@@ -190,6 +190,46 @@
   .tlab{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700;direction:ltr}
   .pace{margin-top:8px;text-align:center;font-weight:900;font-size:15px}
   .pace.ok{color:#16a34a}.pace.bad{color:#e11d48}
+  .badges{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .bdg{border:1px solid var(--line);border-radius:14px;padding:8px 10px;background:#fafaff;display:flex;align-items:center;gap:8px;transition:.3s}
+  .bdg i{font-style:normal;font-size:24px}
+  .bdg b{display:block;font-size:13px}
+  .bdg span{font-size:14px;font-weight:900;color:#7c3aed}
+  .bdg.won{background:linear-gradient(135deg,#fff7ed,#fdf4ff);border-color:#fdba74;animation:pop .5s}
+  .bdg.won i{animation:flick .6s ease-in-out infinite alternate}
+  .bdg:not(.won){opacity:.5}
+  .lbr .nm .bdgs{font-size:14px;margin-right:4px;letter-spacing:1px}
+  .wk .chart{display:flex;align-items:flex-end;gap:6px;height:120px;position:relative;margin:8px 0 2px;padding-top:6px}
+  .wk .bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative}
+  .wk .bar u{display:block;width:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#a78bfa,#06b6d4);text-decoration:none;transition:height .8s;min-height:3px}
+  .wk .bar.hit u{background:linear-gradient(180deg,#fbbf24,#f97316)}
+  .wk .bar.today u{box-shadow:0 0 12px rgba(249,115,22,.6)}
+  .wk .bar em{font-style:normal;font-size:11px;color:var(--muted);font-weight:700;margin-top:3px;height:17px;line-height:17px}
+  .wk .bar small{position:absolute;top:-8px;font-size:10.5px;font-weight:800;direction:ltr;color:var(--text)}
+  .wk .tl{position:absolute;left:0;right:0;border-top:2px dashed #e11d48;pointer-events:none}
+  .wk .tl:after{content:"🎯";position:absolute;left:-4px;top:-12px;font-size:12px}
+  .wk .sum{display:flex;justify-content:space-between;font-size:14px;font-weight:800;margin-top:8px}
+  .wk .sum b{font-family:'Baloo Bhaijaan 2',sans-serif;direction:ltr}
+  .wk .wlb{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+  .wk .wr{display:flex;justify-content:space-between;background:#fafaff;border:1px solid var(--line);border-radius:12px;padding:6px 10px;font-weight:800;font-size:14.5px}
+  .wk .wr.first{border-color:#fbbf24;background:#fffbeb}
+  .wk .wr b{font-family:'Baloo Bhaijaan 2',sans-serif;color:#16a34a;direction:ltr}
+  /* wheel */
+  .wheelM{position:fixed;inset:0;z-index:80;background:rgba(30,27,58,.55);display:none;align-items:center;justify-content:center;padding:16px}
+  .wheelM.on{display:flex}
+  .wbox{background:#fff;border-radius:26px;padding:20px;width:min(460px,100%);text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:pop .5s}
+  .wbox h3{margin:0 0 4px;font-size:24px;font-weight:900}
+  .wwrap{position:relative;width:min(340px,80vw);aspect-ratio:1;margin:10px auto}
+  .wwrap canvas{width:100%;height:100%;transition:transform 5s cubic-bezier(.12,.8,.18,1)}
+  .wwrap .ptr{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:34px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.3));z-index:2}
+  .wres{min-height:34px;font-size:22px;font-weight:900;color:#db2777}
+  .wbtns{display:flex;gap:8px;margin-top:8px}
+  .wbtns button{flex:1;border:0;border-radius:14px;padding:12px;font-family:inherit;font-size:16px;font-weight:900;cursor:pointer}
+  .wspin{background:linear-gradient(135deg,#f97316,#db2777);color:#fff;animation:flash 1.3s ease-in-out infinite}
+  .wclose{background:#f1f0fb;color:var(--text)}
+  .wedit{width:100%;margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:10px;font-family:inherit;font-size:14px;min-height:110px;direction:rtl}
+  .wlink{background:none;border:0;color:#7c3aed;font-family:inherit;font-weight:800;cursor:pointer;font-size:13px;margin-top:6px}
+  .wheelBtn{width:100%;margin-top:10px;border:0;border-radius:14px;padding:12px;font-family:inherit;font-size:17px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(135deg,#f97316,#db2777);animation:flash 1.3s ease-in-out infinite}
   .bonus{display:none;margin-top:4px}
   .bonus.on{display:block;animation:pop .6s}
   .bonus .miles{justify-content:center;gap:clamp(14px,5vw,60px)}
@@ -261,6 +301,14 @@
 <canvas id="bgfx"></canvas>
 <canvas id="fx"></canvas>
 <div class="combo" id="combo"></div>
+<div class="wheelM" id="wheelM"><div class="wbox">
+  <h3>🎡 عجلة المكافأة</h3><div style="color:var(--muted);font-weight:700">كسّرتوا التارجت… لفّوا واكسبوا 🎁</div>
+  <div class="wwrap"><div class="ptr">🔻</div><canvas id="wheel" width="600" height="600"></canvas></div>
+  <div class="wres" id="wres"></div>
+  <div class="wbtns"><button class="wspin" id="wspin" type="button">🎡 لفّ</button><button class="wclose" id="wclose" type="button">قفل</button></div>
+  <button class="wlink" id="wEditT" type="button">✏️ تعديل المكافآت</button>
+  <textarea class="wedit hide" id="wedit" placeholder="كل مكافأة في سطر"></textarea>
+</div></div>
 <div class="boom" id="boom"><b id="boomT"></b><span id="boomS"></span></div>
 
 <div class="shell">
@@ -288,6 +336,18 @@
       <div class="race" id="race"></div>
       <div class="offLine" id="offLine"></div>
       <div class="vacHint">🌴 اضغط على النخلة جنب الاسم: مرة = إجازة النهارده، مرتين = إجازة أسبوعية في نفس اليوم، تالت مرة = إلغاء</div>
+    </div>
+    <div class="card">
+      <h2>🎖️ ألقاب النهارده</h2>
+      <div class="badges" id="badges"></div>
+      <button class="wheelBtn hide" id="wheelOpen" type="button">🎡 لفّوا عجلة المكافأة</button>
+    </div>
+    <div class="card wk">
+      <h2>📅 بطل الأسبوع <small id="wkRange"></small></h2>
+      <div class="chart" id="wkChart"></div>
+      <div class="sum"><span>💰 مبيعات الأسبوع</span><b id="wkTot">0</b></div>
+      <div class="sum"><span>🎯 تارجت الأسبوع لحد النهارده</span><b id="wkTgt">0</b></div>
+      <div class="wlb" id="wkLb"></div>
     </div>
     <div class="card exam">
       <h2>👓 الفحوصات</h2>
@@ -585,7 +645,7 @@ function renderHype(fromAdd){
   renderExtras.fromAdd=!!fromAdd;renderExtras();renderExtras.fromAdd=false;
   if(st!==lastStage){shout(st);lastStage=st;}
   if(fromAdd&&T){for(const m of [25,50,75,90,100,...BONUS]){if(p>=m&&!day.hit.includes(m)){day.hit.push(m);saveDay();
-    if(m===100){boom("كسّرناه!! 🏆","التارجت اتكسر يا أبطال 🔥");emojiRain("🏆",18);emojiRain("🔥",18);
+    if(m===100){setTimeout(()=>{if(!day.wheel)openWheel();},3800);boom("كسّرناه!! 🏆","التارجت اتكسر يا أبطال 🔥");emojiRain("🏆",18);emojiRain("🔥",18);
       beep([523,659,784,1047,1319],.14,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>14)clearInterval(iv);},280);}
     else if(m>100){const t={200:["دبل التارجت!! 👑","مستوى 300% اتفتح 🔓"],300:["تريبل!!! 🦁","مستوى 400% اتفتح 🔓"],400:["400%!!! 💎","فاضل مستوى أخير 🔓"],500:["500%!!! 🌟","أسطورة تبوك بارك"]}[m];
       boom(t[0],t[1]);emojiRain({200:"👑",300:"🦁",400:"💎",500:"🌟"}[m],24);confetti(220);beep([523,659,784,1047,1319,1568],.12,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>(m>=200?18:8))clearInterval(iv);},260);}
@@ -651,7 +711,9 @@ function renderExtras(){
     :'<span class="empty">اختار اسمك قبل ما تسجّل الأوردر وتدخل السباق 🏁</span>';
   $("lb").querySelectorAll(".vac").forEach(b=>b.onclick=()=>cycleOff(b.dataset.n));
   {const offs=[...SELLERS,"د/خواطر"].filter(n=>offState(n));$("offLine").textContent=offs.length?`🌴 إجازة النهارده: ${offs.join("، ")}`:"";}
-  renderChallenge();renderExam();}
+  renderChallenge();renderExam();
+  const bd=renderBadges();renderWeek();
+  $("lb").querySelectorAll(".lbr").forEach(r=>{const nm=r.querySelector(".nm");const n=nm.childNodes[0].textContent.trim();const e=BDG.filter(([k])=>bd[k]===n).map(x=>x[1]).join("");if(e)nm.insertAdjacentHTML("beforeend",`<span class="bdgs">${e}</span>`);});}
 function renderExam(){const e=day.ex||0,n=day.list.length;$("exCnt").textContent=e;
   const off=offState("د/خواطر");document.querySelector(".exam").classList.toggle("off",!!off);
   $("exOff").textContent=off?(off==="d"?"🌴 د/خواطر إجازة النهارده… مفيش فحوصات":`🌴 د/خواطر إجازة كل ${DAYS[wd()]}`):"";
@@ -678,6 +740,58 @@ $("exAdd").onclick=()=>{day.ex=(day.ex||0)+1;saveDay();renderExam();syncToReport
 $("exVac").onclick=()=>cycleOff("د/خواطر");
 $("exMinus").onclick=()=>{if(!day.ex)return;day.ex--;saveDay();renderExam();syncToReport();};
 renderSellers();
+
+/* ===== badges ===== */
+function badgeData(){const L=day.list.filter(o=>o.who),res={};
+  if(L.length){res.first=L[0].who;
+    let mx=L[0];L.forEach(o=>{if(o.v>mx.v)mx=o});res.big=mx.who;
+    const cnt={},cmb={},late={};const cl=closeMin();
+    day.list.forEach((o,i)=>{if(!o.who)return;cnt[o.who]=(cnt[o.who]||0)+1;
+      const pr=day.list[i-1];if(pr&&pr.t&&o.t-pr.t<=30*60000)cmb[o.who]=(cmb[o.who]||0)+1;
+      if(o.t){const d=new Date(o.t);let m=d.getHours()*60+d.getMinutes();if(d.getHours()<6)m+=1440;if(m>=cl-60)late[o.who]=(late[o.who]||0)+1;}});
+    const top=o=>{const e=Object.entries(o).sort((a,b)=>b[1]-a[1]);return e.length?e[0][0]:"";};
+    res.count=top(cnt);res.combo=top(cmb);res.late=top(late);}
+  return res;}
+const BDG=[["first","🌅","أول بيعة النهارده"],["big","💎","صياد الفواتير الكبيرة"],["count","📦","ملك العدد"],["combo","⚡","ملك الكومبو"],["late","🌙","قنّاص آخر ساعة"]];
+function renderBadges(){const d=badgeData();
+  $("badges").innerHTML=BDG.map(([k,e,t])=>`<div class="bdg${d[k]?" won":""}"><i>${e}</i><div><b>${t}</b><span>${d[k]||"لسه…"}</span></div></div>`).join("");
+  $("wheelOpen").classList.toggle("hide",!(pctNow()>=100));
+  return d;}
+/* ===== weekly ===== */
+function hist2(){try{return JSON.parse(S.get("tbk_hist2")||"{}")}catch(e){return{}}}
+function saveToday2(){const h=hist2(),sel={};day.list.forEach(o=>{if(o.who)sel[o.who]=(sel[o.who]||0)+o.v;});
+  h[day.date]={t:Math.round(total()),g:target()||0,s:sel};S.set("tbk_hist2",JSON.stringify(h));return h;}
+function renderWeek(){const h=saveToday2();const [y,m,dd]=day.date.split("-").map(Number);const today=new Date(y,m-1,dd);
+  const start=new Date(today);start.setDate(today.getDate()-today.getDay()); // الأسبوع من الأحد
+  const days=[],SH=["أحد","اتنين","تلات","أربع","خميس","جمعة","سبت"];let wt=0,wg=0;const ws={};
+  for(let i=0;i<7;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    const r=h[k]||null;days.push({k,lab:SH[i],r,fut:d>today});if(r&&d<=today){wt+=r.t;wg+=r.g||0;Object.entries(r.s||{}).forEach(([n,v])=>ws[n]=(ws[n]||0)+v);}}
+  const mx=Math.max(1,...days.map(x=>Math.max(x.r?x.r.t:0,x.r?x.r.g:0)));
+  const tg=target();
+  $("wkChart").innerHTML=days.map(x=>{const v=x.r?x.r.t:0,g=x.r?x.r.g:0;return `<div class="bar${g&&v>=g?" hit":""}${x.k===day.date?" today":""}"><small>${v?(v>=1000?(v/1000).toFixed(1)+"k":v):""}</small><u style="height:calc((100% - 20px) * ${(v/mx).toFixed(3)})"></u><em>${x.lab}</em></div>`;}).join("")+(tg?`<div class="tl" style="bottom:calc(20px + (100% - 26px) * ${(Math.min(tg,mx)/mx).toFixed(3)})"></div>`:"");
+  $("wkTot").textContent=wt.toLocaleString("en-US");$("wkTgt").textContent=wg.toLocaleString("en-US");
+  const f=d=>`${d.getDate()}/${d.getMonth()+1}`;const e=new Date(start);e.setDate(start.getDate()+6);$("wkRange").textContent=`(${f(start)} – ${f(e)})`;
+  const arr=Object.entries(ws).sort((a,b)=>b[1]-a[1]);
+  $("wkLb").innerHTML=arr.length?arr.map(([n,v],i)=>`<div class="wr${i===0?" first":""}"><span>${["👑","🥈","🥉"][i]||"🔥"} ${n}</span><b>${Math.round(v).toLocaleString("en-US")}</b></div>`).join(""):'<span class="empty">الترتيب الأسبوعي هيظهر لما تسجّلوا أوردرات بأسماءكم</span>';}
+/* ===== wheel ===== */
+const DEF_REW=["☕ عزومة قهوة من المدير","🍕 العشا على الفرع","🏃 تمشي بدري 15 دقيقة","🍰 حلويات للفريق","🎧 تختار الأغاني بكرة","⭐ نجمة الأسبوع","🥤 مشروب على حساب الفرع","🎁 مفاجأة من المدير"];
+function rewards(){const r=S.get("tbk_rew");return r?r.split("\n").map(x=>x.trim()).filter(Boolean):DEF_REW;}
+let wRot=0,spinning=false;
+function drawWheel(){const c=$("wheel"),x=c.getContext("2d"),R=rewards(),n=R.length,W2=300,cols=["#f97316","#8b5cf6","#06b6d4","#db2777","#22c55e","#f59e0b","#3b82f6","#ef4444"];
+  x.clearRect(0,0,600,600);for(let i=0;i<n;i++){const a0=i/n*2*Math.PI-Math.PI/2,a1=(i+1)/n*2*Math.PI-Math.PI/2;
+    x.beginPath();x.moveTo(W2,W2);x.arc(W2,W2,290,a0,a1);x.closePath();x.fillStyle=cols[i%cols.length];x.fill();x.strokeStyle="#fff";x.lineWidth=4;x.stroke();
+    x.save();x.translate(W2,W2);x.rotate((a0+a1)/2);x.textAlign="right";x.fillStyle="#fff";x.font="bold 22px Tajawal, sans-serif";
+    let t=R[i];if(t.length>18)t=t.slice(0,17)+"…";x.fillText(t,270,8);x.restore();}
+  x.beginPath();x.arc(W2,W2,38,0,7);x.fillStyle="#fff";x.fill();x.font="40px serif";x.textAlign="center";x.fillText("🎁",W2,W2+14);}
+function openWheel(){drawWheel();$("wres").textContent=day.wheel?`🎉 مكافأة النهارده: ${day.wheel}`:"";$("wheelM").classList.add("on");}
+$("wheelOpen").onclick=openWheel;
+$("wclose").onclick=()=>$("wheelM").classList.remove("on");
+$("wspin").onclick=()=>{if(spinning)return;spinning=true;const R=rewards(),n=R.length,k=Math.floor(Math.random()*n);
+  const seg=360/n,target=360-(k*seg+seg/2);wRot=wRot-(wRot%360)+360*6+target;$("wheel").style.transform=`rotate(${wRot}deg)`;$("wres").textContent="🥁 …";
+  let tk=0;const iv=setInterval(()=>{beep([500+Math.random()*300],.03,"square",.03);if(++tk>40)clearInterval(iv);},110);
+  setTimeout(()=>{spinning=false;day.wheel=R[k];saveDay();$("wres").textContent=`🎉 ${R[k]}`;confetti(220);emojiRain("🎁",18);beep([523,659,784,1047,1319],.12,"square",.07);},5100);};
+$("wEditT").onclick=()=>{const t=$("wedit");t.classList.toggle("hide");t.value=rewards().join("\n");};
+$("wedit").addEventListener("input",()=>{S.set("tbk_rew",$("wedit").value);drawWheel();});
 
 /* ===== day timeline (9am → close) ===== */
 const W=h=>h<12?.5:h<17?.6:h<19?1:h<23?1.6:1;   // وزن كل ساعة حسب حركة الزباين

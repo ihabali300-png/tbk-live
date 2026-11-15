@@ -6,7 +6,7 @@
 <title>TBK LIVE – تبوك بارك</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f2340'/%3E%3Cpath d='M16 46V30M28 46V22M40 46V34M52 46V16' stroke='%23e8b44a' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f7fb;--glass:#ffffff;--gl2:#f1f0fb;--line:#e6e4f2;
     --text:#1e1b3a;--muted:#7a7699;--violet:#8b5cf6;--cyan:#22d3ee;--lime:#a3e635;--pink:#f472b6;--amber:#fbbf24;--red:#f43f5e;--green:#22c55e}
@@ -18,10 +18,10 @@
   .head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
   .brand{display:flex;align-items:center;gap:12px}
   .logo{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:linear-gradient(135deg,var(--violet),var(--cyan));box-shadow:0 0 24px rgba(139,92,246,.6)}
-  .brand h1{margin:0;font-family:'Orbitron',sans-serif;font-size:24px;letter-spacing:2px;line-height:1.1}
+  .brand h1{margin:0;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:24px;letter-spacing:2px;line-height:1.1}
   .brand h1 span{color:#0891b2}
   .brand small{color:var(--muted);font-size:14px}
-  .clock{font-family:'Orbitron',sans-serif;color:var(--muted);font-size:13px;letter-spacing:2px;text-align:left}
+  .clock{font-family:'Baloo Bhaijaan 2',sans-serif;color:var(--muted);font-size:13px;letter-spacing:2px;text-align:left}
   .clock b{display:block;color:var(--text);font-size:22px;letter-spacing:3px}
 
   /* segmented switch */
@@ -41,20 +41,20 @@
   .hide{display:none!important}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .f label{display:block;font-size:14px;font-weight:700;margin-bottom:5px;color:var(--muted)}
-  input[type=number],input[type=date]{width:100%;border:1px solid var(--line);border-radius:14px;padding:11px 12px;font-family:'Orbitron','Tajawal',sans-serif;font-size:18px;font-weight:700;background:#fafaff;color:var(--text);outline:none;text-align:center;direction:ltr;color-scheme:light;transition:.2s}
+  input[type=number],input[type=date]{width:100%;border:1px solid var(--line);border-radius:14px;padding:11px 12px;font-family:'Baloo Bhaijaan 2','Tajawal',sans-serif;font-size:18px;font-weight:700;background:#fafaff;color:var(--text);outline:none;text-align:center;direction:ltr;color-scheme:light;transition:.2s}
   input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,211,238,.18)}
   input::placeholder{font-family:'Tajawal';color:#b3afcc}
 
   .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
   .k{border-radius:18px;padding:14px 6px;text-align:center;background:#fafaff;border:1px solid var(--line)}
-  .k b{display:block;font-family:'Orbitron',sans-serif;font-size:24px;direction:ltr}
+  .k b{display:block;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:24px;direction:ltr}
   .k:nth-child(1) b{color:#d97706}.k:nth-child(2) b{color:#0891b2}.k:nth-child(3) b{color:#16a34a}
   .k span{font-size:13px;color:var(--muted)}
   .pbar{height:12px;background:#eeedf7;border-radius:8px;overflow:hidden;margin-top:14px}
   .pbar i{display:block;height:100%;width:0;background:var(--green);transition:width .4s;box-shadow:0 0 12px currentColor}
   .note{font-size:14px;color:var(--muted);margin-top:8px;text-align:center}
 
-  pre#msg{background:#f0fbfd;border:1px dashed #9adbe8;border-radius:16px;padding:16px;margin:0;font-family:'Orbitron','Tajawal',sans-serif;font-size:15px;line-height:2;direction:ltr;text-align:left;white-space:pre-wrap;min-height:300px;color:#0e4a5a}
+  pre#msg{background:#f0fbfd;border:1px dashed #9adbe8;border-radius:16px;padding:16px;margin:0;font-family:'Baloo Bhaijaan 2','Tajawal',sans-serif;font-size:15px;line-height:2;direction:ltr;text-align:left;white-space:pre-wrap;min-height:300px;color:#0e4a5a}
   .chk{display:flex;align-items:center;gap:8px;font-size:14.5px;margin-top:12px;cursor:pointer;color:var(--muted)}
   .chk input{accent-color:var(--cyan);width:18px;height:18px}
   .actions{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-top:14px}
@@ -75,15 +75,15 @@
   .ring{transition:stroke-dashoffset 1s cubic-bezier(.2,1.4,.4,1)}
   .ring2{transition:stroke-dashoffset 1s cubic-bezier(.2,1.4,.4,1),opacity .5s;opacity:0}
   .ring2.on{opacity:1;filter:drop-shadow(0 0 6px #f59e0b)}
-  .lap{display:none;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;color:#fff;background:linear-gradient(135deg,#f59e0b,#db2777);border-radius:999px;padding:2px 10px;margin-top:4px;animation:flashL 1.2s ease-in-out infinite}
+  .lap{display:none;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:13px;font-weight:900;color:#fff;background:linear-gradient(135deg,#f59e0b,#db2777);border-radius:999px;padding:2px 10px;margin-top:4px;animation:flashL 1.2s ease-in-out infinite}
   .lap.on{display:inline-block}
   @keyframes flashL{50%{box-shadow:0 0 14px #f59e0b}}
   .bonus{display:none;margin-top:4px}
   .bonus.on{display:block;animation:pop .6s}
   .bonus .ttl{text-align:center;font-weight:900;font-size:15px;color:#db2777;margin-bottom:2px}
   .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-  .pct{font-family:'Orbitron',sans-serif;font-size:clamp(44px,9vw,68px);font-weight:900;line-height:1;direction:ltr}
-  .center small{opacity:.75;font-size:15px;margin-top:6px;direction:ltr;font-family:'Orbitron',sans-serif}
+  .pct{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:clamp(44px,9vw,68px);font-weight:900;line-height:1;direction:ltr}
+  .center small{opacity:.75;font-size:15px;margin-top:6px;direction:ltr;font-family:'Baloo Bhaijaan 2',sans-serif}
   .em{font-size:42px;animation:bob 1.2s ease-in-out infinite}
   @keyframes bob{50%{transform:translateY(-8px) scale(1.1)}}
   .shout{min-height:70px;text-align:center;font-size:clamp(20px,3vw,26px);font-weight:900;padding:4px;
@@ -95,12 +95,12 @@
   .miles{display:flex;justify-content:space-between;margin:12px 4px 22px;position:relative}
   .miles:before{content:"";position:absolute;top:50%;left:10px;right:10px;height:4px;background:rgba(30,27,58,.1);border-radius:4px;transform:translateY(-50%)}
   .ms{position:relative;width:50px;height:50px;border-radius:50%;background:#fff;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:22px;filter:grayscale(1) opacity(.45);transition:.4s}
-  .ms em{position:absolute;bottom:-20px;font-size:12px;font-style:normal;opacity:.8;font-family:'Orbitron',sans-serif}
+  .ms em{position:absolute;bottom:-20px;font-size:12px;font-style:normal;opacity:.8;font-family:'Baloo Bhaijaan 2',sans-serif}
   .ms.done{filter:none;border-color:var(--amber);box-shadow:0 0 14px var(--amber);animation:glow 1.6s ease-in-out infinite}
   @keyframes glow{50%{box-shadow:0 0 28px var(--amber),0 0 6px #fff inset}}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .st{background:rgba(255,255,255,.75);border:1px solid var(--line);border-radius:16px;padding:10px 4px;text-align:center}
-  .st b{display:block;font-family:'Orbitron',sans-serif;font-size:20px;direction:ltr}
+  .st b{display:block;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:20px;direction:ltr}
   .st span{font-size:13px;opacity:.8}
   .snd{position:absolute;top:14px;left:16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08);border:0;border-radius:50%;width:38px;height:38px;font-size:18px;cursor:pointer;z-index:2}
 
@@ -111,7 +111,7 @@
   @keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,0)}50%{box-shadow:0 0 0 5px rgba(244,63,94,.3),0 0 30px rgba(249,115,22,.9);transform:scale(1.03)}}
   .fire:active{transform:scale(.94)}
   .quick{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
-  .q{border:1px solid var(--line);background:#fafaff;border-radius:14px;padding:10px 2px;font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;cursor:pointer;color:var(--text);direction:ltr;transition:.15s}
+  .q{border:1px solid var(--line);background:#fafaff;border-radius:14px;padding:10px 2px;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:15px;font-weight:700;cursor:pointer;color:var(--text);direction:ltr;transition:.15s}
   .q:hover{border-color:var(--pink);box-shadow:0 0 14px rgba(244,114,182,.4);color:#db2777}
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;min-height:30px}
   .chip{background:linear-gradient(135deg,#fff1e6,#fbe8ff);border:1px solid #fdc9a8;border-radius:999px;padding:3px 12px;font-size:14px;font-weight:700;direction:ltr;animation:pop .5s}
@@ -120,7 +120,7 @@
   .tools button{border:1px solid var(--line);background:#fafaff;color:var(--text);border-radius:14px;padding:10px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
   .tools button:hover{border-color:var(--cyan)}
   .tline{display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:700}
-  .tline b{font-family:'Orbitron',sans-serif;font-size:24px;color:#d97706;direction:ltr}
+  .tline b{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:24px;color:#d97706;direction:ltr}
   .tline a,.hint a{color:#0891b2;font-weight:700;cursor:pointer}
 
   #fx{position:fixed;inset:0;pointer-events:none;z-index:50}

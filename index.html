@@ -177,6 +177,19 @@
   .leftHead{display:flex;align-items:center;gap:22px}
   .credit{font-family:'Orbitron',sans-serif;font-weight:900;font-size:13px;letter-spacing:4px;line-height:1.6;text-align:left;color:#c9d0db;text-shadow:1px 1px 0 #fff,-1px -1px 0 rgba(0,0,0,.25);animation:glowc 2.6s ease-in-out infinite;user-select:none}
   @keyframes glowc{0%,100%{color:#c9d0db;text-shadow:1px 1px 0 #fff,-1px -1px 0 rgba(0,0,0,.25)}50%{color:#e8b44a;text-shadow:1px 1px 0 #fff,-1px -1px 0 rgba(0,0,0,.2),0 0 10px rgba(232,180,74,.9),0 0 20px rgba(232,180,74,.5)}}
+  .dayT .row3{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .dayT .cd{font-family:'Baloo Bhaijaan 2',sans-serif;font-weight:800;font-size:34px;line-height:1.1;color:#7c3aed;direction:ltr}
+  .dayT .cd.late{color:#e11d48;animation:flashL .9s infinite}
+  .closeOpts{display:flex;gap:6px}
+  .co{border:1.5px solid var(--line);background:#fafaff;border-radius:999px;padding:5px 10px;font-family:'Baloo Bhaijaan 2',sans-serif;font-weight:800;font-size:14px;cursor:pointer;direction:ltr;color:var(--text)}
+  .co.on{background:#7c3aed;color:#fff;border-color:#7c3aed}
+  .tbar{position:relative;height:16px;border-radius:999px;background:#eeedf7;margin:12px 0 4px;overflow:visible}
+  .tbar .tt{position:absolute;inset:0 0 0 auto;border-radius:999px;background:linear-gradient(270deg,#c4b5fd,#8b5cf6);transition:width 1s}
+  .tbar .ss{position:absolute;top:-6px;width:4px;height:28px;border-radius:4px;background:#16a34a;box-shadow:0 0 8px #16a34a;transition:right 1s}
+  .tbar .ss:after{content:"💰";position:absolute;top:-22px;left:-9px;font-size:16px}
+  .tlab{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700;direction:ltr}
+  .pace{margin-top:8px;text-align:center;font-weight:900;font-size:15px}
+  .pace.ok{color:#16a34a}.pace.bad{color:#e11d48}
   .bonus{display:none;margin-top:4px}
   .bonus.on{display:block;animation:pop .6s}
   .bonus .miles{justify-content:center;gap:clamp(14px,5vw,60px)}
@@ -344,6 +357,14 @@
     <div class="card">
       <div class="tline"><span>🎯 تارجت النهارده</span><b id="tShow">–</b></div>
       <div class="hint">تقدر تغيّره من تاب التقفيلة <a id="goRep">✏️ تعديل</a></div>
+    </div>
+    <div class="card dayT">
+      <div class="row3"><h2 style="margin:0">⏰ فاضل على القفلة</h2><div class="closeOpts" id="closeOpts">
+        <button class="co" data-c="23:15" type="button">11:15</button><button class="co" data-c="23:30" type="button">11:30</button><button class="co" data-c="24:00" type="button">12:00</button></div></div>
+      <div class="cd" id="cd">--:--:--</div>
+      <div class="tbar"><div class="tt" id="tt"></div><div class="ss" id="ss"></div></div>
+      <div class="tlab"><span id="tEnd">11:15 PM</span><span>9:00 AM</span></div>
+      <div class="pace" id="pace"></div>
     </div>
     <div class="card">
       <h2>💥 أوردر جديد <small>(اختار مين قفل، واكتب القيمة)</small></h2>
@@ -560,6 +581,7 @@ function renderHype(fromAdd){
   document.querySelectorAll(".ms").forEach(m=>m.classList.toggle("done",p>=+m.dataset.p));
   document.querySelectorAll(".ms.bm").forEach(m=>m.classList.toggle("lock",p<+m.dataset.p-100));
   $("chips").innerHTML=n?day.list.map(o=>`<span class="chip">🔥 ${o.v}${o.who?`<small>${o.who}</small>`:""}</span>`).join(""):'<span class="empty">لسه مفيش أوردرات… أول واحد جاي 💪</span>';
+  if(typeof renderDay==="function")try{renderDay()}catch(e){}
   renderExtras.fromAdd=!!fromAdd;renderExtras();renderExtras.fromAdd=false;
   if(st!==lastStage){shout(st);lastStage=st;}
   if(fromAdd&&T){for(const m of [25,50,75,90,100,...BONUS]){if(p>=m&&!day.hit.includes(m)){day.hit.push(m);saveDay();
@@ -656,6 +678,28 @@ $("exAdd").onclick=()=>{day.ex=(day.ex||0)+1;saveDay();renderExam();syncToReport
 $("exVac").onclick=()=>cycleOff("د/خواطر");
 $("exMinus").onclick=()=>{if(!day.ex)return;day.ex--;saveDay();renderExam();syncToReport();};
 renderSellers();
+
+/* ===== day timeline (9am → close) ===== */
+const W=h=>h<12?.5:h<17?.6:h<19?1:h<23?1.6:1;   // وزن كل ساعة حسب حركة الزباين
+function closeMin(){const c=(day.close||S.get("tbk_close")||"23:15").split(":").map(Number);return c[0]*60+c[1];}
+function nowMin(){const d=new Date();let m=d.getHours()*60+d.getMinutes()+d.getSeconds()/60;if(d.getHours()<6)m+=1440;return m;}
+function wsum(a,b){let t=0;for(let m=a;m<b;m+=5)t+=W(Math.floor(m/60)%24)*5;return t;}
+function renderDay(){const st=540,en=closeMin(),nm=nowMin();
+  document.querySelectorAll(".co").forEach(b=>b.classList.toggle("on",b.dataset.c===(day.close||S.get("tbk_close")||"23:15")));
+  const h=Math.floor(en/60)%24,mm=en%60;$("tEnd").textContent=`${((h+11)%12)+1}:${String(mm).padStart(2,"0")} ${h>=12?"PM":"AM"}`;
+  const left=(en-nm)*60;
+  if(nm<st){$("cd").textContent="لسه مفتحناش ☕";$("cd").classList.remove("late");}
+  else if(left<=0){$("cd").textContent="وقت إضافي 🔥";$("cd").classList.add("late");}
+  else{const H=Math.floor(left/3600),M=Math.floor(left%3600/60),Sx=Math.floor(left%60);$("cd").textContent=`${H}:${String(M).padStart(2,"0")}:${String(Sx).padStart(2,"0")}`;$("cd").classList.toggle("late",left<1800);}
+  const tf=Math.min(1,Math.max(0,(nm-st)/(en-st)));$("tt").style.width=tf*100+"%";
+  const p=pctNow();$("ss").style.right=`calc(${Math.min(100,p)}% - 2px)`;
+  const exp=nm<=st?0:Math.min(1,wsum(st,Math.min(nm,en))/wsum(st,en))*100;
+  const el=$("pace");if(!target()||nm<st){el.textContent="";return;}
+  const d=p-exp;el.className="pace "+(d>=0?"ok":"bad");
+  el.textContent=p>=100?"🏆 التارجت اتحقق… كل اللي جاي بونص":d>=0?`🚀 متقدمين على الخطة… كمّلوا كده`:`⚠️ متأخرين عن الخطة… شدّوا حيلكم 💪`;
+  el.innerHTML+=`<div style="font-size:13px;font-weight:700;color:var(--muted);margin-top:2px">إحنا عند ${Math.round(p)}٪ والمفروض نكون عند ${Math.round(exp)}٪ في الوقت ده</div>`;}
+document.querySelectorAll(".co").forEach(b=>b.onclick=()=>{day.close=b.dataset.c;S.set("tbk_close",b.dataset.c);saveDay();renderDay();toast(`⏰ القفلة الساعة ${b.textContent}`);});
+setInterval(renderDay,1000);
 
 /* report */
 $("date").value=bizDate();

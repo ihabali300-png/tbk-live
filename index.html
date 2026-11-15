@@ -921,8 +921,7 @@ function build(){
   $("barI").style.width=Math.min(ach||0,100)+"%";
   $("barI").style.background=ach==null?"var(--green)":ach>=100?"var(--green)":ach>=70?"var(--amber)":"var(--red)";
   $("rem").textContent=(T&&Sa!=null)?(Sa>=T?"✅ تحقق التارجت":`المتبقي للتارجت: ${Math.round(T-Sa)} ريال`):"";
-  const L=["TBK",fmtDate($("date").value),`Target:${T??""}`,`Sales: ${Sa??""}`,`Orders:${O??""}`,`Traffic:${V??""}`,`ATV: ${atv??""}`,`E.t :${E??""}`];
-  {const Te=n("tele");if(Te)L.push(`Tele :${Te}`);}
+  const L=["TBK",fmtDate($("date").value),`Target:${T??""}`,`Sales: ${Sa??""}`,`Orders:${O??""}`,`Traffic:${V??""}`,`ATV: ${atv??""}`,`E.t :${(E==null&&n("tele")==null)?"":(E||0)+(n("tele")||0)}`];
   if($("extra").checked){L.push(`CR: ${cr!=null?cr.toFixed(1)+"%":""}`);L.push(`Ach: ${ach!=null?Math.round(ach)+"%":""}`);}
   const m=L.join("\n");$("msg").textContent=m;return m;}
 ["date","target","sales","orders","traffic","et","tele"].forEach(id=>$(id).addEventListener("input",()=>{

@@ -343,6 +343,18 @@
   #hype .hint{font-size:12px;margin-top:4px}
   body.hot #hype .card{padding-bottom:calc(12px + var(--heat,0)*16px)}
   .flames{height:calc(var(--heat,0)*24px)}
+  /* accordions */
+  .accHead{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+  .accHead h2{margin:0!important;white-space:nowrap}
+  .accSum{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:900;font-size:14px;color:#7c3aed}
+  .arr{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#f1f0fb;font-size:18px;color:#7c3aed;transition:transform .35s;flex:none}
+  .acc.open .arr{transform:rotate(180deg);background:#7c3aed;color:#fff}
+  .accBody{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s ease}
+  .accBody>*{overflow:hidden}
+  .acc.open .accBody{grid-template-rows:1fr}
+  .accBody{overflow:hidden}
+  .acc.open .accBody{margin-top:8px}
+  .wk .accBody>*{min-height:0}
 </style>
 </head>
 <body>
@@ -388,17 +400,20 @@
       <div class="offLine" id="offLine"></div>
       <div class="vacHint">🌴 اضغط على النخلة جنب الاسم: مرة = إجازة النهارده، مرتين = إجازة أسبوعية في نفس اليوم، تالت مرة = إلغاء</div>
     </div>
-    <div class="card">
-      <h2>🎖️ ألقاب النهارده</h2>
-      <div class="badges" id="badges"></div>
+    <div class="card acc" id="accB">
+      <div class="accHead"><h2>🎖️ ألقاب النهارده</h2><span class="accSum" id="bdgSum"></span><span class="arr">▾</span></div>
+      <div class="accBody"><div class="badges" id="badges"></div></div>
       <button class="wheelBtn hide" id="wheelOpen" type="button">🎡 لفّوا عجلة المكافأة</button>
     </div>
-    <div class="card wk">
-      <h2>📅 بطل الأسبوع <small id="wkRange"></small></h2>
+    <div class="card wk acc" id="accW">
+      <div class="accHead"><h2>📅 بطل الأسبوع</h2><span class="accSum" id="wkHero">–</span><span class="arr">▾</span></div>
+      <div class="accBody"><div>
+      <div style="font-size:12.5px;color:var(--muted);font-weight:700;margin-top:6px" id="wkRange"></div>
       <div class="chart" id="wkChart"></div>
       <div class="sum"><span>💰 مبيعات الأسبوع</span><b id="wkTot">0</b></div>
       <div class="sum"><span>🎯 تارجت الأسبوع لحد النهارده</span><b id="wkTgt">0</b></div>
       <div class="wlb" id="wkLb"></div>
+      </div></div>
     </div>
 
   </div>
@@ -813,6 +828,7 @@ function badgeData(){const L=day.list.filter(o=>o.who),res={};
   return res;}
 const BDG=[["first","🌅","أول بيعة النهارده"],["big","💎","صياد الفواتير الكبيرة"],["count","📦","ملك العدد"],["combo","⚡","ملك الكومبو"],["late","🌙","قنّاص آخر ساعة"]];
 function renderBadges(){const d=badgeData();
+  {const w=BDG.filter(([k])=>d[k]);$("bdgSum").textContent=w.length?w.map(([k,e])=>`${e} ${d[k]}`).join("  ·  "):"لسه محدش أخد لقب…";}
   $("badges").innerHTML=BDG.map(([k,e,t])=>`<div class="bdg${d[k]?" won":""}"><i>${e}</i><div><b>${t}</b><span>${d[k]||"لسه…"}</span></div></div>`).join("");
   $("wheelOpen").classList.toggle("hide",!(pctNow()>=100));
   return d;}
@@ -829,8 +845,9 @@ function renderWeek(){const h=saveToday2();const [y,m,dd]=day.date.split("-").ma
   const tg=target();
   $("wkChart").innerHTML=days.map(x=>{const v=x.r?x.r.t:0,g=x.r?x.r.g:0;return `<div class="bar${g&&v>=g?" hit":""}${x.k===day.date?" today":""}"><small>${v?(v>=1000?(v/1000).toFixed(1)+"k":v):""}</small><u style="height:calc((100% - 20px) * ${(v/mx).toFixed(3)})"></u><em>${x.lab}</em></div>`;}).join("")+(tg?`<div class="tl" style="bottom:calc(20px + (100% - 26px) * ${(Math.min(tg,mx)/mx).toFixed(3)})"></div>`:"");
   $("wkTot").textContent=wt.toLocaleString("en-US");$("wkTgt").textContent=wg.toLocaleString("en-US");
-  const f=d=>`${d.getDate()}/${d.getMonth()+1}`;const e=new Date(start);e.setDate(start.getDate()+6);$("wkRange").textContent=`(${f(start)} – ${f(e)})`;
+  const f=d=>`${d.getDate()}/${d.getMonth()+1}`;const e=new Date(start);e.setDate(start.getDate()+6);$("wkRange").textContent=`الأسبوع من ${f(start)} لـ ${f(e)}`;
   const arr=Object.entries(ws).sort((a,b)=>b[1]-a[1]);
+  $("wkHero").textContent=arr.length?`👑 ${arr[0][0]} — ${Math.round(arr[0][1]).toLocaleString("en-US")} ريال`:"لسه…";
   $("wkLb").innerHTML=arr.length?arr.map(([n,v],i)=>`<div class="wr${i===0?" first":""}"><span>${["👑","🥈","🥉"][i]||"🔥"} ${n}</span><b>${Math.round(v).toLocaleString("en-US")}</b></div>`).join(""):'<span class="empty">الترتيب الأسبوعي هيظهر لما تسجّلوا أوردرات بأسماءكم</span>';}
 /* ===== wheel ===== */
 const DEF_REW=["☕ عزومة قهوة من المدير","🍕 العشا على الفرع","🏃 تمشي بدري 15 دقيقة","🍰 حلويات للفريق","🎧 تختار الأغاني بكرة","⭐ نجمة الأسبوع","🥤 مشروب على حساب الفرع","🎁 مفاجأة من المدير"];
@@ -852,6 +869,9 @@ $("wspin").onclick=()=>{if(spinning)return;spinning=true;const R=rewards(),n=R.l
 $("wEditT").onclick=()=>{const t=$("wedit");t.classList.toggle("hide");t.value=rewards().join("\n");};
 $("wedit").addEventListener("input",()=>{S.set("tbk_rew",$("wedit").value);drawWheel();});
 
+/* accordions */
+document.querySelectorAll(".acc").forEach(a=>{if(S.get("tbk_acc_"+a.id)==="1")a.classList.add("open");
+  a.querySelector(".accHead").onclick=()=>{a.classList.toggle("open");S.set("tbk_acc_"+a.id,a.classList.contains("open")?"1":"0");};});
 /* ===== day timeline (9am → close) ===== */
 const W=h=>h<12?.5:h<17?.6:h<19?1:h<23?1.6:1;   // وزن كل ساعة حسب حركة الزباين
 function closeMin(){const c=(day.close||S.get("tbk_close")||"23:15").split(":").map(Number);return c[0]*60+c[1];}

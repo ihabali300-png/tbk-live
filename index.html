@@ -80,6 +80,9 @@
   @keyframes flashL{50%{box-shadow:0 0 14px #f59e0b}}
   .bonus{display:none;margin-top:4px}
   .bonus.on{display:block;animation:pop .6s}
+  .bonus .miles{justify-content:center;gap:clamp(14px,5vw,60px)}
+  .bonus .miles:before{display:none}
+  .ms.bm.lock{display:none}
   .bonus .ttl{text-align:center;font-weight:900;font-size:15px;color:#db2777;margin-bottom:2px}
   .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
   .pct{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:clamp(44px,9vw,68px);font-weight:900;line-height:1;direction:ltr}
@@ -193,11 +196,10 @@
       <div class="bonus" id="bonus">
         <div class="ttl">🔓 مرحلة الأساطير اتفتحت</div>
         <div class="miles">
-          <div class="ms" data-p="125">🔥<em>125%</em></div>
-          <div class="ms" data-p="150">🚀<em>150%</em></div>
-          <div class="ms" data-p="200">👑<em>200%</em></div>
-          <div class="ms" data-p="250">💎<em>250%</em></div>
-          <div class="ms" data-p="300">🦁<em>300%</em></div>
+          <div class="ms bm" data-p="200">👑<em>200%</em></div>
+          <div class="ms bm" data-p="300">🦁<em>300%</em></div>
+          <div class="ms bm" data-p="400">💎<em>400%</em></div>
+          <div class="ms bm" data-p="500">🌟<em>500%</em></div>
         </div>
       </div>
       <div class="stats">
@@ -341,6 +343,7 @@ const LINES={
  4:["ثواني ونكسّره!! 💣","أوردر واحد كمان ويولّع 🔥🔥🔥","التارجت بيترعش قدامنا 😂⚡","كله يدّي أقوى ما عنده دلوقتي 💥"],
  5:["كسّرناااااه!! 🏆🔥","الفريق ده أسطوري 👑","التارجت اتكسر… يلا على الرقم القياسي 🚀","عاش يا أبطال تبوك بارك 💪🎉"],
  6:["إحنا في مرحلة تانية خالص 🚀","التارجت بقى ورانا… كمّلوا الطحن 💪","كل ريال دلوقتي بونص 💰","الفرع كله مولّع 🔥🔥🔥"],
+ 8:["500%!!! إحنا أسطورة 🌟","مفيش كلام يوصف اللي بيحصل 🤯","تبوك بارك نمبر وان 🥇🌟","ده يوم هيتحكي عنه سنين 📜"],
  7:["دبل التارجت!!! 👑👑","ده مش فريق… ده جيش 🦁","تبوك بارك بتكتب التاريخ النهارده 📜","محدش يقدر يوقفنا 💎"]};
 const STAGES=[["😴","🚀 يلا نبدأ اليوم","#06b6d4","#8b5cf6","linear-gradient(160deg,#eef6ff,#f3eeff)"],
  ["😏","🔥 بدأنا نسخّن","#22c55e","#38bdf8","linear-gradient(160deg,#ecfdf5,#e0f7ff)"],
@@ -349,10 +352,11 @@ const STAGES=[["😴","🚀 يلا نبدأ اليوم","#06b6d4","#8b5cf6","lin
  ["🥵","💣 على وشك الانفجار","#ef4444","#f97316","linear-gradient(160deg,#fff1f2,#ffedd5)"],
  ["👑","🏆 كسّرناه!","#facc15","#ec4899","linear-gradient(160deg,#fdf4ff,#fef9c3)"],
  ["🚀","🚀 مرحلة الأساطير","#facc15","#ec4899","linear-gradient(160deg,#fff7ed,#fce7f3)"],
- ["🦁","👑 دبل التارجت","#facc15","#ec4899","linear-gradient(160deg,#faf5ff,#fde68a)"]];
+ ["🦁","👑 دبل التارجت وأكتر","#facc15","#ec4899","linear-gradient(160deg,#faf5ff,#fde68a)"],
+ ["🌟","🌟 أسطورة تبوك بارك","#facc15","#ec4899","linear-gradient(160deg,#fef9c3,#fbcfe8)"]];
 const LAPS=[["#f59e0b","#db2777"],["#8b5cf6","#06b6d4"],["#ef4444","#f97316"],["#10b981","#3b82f6"]];
-const BONUS=[125,150,200,250,300];
-function stageOf(p){return p>=200?7:p>=125?6:p>=100?5:p>=90?4:p>=75?3:p>=50?2:p>0?1:0;}
+const BONUS=[200,300,400,500];
+function stageOf(p){return p>=500?8:p>=200?7:p>=125?6:p>=100?5:p>=90?4:p>=75?3:p>=50?2:p>0?1:0;}
 let lastStage=-1;
 function shout(st){const a=LINES[st],el=$("shout");el.textContent=a[Math.floor(Math.random()*a.length)];el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");}
 function boom(t,s){$("boomT").textContent=t;$("boomS").textContent=s;const b=$("boom");b.classList.remove("on");void b.offsetWidth;b.classList.add("on");}
@@ -361,7 +365,7 @@ function renderHype(fromAdd){
   const T=target(),tot=total(),p=pctNow(),st=stageOf(p),[em,label,c1,c2,bg]=STAGES[st];
   $("ring").style.strokeDashoffset=540.35*(1-Math.min(p,100)/100);
   const lap=Math.floor(p/100);
-  if(p>=100){const frac=(p-lap*100)/100,lc=LAPS[(lap-1)%LAPS.length];
+  if(p>=100){const frac=p>=500?1:(p-lap*100)/100,lc=LAPS[(lap-1)%LAPS.length];
     $("h1").setAttribute("stop-color",lc[0]);$("h2").setAttribute("stop-color",lc[1]);
     $("ring2").classList.add("on");$("ring2").style.strokeDashoffset=540.35*(1-frac);
     $("lap").textContent=`LAP ${lap+1} 🔥 x${(p/100).toFixed(2)}`;$("lap").classList.add("on");$("bonus").classList.add("on");}
@@ -374,20 +378,22 @@ function renderHype(fromAdd){
   $("tShow").textContent=T||"–";
   const rem=Math.max(T-tot,0),n=day.list.length,atv=n?tot/n:0;
   $("hord").textContent=n;
-  if(T&&p>=100){const nx=BONUS.find(b=>p<b)||Math.ceil((p+1)/100)*100,r2=Math.max(T*nx/100-tot,0);
-    $("hremL").textContent=`فاضل لـ ${nx}%`;$("hrem").textContent=Math.round(r2);
+  if(T&&p>=100){const nx=BONUS.find(b=>p<b);
+    if(nx){const r2=Math.max(T*nx/100-tot,0);$("hremL").textContent=`فاضل لـ ${nx}%`;$("hrem").textContent=Math.round(r2);
     $("hneedL").textContent="أوردرات للمستوى الجاي";$("hneed").textContent=atv?Math.ceil(r2/atv):"?";}
+    else{$("hremL").textContent="كل المستويات";$("hrem").textContent="🌟";$("hneedL").textContent="خلصنا الـ500%";$("hneed").textContent="👑";}}
   else{$("hremL").textContent="فاضل ريال";$("hneedL").textContent="أوردرات كمان";
     $("hrem").textContent=T?(rem?Math.round(rem):"✅"):"–";
     $("hneed").textContent=T?(rem?(atv?Math.ceil(rem/atv):"?"):"0"):"–";}
   document.querySelectorAll(".ms").forEach(m=>m.classList.toggle("done",p>=+m.dataset.p));
+  document.querySelectorAll(".ms.bm").forEach(m=>m.classList.toggle("lock",p<+m.dataset.p-100));
   $("chips").innerHTML=n?day.list.map(v=>`<span class="chip">🔥 ${v}</span>`).join(""):'<span class="empty">لسه مفيش أوردرات… أول واحد جاي 💪</span>';
   if(st!==lastStage){shout(st);lastStage=st;}
   if(fromAdd&&T){for(const m of [25,50,75,90,100,...BONUS]){if(p>=m&&!day.hit.includes(m)){day.hit.push(m);saveDay();
     if(m===100){boom("كسّرناه!! 🏆","التارجت اتكسر يا أبطال 🔥");emojiRain("🏆",18);emojiRain("🔥",18);
       beep([523,659,784,1047,1319],.14,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>14)clearInterval(iv);},280);}
-    else if(m>100){const t={125:["125%! 🔥","التارجت بقى ورانا"],150:["150%! 🚀","مرحلة الأساطير"],200:["دبل التارجت!! 👑","ده تاريخ يا جماعة"],250:["250%! 💎","مش طبيعي اللي بيحصل"],300:["تريبل!!! 🦁","أسطورة تبوك بارك"]}[m];
-      boom(t[0],t[1]);emojiRain(m>=200?"👑":"🚀",22);confetti(220);beep([523,659,784,1047,1319,1568],.12,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>(m>=200?18:8))clearInterval(iv);},260);}
+    else if(m>100){const t={200:["دبل التارجت!! 👑","مستوى 300% اتفتح 🔓"],300:["تريبل!!! 🦁","مستوى 400% اتفتح 🔓"],400:["400%!!! 💎","فاضل مستوى أخير 🔓"],500:["500%!!! 🌟","أسطورة تبوك بارك"]}[m];
+      boom(t[0],t[1]);emojiRain({200:"👑",300:"🦁",400:"💎",500:"🌟"}[m],24);confetti(220);beep([523,659,784,1047,1319,1568],.12,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>(m>=200?18:8))clearInterval(iv);},260);}
     else{const t={25:["ربع التارجت! 🥉","البداية القوية"],50:["نص التارجت! 🥈","كمّلوا كده"],75:["75%! 🥇","قرّبنا أوي"],90:["90%! ⚡","أوردر أو اتنين ونكسّره"]}[m];
       boom(t[0],t[1]);confetti(180);beep([523,659,784,1047],.12,"square",.06);}}}}
 }

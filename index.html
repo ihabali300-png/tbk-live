@@ -86,6 +86,36 @@
   .vs .mid{font-size:22px;font-weight:900;color:var(--muted)}
   .diff{text-align:center;font-weight:800;font-size:15px;margin-bottom:6px}
   .diff.up{color:#16a34a}.diff.down{color:#e11d48}
+  .sellers{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .sel{border:1.5px solid var(--line);background:#fafaff;border-radius:999px;padding:7px 14px;font-family:inherit;font-size:15px;font-weight:800;cursor:pointer;color:var(--text);transition:.15s}
+  .sel.on{background:linear-gradient(135deg,#8b5cf6,#06b6d4);color:#fff;border-color:transparent;box-shadow:0 0 14px rgba(139,92,246,.45)}
+  .lb{display:flex;flex-direction:column;gap:8px}
+  .lbr{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;background:#fafaff;border:1px solid var(--line);border-radius:14px;padding:8px 12px;position:relative;overflow:hidden}
+  .lbr i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,rgba(139,92,246,.14),rgba(6,182,212,.14));transition:width .6s;right:auto}
+  .lbr>*{position:relative}
+  .lbr .rk{font-size:22px;text-align:center}
+  .lbr .nm{font-weight:900;font-size:16px}.lbr .nm small{color:var(--muted);font-weight:600;font-size:12.5px;margin-right:6px}
+  .lbr .vl{font-family:'Baloo Bhaijaan 2',sans-serif;font-weight:800;font-size:20px;color:#16a34a;direction:ltr}
+  .lbr.first{border-color:#fbbf24;box-shadow:0 0 16px rgba(251,191,36,.45);animation:glow 1.8s ease-in-out infinite}
+  .rec{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .rec div{background:rgba(255,255,255,.75);border:1px solid var(--line);border-radius:14px;padding:8px;text-align:center}
+  .rec b{display:block;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:19px;direction:ltr}
+  .rec span{font-size:12.5px;color:var(--muted);font-weight:700}
+  .combo{position:fixed;top:22%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:65;pointer-events:none;font-family:'Baloo Bhaijaan 2',sans-serif;font-weight:800;font-size:clamp(46px,9vw,90px);color:#f59e0b;-webkit-text-stroke:2px #fff;text-shadow:0 0 30px rgba(245,158,11,.8),0 6px 0 #db2777}
+  .combo.on{animation:comboA 1.6s ease-out forwards}
+  @keyframes comboA{0%{transform:translate(-50%,-50%) scale(0) rotate(-12deg);opacity:1}25%{transform:translate(-50%,-50%) scale(1.25) rotate(4deg)}45%{transform:translate(-50%,-50%) scale(1) rotate(0)}80%{opacity:1}100%{transform:translate(-50%,-90%) scale(1);opacity:0}}
+  .chbtns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .chb{border:1.5px dashed #c4b5fd;background:#faf5ff;border-radius:14px;padding:10px 4px;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;color:#6d28d9;line-height:1.4}
+  .chb:hover{border-style:solid;box-shadow:0 0 12px rgba(139,92,246,.35)}
+  .chLive{text-align:center}
+  .chLive .goal{font-weight:900;font-size:17px}
+  .chLive .tm{font-family:'Baloo Bhaijaan 2',sans-serif;font-weight:800;font-size:44px;line-height:1.1;direction:ltr;color:#7c3aed}
+  .chLive .tm.hurry{color:#e11d48;animation:flashL .8s infinite}
+  .chDots{display:flex;justify-content:center;gap:8px;margin:6px 0}
+  .chDots span{width:30px;height:30px;border-radius:50%;border:2px dashed #c4b5fd;display:grid;place-items:center;font-size:16px}
+  .chDots span.ok{border:2px solid #22c55e;background:#dcfce7;animation:pop .5s}
+  .chLive .x{border:0;background:none;color:var(--muted);font-family:inherit;font-size:13px;cursor:pointer;margin-top:4px}
+  .chip small{opacity:.7;font-weight:700;margin-left:6px}
   .bonus{display:none;margin-top:4px}
   .bonus.on{display:block;animation:pop .6s}
   .bonus .miles{justify-content:center;gap:clamp(14px,5vw,60px)}
@@ -155,6 +185,7 @@
 </head>
 <body>
 <canvas id="fx"></canvas>
+<div class="combo" id="combo"></div>
 <div class="boom" id="boom"><b id="boomT"></b><span id="boomS"></span></div>
 
 <div class="shell">
@@ -221,16 +252,25 @@
         <div class="st"><b id="hord">0</b><span>أوردرات</span></div>
         <div class="st"><b id="hneed">–</b><span id="hneedL">أوردرات كمان</span></div>
       </div>
+      <div class="rec">
+        <div><b id="rBig">–</b><span>💎 أكبر فاتورة النهارده</span></div>
+        <div><b id="rRec">–</b><span>🏆 أعلى يوم للفرع</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🏅 لوحة الأبطال <small>(مين قفل أكتر النهارده)</small></h2>
+      <div class="lb" id="lb"></div>
     </div>
   </div>
 
-  <div class="col sticky">
+  <div class="col">
     <div class="card">
       <div class="tline"><span>🎯 تارجت النهارده</span><b id="tShow">–</b></div>
       <div class="hint">تقدر تغيّره من تاب التقفيلة <a id="goRep">✏️ تعديل</a></div>
     </div>
     <div class="card">
-      <h2>💥 أوردر جديد <small>(اكتب القيمة واضغط كسّر)</small></h2>
+      <h2>💥 أوردر جديد <small>(اختار مين قفل، واكتب القيمة)</small></h2>
+      <div class="sellers" id="sellers"></div>
       <div class="addRow">
         <input id="amt" type="number" inputmode="decimal" placeholder="قيمة الأوردر">
         <button class="fire" id="add" type="button">🔥 كسّر</button>
@@ -239,6 +279,23 @@
         <button class="q" data-v="199">199</button><button class="q" data-v="349">349</button>
         <button class="q" data-v="499">499</button><button class="q" data-v="799">799</button>
         <button class="q" data-v="1200">1200</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🎯 تحدي الساعة</h2>
+      <div id="chPick">
+        <div class="chbtns">
+          <button class="chb" data-n="1" data-m="30">أوردر واحد<br>في 30 دقيقة</button>
+          <button class="chb" data-n="2" data-m="60">أوردرين<br>في ساعة</button>
+          <button class="chb" data-n="3" data-m="90">3 أوردرات<br>في ساعة ونص</button>
+        </div>
+        <div class="hint">اختار تحدي والعداد يبدأ على طول ⏱️</div>
+      </div>
+      <div class="chLive hide" id="chLive">
+        <div class="goal" id="chGoal"></div>
+        <div class="tm" id="chTm">00:00</div>
+        <div class="chDots" id="chDots"></div>
+        <button class="x" id="chX" type="button">✖ إلغاء التحدي</button>
       </div>
     </div>
     <div class="card">
@@ -319,9 +376,12 @@ $("goRep").onclick=()=>{openTab("report");$("target").focus();};
 /* day state */
 let day=JSON.parse(S.get("tbk_day")||"null");
 if(!day||day.date!==bizDate())day={date:bizDate(),list:[],hit:[]};
+day.list=day.list.map(o=>typeof o==="number"?{v:o,who:"",t:0}:o);
+const SELLERS=["إيهاب","رزان","بدور","راما","Dr. خواطر"];
+let who=S.get("tbk_who")||"";
 function saveDay(){S.set("tbk_day",JSON.stringify(day));}
 const target=()=>parseFloat($("target").value)||0;
-const total=()=>day.list.reduce((a,b)=>a+b,0);
+const total=()=>day.list.reduce((a,b)=>a+b.v,0);
 const pctNow=()=>target()?total()/target()*100:0;
 
 /* sound */
@@ -403,7 +463,8 @@ function renderHype(fromAdd){
     $("hneed").textContent=T?(rem?(atv?Math.ceil(rem/atv):"?"):"0"):"–";}
   document.querySelectorAll(".ms").forEach(m=>m.classList.toggle("done",p>=+m.dataset.p));
   document.querySelectorAll(".ms.bm").forEach(m=>m.classList.toggle("lock",p<+m.dataset.p-100));
-  $("chips").innerHTML=n?day.list.map(v=>`<span class="chip">🔥 ${v}</span>`).join(""):'<span class="empty">لسه مفيش أوردرات… أول واحد جاي 💪</span>';
+  $("chips").innerHTML=n?day.list.map(o=>`<span class="chip">🔥 ${o.v}${o.who?`<small>${o.who}</small>`:""}</span>`).join(""):'<span class="empty">لسه مفيش أوردرات… أول واحد جاي 💪</span>';
+  renderExtras();
   if(st!==lastStage){shout(st);lastStage=st;}
   if(fromAdd&&T){for(const m of [25,50,75,90,100,...BONUS]){if(p>=m&&!day.hit.includes(m)){day.hit.push(m);saveDay();
     if(m===100){boom("كسّرناه!! 🏆","التارجت اتكسر يا أبطال 🔥");emojiRain("🏆",18);emojiRain("🔥",18);
@@ -416,17 +477,62 @@ function renderHype(fromAdd){
 
 function addOrder(v){v=parseFloat(v);if(!v||v<=0){toast("اكتب قيمة الأوردر");return;}
   if(!target()){toast("حط التارجت الأول 🎯");openTab("report");$("target").focus();return;}
-  day.list.push(Math.round(v));saveDay();$("amt").value="";
+  const now=Date.now(),prev=day.list[day.list.length-1],prevMax=day.list.reduce((a,o)=>Math.max(a,o.v),0),before=total();
+  day.list.push({v:Math.round(v),who,t:now});saveDay();$("amt").value="";
+  // combo
+  if(prev&&prev.t&&now-prev.t<=30*60000){day.combo=(day.combo||1)+1;}else day.combo=1;saveDay();
+  setTimeout(()=>{if(day.combo>=2)comboFx(`⚡ كومبو x${day.combo}`);
+    else if(day.list.length>1&&v>prevMax)comboFx("💎 أكبر فاتورة!");
+    const pb=prevBest();
+    if(pb>0&&before<=pb&&total()>pb&&!day.recHit){day.recHit=1;saveDay();
+      setTimeout(()=>{boom("رقم قياسي جديد!! 🏆","كسّرنا أعلى يوم في تاريخ الفرع");emojiRain("🏆",20);let k=0;const iv=setInterval(()=>{firework();if(++k>10)clearInterval(iv);},260);},1200);}
+    challengeCheck();},50);
   const r=$("add").getBoundingClientRect();confetti(70,r.left+r.width/2,r.top);beep([440,660,880],.07,"square",.05);
   if(navigator.vibrate)navigator.vibrate(60);shout(stageOf(pctNow()));renderHype(true);syncToReport();}
 $("add").onclick=()=>addOrder($("amt").value);
 $("amt").addEventListener("keydown",e=>{if(e.key==="Enter")addOrder($("amt").value);});
 document.querySelectorAll(".q").forEach(b=>b.onclick=()=>addOrder(b.dataset.v));
-$("undo").onclick=()=>{if(!day.list.length)return;day.list.pop();const p=pctNow();day.hit=day.hit.filter(m=>p>=m);saveDay();renderHype();syncToReport();toast("↩️ اتشال آخر أوردر");};
+$("undo").onclick=()=>{if(!day.list.length)return;day.list.pop();day.combo=1;const p=pctNow();day.hit=day.hit.filter(m=>p>=m);saveDay();renderHype();syncToReport();toast("↩️ اتشال آخر أوردر");};
 $("reset").onclick=()=>{const b=$("reset");if(!day.list.length)return;
   if(b.dataset.c!=="1"){b.dataset.c="1";b.textContent="⚠️ اضغط تاني للتأكيد";setTimeout(()=>{b.dataset.c="";b.textContent="🗑️ يوم جديد";},2500);return;}
   day={date:bizDate(),list:[],hit:[]};saveDay();b.dataset.c="";b.textContent="🗑️ يوم جديد";renderHype();syncToReport();toast("بدأنا يوم جديد 🚀");};
 setInterval(()=>{if(!$("hype").classList.contains("hide"))shout(stageOf(pctNow()));},12000);
+
+/* ===== extras: sellers, leaderboard, records, challenge ===== */
+function hist(){try{return JSON.parse(S.get("tbk_hist")||"{}")}catch(e){return{}}}
+function prevBest(){const h=hist();return Math.max(0,...Object.entries(h).filter(([d])=>d!==day.date).map(([,v])=>v));}
+function comboFx(t){const c=$("combo");c.textContent=t;c.classList.remove("on");void c.offsetWidth;c.classList.add("on");beep([880,1175,1568],.06,"triangle",.06);}
+function renderSellers(){$("sellers").innerHTML=SELLERS.map(n=>`<button class="sel${n===who?" on":""}" data-n="${n}" type="button">${n}</button>`).join("");
+  $("sellers").querySelectorAll(".sel").forEach(b=>b.onclick=()=>{who=who===b.dataset.n?"":b.dataset.n;S.set("tbk_who",who);renderSellers();});}
+function renderExtras(){
+  // records
+  const big=day.list.reduce((a,o)=>Math.max(a,o.v),0);$("rBig").textContent=big?big.toLocaleString("en-US"):"–";
+  const h=hist();h[day.date]=Math.round(total());S.set("tbk_hist",JSON.stringify(h));
+  const best=Math.max(0,...Object.values(h));$("rRec").textContent=best?best.toLocaleString("en-US"):"–";
+  // leaderboard
+  const m={};day.list.forEach(o=>{const k=o.who||"بدون اسم";m[k]=m[k]||{v:0,n:0};m[k].v+=o.v;m[k].n++;});
+  const arr=Object.entries(m).sort((a,b)=>b[1].v-a[1].v),mx=arr.length?arr[0][1].v:1,md=["👑","🥈","🥉"];
+  $("lb").innerHTML=arr.length?arr.map(([k,o],i)=>`<div class="lbr${i===0?" first":""}"><i style="width:${o.v/mx*100}%"></i><div class="rk">${md[i]||"🔥"}</div><div class="nm">${k}<small>${o.n} أوردر</small></div><div class="vl">${Math.round(o.v).toLocaleString("en-US")}</div></div>`).join("")
+    :'<span class="empty">اختار اسمك قبل ما تسجّل الأوردر وتدخل السباق 🏁</span>';
+  renderChallenge();}
+/* challenge */
+function chOrders(){const c=day.ch;return c?day.list.filter(o=>o.t>=c.start&&o.t<=c.end).length:0;}
+function renderChallenge(){const c=day.ch;
+  if(!c||c.done){$("chPick").classList.remove("hide");$("chLive").classList.add("hide");return;}
+  $("chPick").classList.add("hide");$("chLive").classList.remove("hide");
+  const got=chOrders();$("chGoal").textContent=`🎯 ${c.need===1?"أوردر واحد":c.need===2?"أوردرين":c.need+" أوردرات"} قبل الساعة ${new Date(c.end).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}`;
+  $("chDots").innerHTML=Array.from({length:c.need},(_,i)=>`<span class="${i<got?"ok":""}">${i<got?"✅":"⏳"}</span>`).join("");}
+function challengeCheck(){const c=day.ch;if(!c||c.done)return;
+  if(chOrders()>=c.need){c.done=1;saveDay();boom("التحدي اتحقق!! 🎯","عاش يا فريق… اختاروا تحدي جديد");confetti(200);beep([523,784,1047,1568],.12,"square",.07);renderChallenge();}}
+function tickChallenge(){const c=day.ch;if(!c||c.done)return;const left=c.end-Date.now();
+  if(left<=0){c.done=1;saveDay();toast("⌛ وقت التحدي خلص… جرّبوا تاني 💪");renderChallenge();return;}
+  const mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);$("chTm").textContent=`${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
+  $("chTm").classList.toggle("hurry",left<5*60000);}
+document.querySelectorAll(".chb").forEach(b=>b.onclick=()=>{const n=+b.dataset.n,mi=+b.dataset.m,now=Date.now();
+  day.ch={need:n,start:now,end:now+mi*60000};saveDay();renderChallenge();tickChallenge();beep([660,880],.08,"square",.05);toast("⏱️ التحدي بدأ… يلا!");});
+$("chX").onclick=()=>{if(day.ch){day.ch.done=1;saveDay();renderChallenge();}};
+setInterval(tickChallenge,1000);
+renderSellers();
 
 /* report */
 $("date").value=bizDate();

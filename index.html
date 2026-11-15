@@ -164,6 +164,16 @@
   .lbr.first .rk{animation:flick .45s ease-in-out infinite alternate}
   .lbr.first:after{content:"🔥";position:absolute;left:-2px;top:-12px;font-size:22px;animation:flick .4s ease-in-out infinite alternate}
   .lbr.chase{border-color:#fdba74}
+  .lbr .nm .offT{display:block;font-size:12px;color:#0d9488;font-weight:700;margin:0}
+  .lbr.off{opacity:.55;filter:grayscale(.6)}
+  .lbr .vac{position:relative;z-index:2;border:1px dashed var(--line);background:#fff;border-radius:999px;font-size:13px;padding:2px 7px;cursor:pointer;margin-right:6px}
+  .lbr.off .vac{border-style:solid;border-color:#5eead4;background:#f0fdfa}
+  .lbr{grid-template-columns:36px 1fr auto auto}
+  .offLine{margin-top:6px;text-align:center;font-size:12.5px;color:var(--muted);font-weight:700}
+  .vacHint{font-size:11.5px;color:var(--muted);text-align:center;margin-top:4px}
+  .exam .dr .vac{border:1px dashed var(--line);background:#fff;border-radius:999px;font-size:13px;padding:1px 7px;cursor:pointer;margin-right:6px;vertical-align:middle}
+  .exam.off .cnt,.exam.off .exBtns{opacity:.35;pointer-events:none}
+  .exOff{font-size:13px;color:#0d9488;font-weight:800;min-height:18px}
   .bonus{display:none;margin-top:4px}
   .bonus.on{display:block;animation:pop .6s}
   .bonus .miles{justify-content:center;gap:clamp(14px,5vw,60px)}
@@ -260,10 +270,13 @@
       <h2>🏅 لوحة الأبطال <small>(مين قفل أكتر النهارده)</small></h2>
       <div class="lb" id="lb"></div>
       <div class="race" id="race"></div>
+      <div class="offLine" id="offLine"></div>
+      <div class="vacHint">🌴 اضغط على النخلة جنب الاسم: مرة = إجازة النهارده، مرتين = إجازة أسبوعية في نفس اليوم، تالت مرة = إلغاء</div>
     </div>
     <div class="card exam">
       <h2>👓 الفحوصات</h2>
-      <div class="dr">د/خواطر 🩺</div>
+      <div class="dr">د/خواطر 🩺<button class="vac" id="exVac" type="button" title="إجازة">🌴</button></div>
+      <div class="exOff" id="exOff"></div>
       <div class="cnt" id="exCnt">0</div>
       <div class="sub2">فحص النهارده</div>
       <div class="exBtns"><button class="exAdd" id="exAdd" type="button">➕ فحص جديد</button><button class="exMinus" id="exMinus" type="button" title="تراجع">↩️</button></div>
@@ -583,8 +596,18 @@ setInterval(()=>{if(!$("hype").classList.contains("hide"))shout(stageOf(pctNow()
 /* ===== extras: sellers, leaderboard, records, challenge ===== */
 function hist(){try{return JSON.parse(S.get("tbk_hist")||"{}")}catch(e){return{}}}
 function prevBest(){const h=hist();return Math.max(0,...Object.entries(h).filter(([d])=>d!==day.date).map(([,v])=>v));}
+const DAYS=["الأحد","الاتنين","التلات","الأربع","الخميس","الجمعة","السبت"];
+function wd(){const [y,m,d]=day.date.split("-").map(Number);return new Date(y,m-1,d).getDay();}
+function weekly(){try{return JSON.parse(S.get("tbk_weekly")||"{}")}catch(e){return{}}}
+function offState(n){day.off=day.off||{};if(weekly()[n]===wd())return"w";return day.off[n]?"d":"";}
+function cycleOff(n){day.off=day.off||{};const w=weekly(),st=offState(n);
+  if(st===""){day.off[n]=1;}else if(st==="d"){delete day.off[n];w[n]=wd();}else{delete w[n];delete day.off[n];}
+  S.set("tbk_weekly",JSON.stringify(w));saveDay();
+  if(n===who&&offState(n))who="";renderSellers();renderExtras();
+  const ns=offState(n);toast(ns==="d"?`🌴 ${n} إجازة النهارده`:ns==="w"?`🌴 ${n} إجازة كل ${DAYS[wd()]}`:`✅ ${n} موجود النهارده`);}
+function offLabel(n){const st=offState(n);return st==="d"?"🌴 إجازة النهارده":st==="w"?`🌴 إجازة أسبوعية (كل ${DAYS[wd()]})`:"";}
 function comboFx(t){const c=$("combo");c.textContent=t;c.classList.remove("on");void c.offsetWidth;c.classList.add("on");beep([880,1175,1568],.06,"triangle",.06);}
-function renderSellers(){$("sellers").innerHTML=SELLERS.map(n=>`<button class="sel${n===who?" on":""}" data-n="${n}" type="button">${n}</button>`).join("");
+function renderSellers(){$("sellers").innerHTML=SELLERS.filter(n=>!offState(n)).map(n=>`<button class="sel${n===who?" on":""}" data-n="${n}" type="button">${n}</button>`).join("");
   $("sellers").querySelectorAll(".sel").forEach(b=>b.onclick=()=>{who=who===b.dataset.n?"":b.dataset.n;S.set("tbk_who",who);renderSellers();});}
 function renderExtras(){
   // records
@@ -598,10 +621,15 @@ function renderExtras(){
   if(ld&&day.leader&&ld!==day.leader&&renderExtras.fromAdd)setTimeout(()=>{comboFx(`🔥 ${ld} خطف الصدارة!`);emojiRain("🔥",14);},700);
   if(ld)day.leader=ld;
   {const a=arr.filter(x=>x[1].v>0);$("race").textContent=a.length>=2?`⚔️ ${a[0][0]} قدام ${a[1][0]} بـ ${Math.round(a[0][1].v-a[1][1].v).toLocaleString("en-US")} ريال… الحق يا ${a[1][0]}!`:a.length===1?`👀 ${a[0][0]} لوحده في الصدارة… مين هيلحقه؟`:"";}
-  $("lb").innerHTML=arr.length?arr.map(([k,o],i)=>`<div class="lbr${i===0&&o.v>0?" first":""}${i===1&&o.v>0?" chase":""}"><i style="width:${o.v/mx*100}%"></i><div class="rk">${o.v>0?(md[i]||"🔥"):"⏳"}</div><div class="nm">${k}<small>${o.n} أوردر</small></div><div class="vl">${Math.round(o.v).toLocaleString("en-US")}</div></div>`).join("")
+  arr.sort((a,b)=>(!!offState(a[0])&&!a[1].v)-(!!offState(b[0])&&!b[1].v));
+  $("lb").innerHTML=arr.length?arr.map(([k,o],i)=>{const off=offState(k);return `<div class="lbr${i===0&&o.v>0?" first":""}${i===1&&o.v>0?" chase":""}${off&&!o.v?" off":""}"><i style="width:${o.v/mx*100}%"></i><div class="rk">${off&&!o.v?"🌴":o.v>0?(md[i]||"🔥"):"⏳"}</div><div class="nm">${k}<small>${o.n} أوردر</small>${off?`<span class="offT">${offLabel(k)}</span>`:""}</div><div class="vl">${Math.round(o.v).toLocaleString("en-US")}</div>${SELLERS.includes(k)?`<button class="vac" data-n="${k}" type="button" title="إجازة">🌴</button>`:"<span></span>"}</div>`;}).join("")
     :'<span class="empty">اختار اسمك قبل ما تسجّل الأوردر وتدخل السباق 🏁</span>';
+  $("lb").querySelectorAll(".vac").forEach(b=>b.onclick=()=>cycleOff(b.dataset.n));
+  {const offs=[...SELLERS,"د/خواطر"].filter(n=>offState(n));$("offLine").textContent=offs.length?`🌴 إجازة النهارده: ${offs.join("، ")}`:"";}
   renderChallenge();renderExam();}
 function renderExam(){const e=day.ex||0,n=day.list.length;$("exCnt").textContent=e;
+  const off=offState("د/خواطر");document.querySelector(".exam").classList.toggle("off",!!off);
+  $("exOff").textContent=off?(off==="d"?"🌴 د/خواطر إجازة النهارده… مفيش فحوصات":`🌴 د/خواطر إجازة كل ${DAYS[wd()]}`):"";
   $("exConv").textContent=e?`🎯 تحويل الفحص: ${Math.round(Math.min(n/e,1)*100)}% (${n} أوردر من ${e} فحص)`:"";}
 /* challenge */
 function chOrders(){const c=day.ch;return c?day.list.filter(o=>o.t>=c.start&&o.t<=c.end).length:0;}
@@ -622,6 +650,7 @@ $("chX").onclick=()=>{if(day.ch){day.ch.done=1;saveDay();renderChallenge();}};
 setInterval(tickChallenge,1000);
 $("exAdd").onclick=()=>{day.ex=(day.ex||0)+1;saveDay();renderExam();syncToReport();beep([520,780],.07,"triangle",.05);
   const r=$("exAdd").getBoundingClientRect();confetti(40,r.left+r.width/2,r.top);};
+$("exVac").onclick=()=>cycleOff("د/خواطر");
 $("exMinus").onclick=()=>{if(!day.ex)return;day.ex--;saveDay();renderExam();syncToReport();};
 renderSellers();
 

@@ -14,7 +14,7 @@
   body{margin:0;font-family:'Tajawal',system-ui,sans-serif;color:var(--text);line-height:1.55;overflow-x:hidden;min-height:100vh;
     background:radial-gradient(900px 500px at 85% -10%,rgba(139,92,246,.12),transparent 60%),radial-gradient(800px 500px at 0% 110%,rgba(34,211,238,.12),transparent 60%),var(--bg);background-attachment:fixed}
   body:after{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(30,27,58,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(30,27,58,.035) 1px,transparent 1px);background-size:44px 44px;z-index:0}
-  .shell{position:relative;z-index:1;max-width:1300px;margin:0 auto;padding:18px 22px 26px}
+  .shell{position:relative;z-index:1;max-width:1840px;margin:0 auto;padding:18px 22px 26px}
   .head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
   .brand{display:flex;align-items:center;gap:12px}
   .logo{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:linear-gradient(135deg,var(--violet),var(--cyan));box-shadow:0 0 24px rgba(139,92,246,.6)}
@@ -33,6 +33,20 @@
   .mode.on{color:#fff}
 
   .grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px}
+  #report.grid{max-width:1300px;margin:0 auto}
+  .grid3{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.2fr) minmax(0,1fr);grid-template-areas:"lb ar ac";gap:18px}
+  .grid3>.c-lb{grid-area:lb}.grid3>.c-ar{grid-area:ar}.grid3>.c-ac{grid-area:ac}
+  @media (max-width:1280px){.grid3{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);grid-template-areas:"ar ac" "lb lb"}}
+  @media (max-width:980px){.grid3{grid-template-columns:1fr;grid-template-areas:"ar" "ac" "lb"}}
+  .exam{text-align:center}
+  .exam .dr{font-size:18px;font-weight:900}
+  .exam .cnt{font-family:'Baloo Bhaijaan 2',sans-serif;font-weight:800;font-size:52px;line-height:1.1;color:#0891b2}
+  .exam .sub2{font-size:13.5px;color:var(--muted);font-weight:700}
+  .exBtns{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}
+  .exAdd{border:0;border-radius:14px;padding:12px;font-family:inherit;font-size:17px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(135deg,#06b6d4,#8b5cf6);box-shadow:0 0 16px rgba(6,182,212,.35)}
+  .exAdd:active{transform:scale(.95)}
+  .exMinus{border:1px solid var(--line);background:#fafaff;border-radius:14px;padding:0 14px;font-size:18px;cursor:pointer}
+  .exConv{margin-top:8px;font-size:14px;font-weight:800;color:#7c3aed}
   .col{display:flex;flex-direction:column;gap:16px;min-width:0}
   .card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 6px 24px rgba(60,50,140,.07)}
   .card h2{margin:0 0 12px;font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px}
@@ -204,8 +218,22 @@
 </div>
 
 <!-- ================= HYPE ================= -->
-<div class="grid pane" id="hype">
-  <div class="col">
+<div class="grid3 pane" id="hype">
+  <div class="col c-lb">
+    <div class="card">
+      <h2>🏅 لوحة الأبطال <small>(مين قفل أكتر النهارده)</small></h2>
+      <div class="lb" id="lb"></div>
+    </div>
+    <div class="card exam">
+      <h2>👓 الفحوصات</h2>
+      <div class="dr">د/خواطر 🩺</div>
+      <div class="cnt" id="exCnt">0</div>
+      <div class="sub2">فحص النهارده</div>
+      <div class="exBtns"><button class="exAdd" id="exAdd" type="button">➕ فحص جديد</button><button class="exMinus" id="exMinus" type="button" title="تراجع">↩️</button></div>
+      <div class="exConv" id="exConv"></div>
+    </div>
+  </div>
+  <div class="col c-ar">
     <div class="arena" id="arena">
       <button class="snd" id="snd" title="الصوت">🔊</button>
       <div class="stage" id="stage">🚀 يلا نبدأ اليوم</div>
@@ -257,13 +285,9 @@
         <div><b id="rRec">–</b><span>🏆 أعلى يوم للفرع</span></div>
       </div>
     </div>
-    <div class="card">
-      <h2>🏅 لوحة الأبطال <small>(مين قفل أكتر النهارده)</small></h2>
-      <div class="lb" id="lb"></div>
-    </div>
   </div>
 
-  <div class="col">
+  <div class="col c-ac">
     <div class="card">
       <div class="tline"><span>🎯 تارجت النهارده</span><b id="tShow">–</b></div>
       <div class="hint">تقدر تغيّره من تاب التقفيلة <a id="goRep">✏️ تعديل</a></div>
@@ -377,8 +401,8 @@ $("goRep").onclick=()=>{openTab("report");$("target").focus();};
 let day=JSON.parse(S.get("tbk_day")||"null");
 if(!day||day.date!==bizDate())day={date:bizDate(),list:[],hit:[]};
 day.list=day.list.map(o=>typeof o==="number"?{v:o,who:"",t:0}:o);
-const SELLERS=["إيهاب","رزان","بدور","راما","Dr. خواطر"];
-let who=S.get("tbk_who")||"";
+const SELLERS=["إيهاب","رزان","راما","بدور"];
+let who=S.get("tbk_who")||"";if(!SELLERS.includes(who))who="";
 function saveDay(){S.set("tbk_day",JSON.stringify(day));}
 const target=()=>parseFloat($("target").value)||0;
 const total=()=>day.list.reduce((a,b)=>a+b.v,0);
@@ -510,11 +534,13 @@ function renderExtras(){
   const h=hist();h[day.date]=Math.round(total());S.set("tbk_hist",JSON.stringify(h));
   const best=Math.max(0,...Object.values(h));$("rRec").textContent=best?best.toLocaleString("en-US"):"–";
   // leaderboard
-  const m={};day.list.forEach(o=>{const k=o.who||"بدون اسم";m[k]=m[k]||{v:0,n:0};m[k].v+=o.v;m[k].n++;});
-  const arr=Object.entries(m).sort((a,b)=>b[1].v-a[1].v),mx=arr.length?arr[0][1].v:1,md=["👑","🥈","🥉"];
-  $("lb").innerHTML=arr.length?arr.map(([k,o],i)=>`<div class="lbr${i===0?" first":""}"><i style="width:${o.v/mx*100}%"></i><div class="rk">${md[i]||"🔥"}</div><div class="nm">${k}<small>${o.n} أوردر</small></div><div class="vl">${Math.round(o.v).toLocaleString("en-US")}</div></div>`).join("")
+  const m={};SELLERS.forEach(k=>m[k]={v:0,n:0});day.list.forEach(o=>{const k=o.who||"بدون اسم";m[k]=m[k]||{v:0,n:0};m[k].v+=o.v;m[k].n++;});
+  const arr=Object.entries(m).filter(([k,o])=>o.n||SELLERS.includes(k)).sort((a,b)=>b[1].v-a[1].v),mx=Math.max(1,arr.length?arr[0][1].v:1),md=["👑","🥈","🥉"];
+  $("lb").innerHTML=arr.length?arr.map(([k,o],i)=>`<div class="lbr${i===0&&o.v>0?" first":""}"><i style="width:${o.v/mx*100}%"></i><div class="rk">${o.v>0?(md[i]||"🔥"):"⏳"}</div><div class="nm">${k}<small>${o.n} أوردر</small></div><div class="vl">${Math.round(o.v).toLocaleString("en-US")}</div></div>`).join("")
     :'<span class="empty">اختار اسمك قبل ما تسجّل الأوردر وتدخل السباق 🏁</span>';
-  renderChallenge();}
+  renderChallenge();renderExam();}
+function renderExam(){const e=day.ex||0,n=day.list.length;$("exCnt").textContent=e;
+  $("exConv").textContent=e?`🎯 تحويل الفحص: ${Math.round(Math.min(n/e,1)*100)}% (${n} أوردر من ${e} فحص)`:"";}
 /* challenge */
 function chOrders(){const c=day.ch;return c?day.list.filter(o=>o.t>=c.start&&o.t<=c.end).length:0;}
 function renderChallenge(){const c=day.ch;
@@ -532,13 +558,16 @@ document.querySelectorAll(".chb").forEach(b=>b.onclick=()=>{const n=+b.dataset.n
   day.ch={need:n,start:now,end:now+mi*60000};saveDay();renderChallenge();tickChallenge();beep([660,880],.08,"square",.05);toast("⏱️ التحدي بدأ… يلا!");});
 $("chX").onclick=()=>{if(day.ch){day.ch.done=1;saveDay();renderChallenge();}};
 setInterval(tickChallenge,1000);
+$("exAdd").onclick=()=>{day.ex=(day.ex||0)+1;saveDay();renderExam();syncToReport();beep([520,780],.07,"triangle",.05);
+  const r=$("exAdd").getBoundingClientRect();confetti(40,r.left+r.width/2,r.top);};
+$("exMinus").onclick=()=>{if(!day.ex)return;day.ex--;saveDay();renderExam();syncToReport();};
 renderSellers();
 
 /* report */
 $("date").value=bizDate();
 {const t=S.get("tbk_target");if(t)$("target").value=t;}
 $("extra").checked=S.get("tbk_extra")==="1";
-function syncToReport(){if(day.list.length){$("sales").value=Math.round(total());$("orders").value=day.list.length;}build();}
+function syncToReport(){if(day.list.length){$("sales").value=Math.round(total());$("orders").value=day.list.length;}if(day.ex)$("et").value=day.ex;build();}
 function n(id){const v=parseFloat($(id).value);return isNaN(v)?null:v;}
 function fmtDate(v){if(!v)return"";const[y,m,d]=v.split("-");return`${d}-${m}-${y}`;}
 function build(){

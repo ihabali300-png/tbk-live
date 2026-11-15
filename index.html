@@ -73,6 +73,14 @@
   .gaugeBox{position:relative;width:min(320px,74vw);aspect-ratio:1;margin:6px auto}
   .gaugeBox svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 0 16px var(--glow,#22d3ee))}
   .ring{transition:stroke-dashoffset 1s cubic-bezier(.2,1.4,.4,1)}
+  .ring2{transition:stroke-dashoffset 1s cubic-bezier(.2,1.4,.4,1),opacity .5s;opacity:0}
+  .ring2.on{opacity:1;filter:drop-shadow(0 0 6px #f59e0b)}
+  .lap{display:none;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;color:#fff;background:linear-gradient(135deg,#f59e0b,#db2777);border-radius:999px;padding:2px 10px;margin-top:4px;animation:flashL 1.2s ease-in-out infinite}
+  .lap.on{display:inline-block}
+  @keyframes flashL{50%{box-shadow:0 0 14px #f59e0b}}
+  .bonus{display:none;margin-top:4px}
+  .bonus.on{display:block;animation:pop .6s}
+  .bonus .ttl{text-align:center;font-weight:900;font-size:15px;color:#db2777;margin-bottom:2px}
   .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
   .pct{font-family:'Orbitron',sans-serif;font-size:clamp(44px,9vw,68px);font-weight:900;line-height:1;direction:ltr}
   .center small{opacity:.75;font-size:15px;margin-top:6px;direction:ltr;font-family:'Orbitron',sans-serif}
@@ -162,14 +170,16 @@
       <div class="gaugeBox">
         <svg viewBox="0 0 200 200">
           <defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" id="g1" stop-color="#38bdf8"/><stop offset="1" id="g2" stop-color="#8b5cf6"/></linearGradient></defs>
+            <stop offset="0" id="g1" stop-color="#38bdf8"/><stop offset="1" id="g2" stop-color="#8b5cf6"/></linearGradient><linearGradient id="gr2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" id="h1" stop-color="#f59e0b"/><stop offset="1" id="h2" stop-color="#db2777"/></linearGradient></defs>
           <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(30,27,58,.08)" stroke-width="16"/>
           <circle class="ring" id="ring" cx="100" cy="100" r="86" fill="none" stroke="url(#gr)" stroke-width="16" stroke-linecap="round" stroke-dasharray="540.35" stroke-dashoffset="540.35"/>
+          <circle class="ring2" id="ring2" cx="100" cy="100" r="86" fill="none" stroke="url(#gr2)" stroke-width="16" stroke-linecap="round" stroke-dasharray="540.35" stroke-dashoffset="540.35"/>
         </svg>
         <div class="center">
           <div class="em" id="em">😴</div>
           <div class="pct" id="hp">0%</div>
           <small id="hsales">0 / 0</small>
+          <span class="lap" id="lap"></span>
         </div>
       </div>
       <div class="shout" id="shout">كل عميل داخل هو فرصة… يلا يا أبطال 💪</div>
@@ -180,10 +190,20 @@
         <div class="ms" data-p="90">⚡<em>90%</em></div>
         <div class="ms" data-p="100">🏆<em>100%</em></div>
       </div>
+      <div class="bonus" id="bonus">
+        <div class="ttl">🔓 مرحلة الأساطير اتفتحت</div>
+        <div class="miles">
+          <div class="ms" data-p="125">🔥<em>125%</em></div>
+          <div class="ms" data-p="150">🚀<em>150%</em></div>
+          <div class="ms" data-p="200">👑<em>200%</em></div>
+          <div class="ms" data-p="250">💎<em>250%</em></div>
+          <div class="ms" data-p="300">🦁<em>300%</em></div>
+        </div>
+      </div>
       <div class="stats">
-        <div class="st"><b id="hrem">–</b><span>فاضل ريال</span></div>
+        <div class="st"><b id="hrem">–</b><span id="hremL">فاضل ريال</span></div>
         <div class="st"><b id="hord">0</b><span>أوردرات</span></div>
-        <div class="st"><b id="hneed">–</b><span>أوردرات كمان</span></div>
+        <div class="st"><b id="hneed">–</b><span id="hneedL">أوردرات كمان</span></div>
       </div>
     </div>
   </div>
@@ -319,14 +339,20 @@ const LINES={
  2:["نص الطريق! الفريق ده مختلف 💥","إحنا في النص… والنص التاني أسهل 😤","كده الكلام… ارفعوا الفاتورة شوية 💎","الجو بقى نار 🔥🔥"],
  3:["قرّبنا جداً… محدش يهدّي دلوقتي ⚡","ريحة التارجت جاية 👃🏆","آخر شوية… كل أوردر بيفرق 💪","يا جماعة إحنا تقريباً هناك 🚀"],
  4:["ثواني ونكسّره!! 💣","أوردر واحد كمان ويولّع 🔥🔥🔥","التارجت بيترعش قدامنا 😂⚡","كله يدّي أقوى ما عنده دلوقتي 💥"],
- 5:["كسّرناااااه!! 🏆🔥","الفريق ده أسطوري 👑","التارجت اتكسر… يلا على الرقم القياسي 🚀","عاش يا أبطال تبوك بارك 💪🎉"]};
+ 5:["كسّرناااااه!! 🏆🔥","الفريق ده أسطوري 👑","التارجت اتكسر… يلا على الرقم القياسي 🚀","عاش يا أبطال تبوك بارك 💪🎉"],
+ 6:["إحنا في مرحلة تانية خالص 🚀","التارجت بقى ورانا… كمّلوا الطحن 💪","كل ريال دلوقتي بونص 💰","الفرع كله مولّع 🔥🔥🔥"],
+ 7:["دبل التارجت!!! 👑👑","ده مش فريق… ده جيش 🦁","تبوك بارك بتكتب التاريخ النهارده 📜","محدش يقدر يوقفنا 💎"]};
 const STAGES=[["😴","🚀 يلا نبدأ اليوم","#06b6d4","#8b5cf6","linear-gradient(160deg,#eef6ff,#f3eeff)"],
  ["😏","🔥 بدأنا نسخّن","#22c55e","#38bdf8","linear-gradient(160deg,#ecfdf5,#e0f7ff)"],
  ["😤","💥 نص الطريق","#eab308","#22c55e","linear-gradient(160deg,#fefce8,#ecfccb)"],
  ["🤩","⚡ قرّبنا جداً","#f97316","#facc15","linear-gradient(160deg,#fff7ed,#fef3c7)"],
  ["🥵","💣 على وشك الانفجار","#ef4444","#f97316","linear-gradient(160deg,#fff1f2,#ffedd5)"],
- ["👑","🏆 كسّرناه!","#facc15","#ec4899","linear-gradient(160deg,#fdf4ff,#fef9c3)"]];
-function stageOf(p){return p>=100?5:p>=90?4:p>=75?3:p>=50?2:p>0?1:0;}
+ ["👑","🏆 كسّرناه!","#facc15","#ec4899","linear-gradient(160deg,#fdf4ff,#fef9c3)"],
+ ["🚀","🚀 مرحلة الأساطير","#facc15","#ec4899","linear-gradient(160deg,#fff7ed,#fce7f3)"],
+ ["🦁","👑 دبل التارجت","#facc15","#ec4899","linear-gradient(160deg,#faf5ff,#fde68a)"]];
+const LAPS=[["#f59e0b","#db2777"],["#8b5cf6","#06b6d4"],["#ef4444","#f97316"],["#10b981","#3b82f6"]];
+const BONUS=[125,150,200,250,300];
+function stageOf(p){return p>=200?7:p>=125?6:p>=100?5:p>=90?4:p>=75?3:p>=50?2:p>0?1:0;}
 let lastStage=-1;
 function shout(st){const a=LINES[st],el=$("shout");el.textContent=a[Math.floor(Math.random()*a.length)];el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");}
 function boom(t,s){$("boomT").textContent=t;$("boomS").textContent=s;const b=$("boom");b.classList.remove("on");void b.offsetWidth;b.classList.add("on");}
@@ -334,6 +360,12 @@ function boom(t,s){$("boomT").textContent=t;$("boomS").textContent=s;const b=$("
 function renderHype(fromAdd){
   const T=target(),tot=total(),p=pctNow(),st=stageOf(p),[em,label,c1,c2,bg]=STAGES[st];
   $("ring").style.strokeDashoffset=540.35*(1-Math.min(p,100)/100);
+  const lap=Math.floor(p/100);
+  if(p>=100){const frac=(p-lap*100)/100,lc=LAPS[(lap-1)%LAPS.length];
+    $("h1").setAttribute("stop-color",lc[0]);$("h2").setAttribute("stop-color",lc[1]);
+    $("ring2").classList.add("on");$("ring2").style.strokeDashoffset=540.35*(1-frac);
+    $("lap").textContent=`LAP ${lap+1} 🔥 x${(p/100).toFixed(2)}`;$("lap").classList.add("on");$("bonus").classList.add("on");}
+  else{$("ring2").classList.remove("on");$("ring2").style.strokeDashoffset=540.35;$("lap").classList.remove("on");$("bonus").classList.remove("on");}
   $("g1").setAttribute("stop-color",c1);$("g2").setAttribute("stop-color",c2);
   document.querySelector(".gaugeBox").style.setProperty("--glow",c1);
   $("arena").style.setProperty("--abg",bg);
@@ -341,14 +373,21 @@ function renderHype(fromAdd){
   $("hp").textContent=Math.round(p)+"%";$("hsales").textContent=`${Math.round(tot)} / ${T||"?"}`;
   $("tShow").textContent=T||"–";
   const rem=Math.max(T-tot,0),n=day.list.length,atv=n?tot/n:0;
-  $("hrem").textContent=T?(rem?Math.round(rem):"✅"):"–";$("hord").textContent=n;
-  $("hneed").textContent=T?(rem?(atv?Math.ceil(rem/atv):"?"):"0"):"–";
+  $("hord").textContent=n;
+  if(T&&p>=100){const nx=BONUS.find(b=>p<b)||Math.ceil((p+1)/100)*100,r2=Math.max(T*nx/100-tot,0);
+    $("hremL").textContent=`فاضل لـ ${nx}%`;$("hrem").textContent=Math.round(r2);
+    $("hneedL").textContent="أوردرات للمستوى الجاي";$("hneed").textContent=atv?Math.ceil(r2/atv):"?";}
+  else{$("hremL").textContent="فاضل ريال";$("hneedL").textContent="أوردرات كمان";
+    $("hrem").textContent=T?(rem?Math.round(rem):"✅"):"–";
+    $("hneed").textContent=T?(rem?(atv?Math.ceil(rem/atv):"?"):"0"):"–";}
   document.querySelectorAll(".ms").forEach(m=>m.classList.toggle("done",p>=+m.dataset.p));
   $("chips").innerHTML=n?day.list.map(v=>`<span class="chip">🔥 ${v}</span>`).join(""):'<span class="empty">لسه مفيش أوردرات… أول واحد جاي 💪</span>';
   if(st!==lastStage){shout(st);lastStage=st;}
-  if(fromAdd&&T){for(const m of [25,50,75,90,100]){if(p>=m&&!day.hit.includes(m)){day.hit.push(m);saveDay();
+  if(fromAdd&&T){for(const m of [25,50,75,90,100,...BONUS]){if(p>=m&&!day.hit.includes(m)){day.hit.push(m);saveDay();
     if(m===100){boom("كسّرناه!! 🏆","التارجت اتكسر يا أبطال 🔥");emojiRain("🏆",18);emojiRain("🔥",18);
       beep([523,659,784,1047,1319],.14,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>14)clearInterval(iv);},280);}
+    else if(m>100){const t={125:["125%! 🔥","التارجت بقى ورانا"],150:["150%! 🚀","مرحلة الأساطير"],200:["دبل التارجت!! 👑","ده تاريخ يا جماعة"],250:["250%! 💎","مش طبيعي اللي بيحصل"],300:["تريبل!!! 🦁","أسطورة تبوك بارك"]}[m];
+      boom(t[0],t[1]);emojiRain(m>=200?"👑":"🚀",22);confetti(220);beep([523,659,784,1047,1319,1568],.12,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>(m>=200?18:8))clearInterval(iv);},260);}
     else{const t={25:["ربع التارجت! 🥉","البداية القوية"],50:["نص التارجت! 🥈","كمّلوا كده"],75:["75%! 🥇","قرّبنا أوي"],90:["90%! ⚡","أوردر أو اتنين ونكسّره"]}[m];
       boom(t[0],t[1]);confetti(180);beep([523,659,784,1047],.12,"square",.06);}}}}
 }

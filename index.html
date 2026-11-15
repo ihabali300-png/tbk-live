@@ -358,6 +358,10 @@
   /* fit-to-screen */
   html.fit,html.fit body{overflow:hidden;height:100%}
   html.fit .shell{max-width:none;margin:0;transform-origin:top left;position:absolute;top:0}
+  .rstRow{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
+  .rstBtn{border:1.5px dashed #fca5a5;background:#fff1f2;color:#be123c;border-radius:12px;padding:10px;font-family:inherit;font-size:15px;font-weight:800;cursor:pointer}
+  .rstBtn.back{border-color:#a5b4fc;background:#eef2ff;color:#4338ca}
+  .rstBtn.sure{background:#e11d48;color:#fff;border-style:solid}
 </style>
 </head>
 <body>
@@ -585,6 +589,11 @@
         <button class="btn green" id="send" type="button">📲 أرسل واتساب</button>
       </div>
       <div class="hint">🔒 يفتح الواتساب، تختار القروب وترسل</div>
+      <div class="rstRow">
+        <button class="rstBtn" id="rst" type="button">🧹 تصفير الأرقام وإدخالها يدوي</button>
+        <button class="rstBtn back hide" id="rstBack" type="button">🔄 رجّع الأرقام من صفحة الحماس</button>
+      </div>
+      <div class="hint" id="manHint"></div>
     </div>
   </div>
 </div>
@@ -902,7 +911,7 @@ setInterval(renderDay,1000);
 $("date").value=bizDate();
 {const t=S.get("tbk_target");if(t)$("target").value=t;}
 $("extra").checked=S.get("tbk_extra")==="1";
-function syncToReport(){if(day.list.length){$("sales").value=Math.round(total());$("orders").value=day.list.length;}if(day.ex)$("et").value=day.ex;if(day.tele)$("tele").value=day.tele;build();}
+function syncToReport(){if(day.manual){build();manUI();return;}manUI();if(day.list.length){$("sales").value=Math.round(total());$("orders").value=day.list.length;}if(day.ex)$("et").value=day.ex;if(day.tele)$("tele").value=day.tele;build();}
 function n(id){const v=parseFloat($(id).value);return isNaN(v)?null:v;}
 function fmtDate(v){if(!v)return"";const[y,m,d]=v.split("-");return`${d}-${m}-${y}`;}
 function build(){
@@ -933,6 +942,13 @@ function fit(){const sh=document.querySelector(".shell"),R=document.documentElem
   sh.style.transform=`scale(${z})`;sh.style.left=Math.max(0,(innerWidth-W*z)/2)+"px";}
 addEventListener("resize",fit);
 new ResizeObserver(()=>requestAnimationFrame(fit)).observe(document.querySelector(".shell"));
+/* ===== manual reset in report ===== */
+function manUI(){$("rstBack").classList.toggle("hide",!day.manual);$("manHint").textContent=day.manual?"✍️ وضع الإدخال اليدوي شغّال: الأرقام ما تتعبى تلقائياً من صفحة الحماس":"";}
+$("rst").onclick=()=>{const b=$("rst");
+  if(b.dataset.c!=="1"){b.dataset.c="1";b.classList.add("sure");b.textContent="⚠️ اضغط مرة ثانية للتأكيد";setTimeout(()=>{b.dataset.c="";b.classList.remove("sure");b.textContent="🧹 تصفير الأرقام وإدخالها يدوي";},2500);return;}
+  b.dataset.c="";b.classList.remove("sure");b.textContent="🧹 تصفير الأرقام وإدخالها يدوي";
+  day.manual=1;saveDay();["sales","orders","traffic","et","tele"].forEach(id=>$(id).value="");build();manUI();$("sales").focus();toast("🧹 تم التصفير… اكتب الأرقام يدوي");};
+$("rstBack").onclick=()=>{day.manual=0;saveDay();syncToReport();toast("🔄 رجعت الأرقام من صفحة الحماس");};
 /* init */
 openTab(target()?(S.get("tbk_tab")||"hype"):"report");
 syncToReport();renderHype();

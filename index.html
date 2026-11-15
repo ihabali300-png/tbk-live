@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TBK LIVE – تبوك بارك</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f2340'/%3E%3Cpath d='M16 46V30M28 46V22M40 46V34M52 46V16' stroke='%23e8b44a' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#07060f;--glass:rgba(255,255,255,.055);--gl2:rgba(255,255,255,.09);--line:rgba(255,255,255,.12);
+    --text:#f4f2ff;--muted:#a49fc0;--violet:#8b5cf6;--cyan:#22d3ee;--lime:#a3e635;--pink:#f472b6;--amber:#fbbf24;--red:#f43f5e;--green:#22c55e}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Tajawal',system-ui,sans-serif;color:var(--text);line-height:1.55;overflow-x:hidden;min-height:100vh;
+    background:radial-gradient(900px 500px at 85% -10%,rgba(139,92,246,.35),transparent 60%),radial-gradient(800px 500px at 0% 110%,rgba(34,211,238,.22),transparent 60%),var(--bg);background-attachment:fixed}
+  body:after{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:44px 44px;z-index:0}
+  .shell{position:relative;z-index:1;max-width:1300px;margin:0 auto;padding:18px 22px 26px}
+  .head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:linear-gradient(135deg,var(--violet),var(--cyan));box-shadow:0 0 24px rgba(139,92,246,.6)}
+  .brand h1{margin:0;font-family:'Orbitron',sans-serif;font-size:24px;letter-spacing:2px;line-height:1.1}
+  .brand h1 span{color:var(--cyan)}
+  .brand small{color:var(--muted);font-size:14px}
+  .clock{font-family:'Orbitron',sans-serif;color:var(--muted);font-size:13px;letter-spacing:2px;text-align:left}
+  .clock b{display:block;color:var(--text);font-size:22px;letter-spacing:3px}
+
+  /* segmented switch */
+  .switch{position:relative;display:grid;grid-template-columns:1fr 1fr;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:6px;width:min(560px,100%);margin:0 auto 20px;backdrop-filter:blur(10px)}
+  .switch .knob{position:absolute;top:6px;bottom:6px;width:calc(50% - 6px);right:6px;border-radius:999px;transition:.45s cubic-bezier(.3,1.5,.5,1);
+    background:linear-gradient(135deg,#f97316,#f43f5e,#d946ef);box-shadow:0 0 24px rgba(244,63,94,.6)}
+  .switch.rep .knob{right:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));box-shadow:0 0 24px rgba(34,211,238,.5)}
+  .mode{position:relative;z-index:1;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:18px;font-weight:900;padding:13px 10px;border-radius:999px;cursor:pointer;transition:color .3s}
+  .mode.on{color:#fff}
+
+  .grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px}
+  .col{display:flex;flex-direction:column;gap:16px;min-width:0}
+  .card{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:18px;backdrop-filter:blur(12px)}
+  .card h2{margin:0 0 12px;font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .card h2 small{color:var(--muted);font-weight:500;font-size:13px}
+  .sticky{position:sticky;top:14px;align-self:start}
+  .hide{display:none!important}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .f label{display:block;font-size:14px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+  input[type=number],input[type=date]{width:100%;border:1px solid var(--line);border-radius:14px;padding:11px 12px;font-family:'Orbitron','Tajawal',sans-serif;font-size:18px;font-weight:700;background:rgba(0,0,0,.35);color:var(--text);outline:none;text-align:center;direction:ltr;color-scheme:dark;transition:.2s}
+  input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+  input::placeholder{font-family:'Tajawal';color:#6d6890}
+
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .k{border-radius:18px;padding:14px 6px;text-align:center;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid var(--line)}
+  .k b{display:block;font-family:'Orbitron',sans-serif;font-size:24px;direction:ltr}
+  .k:nth-child(1) b{color:var(--amber)}.k:nth-child(2) b{color:var(--cyan)}.k:nth-child(3) b{color:var(--lime)}
+  .k span{font-size:13px;color:var(--muted)}
+  .pbar{height:12px;background:rgba(0,0,0,.4);border-radius:8px;overflow:hidden;margin-top:14px}
+  .pbar i{display:block;height:100%;width:0;background:var(--green);transition:width .4s;box-shadow:0 0 12px currentColor}
+  .note{font-size:14px;color:var(--muted);margin-top:8px;text-align:center}
+
+  pre#msg{background:rgba(0,0,0,.4);border:1px dashed rgba(34,211,238,.35);border-radius:16px;padding:16px;margin:0;font-family:'Orbitron','Tajawal',sans-serif;font-size:15px;line-height:2;direction:ltr;text-align:left;white-space:pre-wrap;min-height:300px;color:#c9f6ff}
+  .chk{display:flex;align-items:center;gap:8px;font-size:14.5px;margin-top:12px;cursor:pointer;color:var(--muted)}
+  .chk input{accent-color:var(--cyan);width:18px;height:18px}
+  .actions{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-top:14px}
+  .btn{border:none;border-radius:14px;padding:14px;font-family:inherit;font-size:17px;font-weight:900;cursor:pointer;transition:.15s}
+  .btn:active{transform:scale(.96)}
+  .btn.navy{background:var(--gl2);color:var(--text);border:1px solid var(--line)}
+  .btn.green{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;box-shadow:0 0 20px rgba(37,211,102,.35)}
+  .hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+  /* arena */
+  .arena{position:relative;border-radius:26px;padding:20px;color:#fff;overflow:hidden;background:var(--abg,linear-gradient(160deg,#1a1240,#0c1a3a));transition:background 1s;border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+  .arena:before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent,rgba(255,255,255,.07),transparent 30%);animation:spin 8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .arena>*{position:relative}
+  .stage{font-size:19px;font-weight:900;text-align:center}
+  .gaugeBox{position:relative;width:min(320px,74vw);aspect-ratio:1;margin:6px auto}
+  .gaugeBox svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 0 16px var(--glow,#22d3ee))}
+  .ring{transition:stroke-dashoffset 1s cubic-bezier(.2,1.4,.4,1)}
+  .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .pct{font-family:'Orbitron',sans-serif;font-size:clamp(44px,9vw,68px);font-weight:900;line-height:1;direction:ltr}
+  .center small{opacity:.75;font-size:15px;margin-top:6px;direction:ltr;font-family:'Orbitron',sans-serif}
+  .em{font-size:42px;animation:bob 1.2s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-8px) scale(1.1)}}
+  .shout{min-height:70px;text-align:center;font-size:clamp(20px,3vw,26px);font-weight:900;padding:4px;
+    background:linear-gradient(90deg,#fde68a,#fb923c,#f472b6,#a78bfa,#fde68a);background-size:300%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 4s linear infinite}
+  @keyframes flow{to{background-position:300%}}
+  .shout.pop{animation:flow 4s linear infinite,pop .6s}
+  @keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+  .miles{display:flex;justify-content:space-between;margin:12px 4px 22px;position:relative}
+  .miles:before{content:"";position:absolute;top:50%;left:10px;right:10px;height:4px;background:rgba(255,255,255,.15);border-radius:4px;transform:translateY(-50%)}
+  .ms{position:relative;width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;filter:grayscale(1) brightness(.6);transition:.4s}
+  .ms em{position:absolute;bottom:-20px;font-size:12px;font-style:normal;opacity:.8;font-family:'Orbitron',sans-serif}
+  .ms.done{filter:none;border-color:var(--amber);box-shadow:0 0 14px var(--amber);animation:glow 1.6s ease-in-out infinite}
+  @keyframes glow{50%{box-shadow:0 0 28px var(--amber),0 0 6px #fff inset}}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .st{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:10px 4px;text-align:center}
+  .st b{display:block;font-family:'Orbitron',sans-serif;font-size:20px;direction:ltr}
+  .st span{font-size:13px;opacity:.8}
+  .snd{position:absolute;top:14px;left:16px;background:rgba(255,255,255,.12);border:0;border-radius:50%;width:38px;height:38px;font-size:18px;cursor:pointer;z-index:2}
+
+  .addRow{display:grid;grid-template-columns:1.2fr 1fr;gap:10px}
+  .addRow input{font-size:22px}
+  .fire{border:0;border-radius:16px;font-family:inherit;font-size:21px;font-weight:900;color:#fff;cursor:pointer;
+    background:linear-gradient(135deg,#f97316,#f43f5e,#d946ef);animation:flash 1.3s ease-in-out infinite}
+  @keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,0)}50%{box-shadow:0 0 0 5px rgba(244,63,94,.3),0 0 30px rgba(249,115,22,.9);transform:scale(1.03)}}
+  .fire:active{transform:scale(.94)}
+  .quick{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+  .q{border:1px solid var(--line);background:rgba(0,0,0,.3);border-radius:14px;padding:10px 2px;font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;cursor:pointer;color:var(--text);direction:ltr;transition:.15s}
+  .q:hover{border-color:var(--pink);box-shadow:0 0 14px rgba(244,114,182,.5);color:#fff}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;min-height:30px}
+  .chip{background:linear-gradient(135deg,rgba(249,115,22,.25),rgba(217,70,239,.25));border:1px solid rgba(249,115,22,.4);border-radius:999px;padding:3px 12px;font-size:14px;font-weight:700;direction:ltr;animation:pop .5s}
+  .empty{color:var(--muted);font-size:14px}
+  .tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .tools button{border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--text);border-radius:14px;padding:10px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+  .tools button:hover{border-color:var(--cyan)}
+  .tline{display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:700}
+  .tline b{font-family:'Orbitron',sans-serif;font-size:24px;color:var(--amber);direction:ltr}
+  .tline a,.hint a{color:var(--cyan);font-weight:700;cursor:pointer}
+
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+  .boom{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle,rgba(30,10,60,.6),rgba(0,0,0,.88));pointer-events:none}
+  .boom.on{display:flex;animation:fadeout 3.4s forwards}
+  .boom b{font-size:clamp(44px,10vw,96px);font-weight:900;text-align:center;color:#fff;text-shadow:0 0 20px var(--amber),0 0 40px #f43f5e;animation:pop .7s,shake .15s .7s 6}
+  .boom span{font-size:clamp(20px,3vw,30px);margin-top:10px;color:var(--amber);font-weight:800}
+  @keyframes shake{25%{transform:translate(4px,-3px) rotate(1deg)}75%{transform:translate(-4px,3px) rotate(-1deg)}}
+  @keyframes fadeout{0%,80%{opacity:1}100%{opacity:0}}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(90px);background:#1e1838;border:1px solid var(--line);color:#fff;padding:10px 22px;border-radius:999px;font-weight:700;transition:.25s;z-index:70}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  @media (max-width:980px){
+    .grid{grid-template-columns:1fr}
+    .shell{padding:14px}
+    .sticky{position:static}
+    .clock{display:none}
+    .quick{grid-template-columns:repeat(3,1fr)}
+  }
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="boom" id="boom"><b id="boomT"></b><span id="boomS"></span></div>
+
+<div class="shell">
+<div class="head">
+  <div class="brand">
+    <div class="logo">⚡</div>
+    <div><h1 dir="ltr">TBK <span>LIVE</span></h1><small>لوحة مبيعات تبوك بارك</small></div>
+  </div>
+  <div class="clock" dir="ltr">TODAY<b id="clk">--:--</b></div>
+</div>
+
+<div class="switch" id="sw">
+  <div class="knob"></div>
+  <button class="mode" data-t="hype" type="button">🔥 الحماس</button>
+  <button class="mode" data-t="report" type="button">📊 تقفيلة نهاية اليوم</button>
+</div>
+
+<!-- ================= HYPE ================= -->
+<div class="grid pane" id="hype">
+  <div class="col">
+    <div class="arena" id="arena">
+      <button class="snd" id="snd" title="الصوت">🔊</button>
+      <div class="stage" id="stage">🚀 يلا نبدأ اليوم</div>
+      <div class="gaugeBox">
+        <svg viewBox="0 0 200 200">
+          <defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" id="g1" stop-color="#38bdf8"/><stop offset="1" id="g2" stop-color="#8b5cf6"/></linearGradient></defs>
+          <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(0,0,0,.3)" stroke-width="16"/>
+          <circle class="ring" id="ring" cx="100" cy="100" r="86" fill="none" stroke="url(#gr)" stroke-width="16" stroke-linecap="round" stroke-dasharray="540.35" stroke-dashoffset="540.35"/>
+        </svg>
+        <div class="center">
+          <div class="em" id="em">😴</div>
+          <div class="pct" id="hp">0%</div>
+          <small id="hsales">0 / 0</small>
+        </div>
+      </div>
+      <div class="shout" id="shout">كل عميل داخل هو فرصة… يلا يا أبطال 💪</div>
+      <div class="miles">
+        <div class="ms" data-p="25">🥉<em>25%</em></div>
+        <div class="ms" data-p="50">🥈<em>50%</em></div>
+        <div class="ms" data-p="75">🥇<em>75%</em></div>
+        <div class="ms" data-p="90">⚡<em>90%</em></div>
+        <div class="ms" data-p="100">🏆<em>100%</em></div>
+      </div>
+      <div class="stats">
+        <div class="st"><b id="hrem">–</b><span>فاضل ريال</span></div>
+        <div class="st"><b id="hord">0</b><span>أوردرات</span></div>
+        <div class="st"><b id="hneed">–</b><span>أوردرات كمان</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col sticky">
+    <div class="card">
+      <div class="tline"><span>🎯 تارجت النهارده</span><b id="tShow">–</b></div>
+      <div class="hint">تقدر تغيّره من تاب التقفيلة <a id="goRep">✏️ تعديل</a></div>
+    </div>
+    <div class="card">
+      <h2>💥 أوردر جديد <small>(اكتب القيمة واضغط كسّر)</small></h2>
+      <div class="addRow">
+        <input id="amt" type="number" inputmode="decimal" placeholder="قيمة الأوردر">
+        <button class="fire" id="add" type="button">🔥 كسّر</button>
+      </div>
+      <div class="quick">
+        <button class="q" data-v="199">199</button><button class="q" data-v="349">349</button>
+        <button class="q" data-v="499">499</button><button class="q" data-v="799">799</button>
+        <button class="q" data-v="1200">1200</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🧾 أوردرات النهارده</h2>
+      <div class="chips" id="chips"></div>
+      <div class="tools">
+        <button id="undo" type="button">↩️ تراجع عن آخر أوردر</button>
+        <button id="reset" type="button">🗑️ يوم جديد</button>
+      </div>
+      <div class="hint">الأوردرات بتتنقل لوحدها لتاب التقفيلة آخر اليوم</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= REPORT ================= -->
+<div class="grid pane" id="report">
+  <div class="col">
+    <div class="card">
+      <h2>📅 بيانات اليوم</h2>
+      <div class="row2">
+        <div class="f"><label>التاريخ</label><input id="date" type="date"></div>
+        <div class="f"><label>🎯 التارجت</label><input id="target" type="number" inputmode="numeric"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🔢 أرقام اليوم <small>(الزوار من خانة Visitors في جهاز الترافيك)</small></h2>
+      <div class="row2" style="margin-bottom:12px">
+        <div class="f"><label>💰 المبيعات</label><input id="sales" type="number" inputmode="decimal"></div>
+        <div class="f"><label>📦 الأوردرات</label><input id="orders" type="number" inputmode="numeric"></div>
+      </div>
+      <div class="row2">
+        <div class="f"><label>🚶 الزوار</label><input id="traffic" type="number" inputmode="numeric"></div>
+        <div class="f"><label>👓 الفحوصات</label><input id="et" type="number" inputmode="numeric"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📈 المؤشرات <small>(بتتحسب لوحدها)</small></h2>
+      <div class="kpis">
+        <div class="k"><b id="atv">–</b><span>متوسط الفاتورة</span></div>
+        <div class="k"><b id="cr">–</b><span>نسبة التحويل</span></div>
+        <div class="k"><b id="ach">–</b><span>تحقيق التارجت</span></div>
+      </div>
+      <div class="pbar"><i id="barI"></i></div>
+      <div class="note" id="rem"></div>
+    </div>
+  </div>
+  <div class="col sticky">
+    <div class="card">
+      <h2>💬 الرسالة</h2>
+      <pre id="msg"></pre>
+      <label class="chk"><input type="checkbox" id="extra"> إضافة نسبة التحويل والتحقيق للرسالة</label>
+      <div class="actions">
+        <button class="btn navy" id="copy" type="button">📋 نسخ</button>
+        <button class="btn green" id="send" type="button">📲 ابعت واتساب</button>
+      </div>
+      <div class="hint">🔒 هيفتح الواتساب وتختار الجروب وتبعت</div>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const S={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function bizDate(){const d=new Date();if(d.getHours()<6)d.setDate(d.getDate()-1);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1800);}
+
+/* tabs */
+function openTab(t){document.querySelectorAll(".mode").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
+  document.querySelectorAll(".pane").forEach(p=>p.classList.toggle("hide",p.id!==t));$("sw").classList.toggle("rep",t==="report");S.set("tbk_tab",t);
+  if(t==="report")syncToReport();else renderHype();}
+document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>openTab(b.dataset.t));
+$("goRep").onclick=()=>{openTab("report");$("target").focus();};
+
+/* day state */
+let day=JSON.parse(S.get("tbk_day")||"null");
+if(!day||day.date!==bizDate())day={date:bizDate(),list:[],hit:[]};
+function saveDay(){S.set("tbk_day",JSON.stringify(day));}
+const target=()=>parseFloat($("target").value)||0;
+const total=()=>day.list.reduce((a,b)=>a+b,0);
+const pctNow=()=>target()?total()/target()*100:0;
+
+/* sound */
+let soundOn=S.get("tbk_snd")!=="0",ac;
+function beep(fr,dur=.12,type="square",vol=.06){if(!soundOn)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+  fr.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=f;g.gain.value=vol;o.connect(g);g.connect(ac.destination);
+  const t=ac.currentTime+i*dur;o.start(t);g.gain.exponentialRampToValueAtTime(.0001,t+dur*1.6);o.stop(t+dur*1.7);});}catch(e){}}
+$("snd").textContent=soundOn?"🔊":"🔇";
+$("snd").onclick=()=>{soundOn=!soundOn;S.set("tbk_snd",soundOn?"1":"0");$("snd").textContent=soundOn?"🔊":"🔇";};
+
+/* particles */
+const cv=$("fx"),cx=cv.getContext("2d");let P=[];
+function rs(){cv.width=innerWidth;cv.height=innerHeight;}rs();addEventListener("resize",rs);
+const COLS=["#e8b44a","#f08a24","#ff5fa2","#1faa59","#38bdf8","#b388ff","#fff"];
+function confetti(n=120,x=innerWidth/2,y=innerHeight*.35){for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=4+Math.random()*9;
+  P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-6,g:.25,life:90+Math.random()*60,c:COLS[i%COLS.length],r:3+Math.random()*5,rot:Math.random()*6,sq:Math.random()<.5});}}
+function firework(){const x=innerWidth*(.15+Math.random()*.7),y=innerHeight*(.15+Math.random()*.35);
+  for(let i=0;i<70;i++){const a=i/70*Math.PI*2,s=3+Math.random()*4;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,g:.06,life:70,c:COLS[Math.floor(Math.random()*COLS.length)],r:2.5,rot:0});}
+  beep([600+Math.random()*400],.05,"triangle",.04);}
+function emojiRain(em,n=24){for(let i=0;i<n;i++)P.push({x:Math.random()*innerWidth,y:-30-Math.random()*200,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,g:.05,life:240,em,r:24+Math.random()*16,rot:0});}
+(function loop(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.life>0&&p.y<cv.height+60);
+  for(const p of P){p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.99;p.life--;p.rot+=.1;cx.globalAlpha=Math.min(1,p.life/40);
+    if(p.em){cx.font=`${p.r}px serif`;cx.fillText(p.em,p.x,p.y);}
+    else{cx.fillStyle=p.c;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);if(p.sq)cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);else{cx.beginPath();cx.arc(0,0,p.r/2,0,7);cx.fill();}cx.restore();}}
+  cx.globalAlpha=1;requestAnimationFrame(loop);})();
+
+/* hype texts */
+const LINES={
+ 0:["كل عميل داخل هو فرصة… يلا يا أبطال 💪","أول أوردر بيفتح النفس 🔓","النهارده يومنا… مفيش حاجة اسمها مستحيل 🚀","ابتسامة + فحص + عرض قوي = بيعة 😎"],
+ 1:["بدأنا نسخّن 🔥 كمّلوا!","الماكينة اشتغلت… متوقفوش ⚙️","حلو أوي… العميل الجاي بتاعنا 🎯","خطوة خطوة بنوصل 👣"],
+ 2:["نص الطريق! الفريق ده مختلف 💥","إحنا في النص… والنص التاني أسهل 😤","كده الكلام… ارفعوا الفاتورة شوية 💎","الجو بقى نار 🔥🔥"],
+ 3:["قرّبنا جداً… محدش يهدّي دلوقتي ⚡","ريحة التارجت جاية 👃🏆","آخر شوية… كل أوردر بيفرق 💪","يا جماعة إحنا تقريباً هناك 🚀"],
+ 4:["ثواني ونكسّره!! 💣","أوردر واحد كمان ويولّع 🔥🔥🔥","التارجت بيترعش قدامنا 😂⚡","كله يدّي أقوى ما عنده دلوقتي 💥"],
+ 5:["كسّرناااااه!! 🏆🔥","الفريق ده أسطوري 👑","التارجت اتكسر… يلا على الرقم القياسي 🚀","عاش يا أبطال تبوك بارك 💪🎉"]};
+const STAGES=[["😴","🚀 يلا نبدأ اليوم","#22d3ee","#8b5cf6","linear-gradient(160deg,#1a1240,#0c1a3a)"],
+ ["😏","🔥 بدأنا نسخّن","#22c55e","#38bdf8","linear-gradient(160deg,#0f2a3a,#14532d)"],
+ ["😤","💥 نص الطريق","#facc15","#22c55e","linear-gradient(160deg,#1f2a14,#4d5a12)"],
+ ["🤩","⚡ قرّبنا جداً","#f97316","#facc15","linear-gradient(160deg,#3a1d08,#7c3a0a)"],
+ ["🥵","💣 على وشك الانفجار","#ef4444","#f97316","linear-gradient(160deg,#3a0a0a,#8b1414)"],
+ ["👑","🏆 كسّرناه!","#facc15","#ec4899","linear-gradient(160deg,#3b0a2a,#8a6100)"]];
+function stageOf(p){return p>=100?5:p>=90?4:p>=75?3:p>=50?2:p>0?1:0;}
+let lastStage=-1;
+function shout(st){const a=LINES[st],el=$("shout");el.textContent=a[Math.floor(Math.random()*a.length)];el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");}
+function boom(t,s){$("boomT").textContent=t;$("boomS").textContent=s;const b=$("boom");b.classList.remove("on");void b.offsetWidth;b.classList.add("on");}
+
+function renderHype(fromAdd){
+  const T=target(),tot=total(),p=pctNow(),st=stageOf(p),[em,label,c1,c2,bg]=STAGES[st];
+  $("ring").style.strokeDashoffset=540.35*(1-Math.min(p,100)/100);
+  $("g1").setAttribute("stop-color",c1);$("g2").setAttribute("stop-color",c2);
+  document.querySelector(".gaugeBox").style.setProperty("--glow",c1);
+  $("arena").style.setProperty("--abg",bg);
+  $("em").textContent=em;$("stage").textContent=label;$("stage").style.color=c1;
+  $("hp").textContent=Math.round(p)+"%";$("hsales").textContent=`${Math.round(tot)} / ${T||"?"}`;
+  $("tShow").textContent=T||"–";
+  const rem=Math.max(T-tot,0),n=day.list.length,atv=n?tot/n:0;
+  $("hrem").textContent=T?(rem?Math.round(rem):"✅"):"–";$("hord").textContent=n;
+  $("hneed").textContent=T?(rem?(atv?Math.ceil(rem/atv):"?"):"0"):"–";
+  document.querySelectorAll(".ms").forEach(m=>m.classList.toggle("done",p>=+m.dataset.p));
+  $("chips").innerHTML=n?day.list.map(v=>`<span class="chip">🔥 ${v}</span>`).join(""):'<span class="empty">لسه مفيش أوردرات… أول واحد جاي 💪</span>';
+  if(st!==lastStage){shout(st);lastStage=st;}
+  if(fromAdd&&T){for(const m of [25,50,75,90,100]){if(p>=m&&!day.hit.includes(m)){day.hit.push(m);saveDay();
+    if(m===100){boom("كسّرناه!! 🏆","التارجت اتكسر يا أبطال 🔥");emojiRain("🏆",18);emojiRain("🔥",18);
+      beep([523,659,784,1047,1319],.14,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>14)clearInterval(iv);},280);}
+    else{const t={25:["ربع التارجت! 🥉","البداية القوية"],50:["نص التارجت! 🥈","كمّلوا كده"],75:["75%! 🥇","قرّبنا أوي"],90:["90%! ⚡","أوردر أو اتنين ونكسّره"]}[m];
+      boom(t[0],t[1]);confetti(180);beep([523,659,784,1047],.12,"square",.06);}}}}
+}
+
+function addOrder(v){v=parseFloat(v);if(!v||v<=0){toast("اكتب قيمة الأوردر");return;}
+  if(!target()){toast("حط التارجت الأول 🎯");openTab("report");$("target").focus();return;}
+  day.list.push(Math.round(v));saveDay();$("amt").value="";
+  const r=$("add").getBoundingClientRect();confetti(70,r.left+r.width/2,r.top);beep([440,660,880],.07,"square",.05);
+  if(navigator.vibrate)navigator.vibrate(60);shout(stageOf(pctNow()));renderHype(true);syncToReport();}
+$("add").onclick=()=>addOrder($("amt").value);
+$("amt").addEventListener("keydown",e=>{if(e.key==="Enter")addOrder($("amt").value);});
+document.querySelectorAll(".q").forEach(b=>b.onclick=()=>addOrder(b.dataset.v));
+$("undo").onclick=()=>{if(!day.list.length)return;day.list.pop();const p=pctNow();day.hit=day.hit.filter(m=>p>=m);saveDay();renderHype();syncToReport();toast("↩️ اتشال آخر أوردر");};
+$("reset").onclick=()=>{const b=$("reset");if(!day.list.length)return;
+  if(b.dataset.c!=="1"){b.dataset.c="1";b.textContent="⚠️ اضغط تاني للتأكيد";setTimeout(()=>{b.dataset.c="";b.textContent="🗑️ يوم جديد";},2500);return;}
+  day={date:bizDate(),list:[],hit:[]};saveDay();b.dataset.c="";b.textContent="🗑️ يوم جديد";renderHype();syncToReport();toast("بدأنا يوم جديد 🚀");};
+setInterval(()=>{if(!$("hype").classList.contains("hide"))shout(stageOf(pctNow()));},12000);
+
+/* report */
+$("date").value=bizDate();
+{const t=S.get("tbk_target");if(t)$("target").value=t;}
+$("extra").checked=S.get("tbk_extra")==="1";
+function syncToReport(){if(day.list.length){$("sales").value=Math.round(total());$("orders").value=day.list.length;}build();}
+function n(id){const v=parseFloat($(id).value);return isNaN(v)?null:v;}
+function fmtDate(v){if(!v)return"";const[y,m,d]=v.split("-");return`${d}-${m}-${y}`;}
+function build(){
+  const T=n("target"),Sa=n("sales"),O=n("orders"),V=n("traffic"),E=n("et");
+  const atv=(Sa!=null&&O)?Math.round(Sa/O):null,cr=(O!=null&&V)?O/V*100:null,ach=(Sa!=null&&T)?Sa/T*100:null;
+  $("atv").textContent=atv??"–";$("cr").textContent=cr!=null?cr.toFixed(1)+"%":"–";$("ach").textContent=ach!=null?Math.round(ach)+"%":"–";
+  $("barI").style.width=Math.min(ach||0,100)+"%";
+  $("barI").style.background=ach==null?"var(--green)":ach>=100?"var(--green)":ach>=70?"var(--amber)":"var(--red)";
+  $("rem").textContent=(T&&Sa!=null)?(Sa>=T?"✅ التارجت اتحقق":`المتبقي للتارجت: ${Math.round(T-Sa)} ريال`):"";
+  const L=["TBK",fmtDate($("date").value),`Target:${T??""}`,`Sales: ${Sa??""}`,`Orders:${O??""}`,`Traffic:${V??""}`,`ATV: ${atv??""}`,`E.t :${E??""}`];
+  if($("extra").checked){L.push(`CR: ${cr!=null?cr.toFixed(1)+"%":""}`);L.push(`Ach: ${ach!=null?Math.round(ach)+"%":""}`);}
+  const m=L.join("\n");$("msg").textContent=m;return m;}
+["date","target","sales","orders","traffic","et"].forEach(id=>$(id).addEventListener("input",()=>{
+  if(id==="target"){S.set("tbk_target",$("target").value);renderHype();}build();}));
+$("extra").addEventListener("change",()=>{S.set("tbk_extra",$("extra").checked?"1":"0");build();});
+$("send").onclick=()=>window.open("https://wa.me/?text="+encodeURIComponent(build()),"_blank");
+$("copy").onclick=async()=>{const m=build();try{await navigator.clipboard.writeText(m);}catch(e){const r=document.createRange();r.selectNode($("msg"));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand("copy");}toast("✅ اتنسخ");};
+
+/* clock */
+function tick(){const d=new Date();$("clk").textContent=d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}tick();setInterval(tick,15000);
+/* init */
+openTab(target()?(S.get("tbk_tab")||"hype"):"report");
+syncToReport();renderHype();
+</script>
+</body>
+</html>

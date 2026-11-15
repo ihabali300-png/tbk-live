@@ -355,6 +355,9 @@
   .accBody{overflow:hidden}
   .acc.open .accBody{margin-top:8px}
   .wk .accBody>*{min-height:0}
+  /* fit-to-screen */
+  html.fit,html.fit body{overflow:hidden;height:100%}
+  html.fit .shell{max-width:none;margin:0;transform-origin:top left;position:absolute;top:0}
 </style>
 </head>
 <body>
@@ -416,6 +419,23 @@
       </div></div>
     </div>
 
+    <div class="exRow">
+    <div class="card exam">
+      <h2>👓 الفحوصات</h2>
+      <div class="dr">د/خواطر 🩺<button class="vac" id="exVac" type="button" title="إجازة">🌴</button></div>
+      <div class="exOff" id="exOff"></div>
+      <div class="cnt" id="exCnt">0</div>
+      <div class="sub2">فحص النهارده</div>
+      <div class="exBtns"><button class="exAdd" id="exAdd" type="button">➕ فحص جديد</button><button class="exMinus" id="exMinus" type="button" title="تراجع">↩️</button></div>
+      <div class="exConv" id="exConv"></div>
+    </div>
+    <div class="card exam tele">
+      <h2>📡 فحوصات Tele</h2>
+      <div class="cnt" id="teCnt">0</div>
+      <div class="sub2">فحص عن بُعد النهارده</div>
+      <div class="exBtns"><button class="exAdd" id="teAdd" type="button">➕ فحص Tele</button><button class="exMinus" id="teMinus" type="button" title="تراجع">↩️</button></div>
+    </div>
+    </div>
   </div>
   <div class="col c-ar">
     <div class="arena" id="arena">
@@ -465,23 +485,7 @@
         <div class="st"><b id="hneed">–</b><span id="hneedL">أوردرات كمان</span></div>
       </div>
     </div>
-    <div class="exRow">
-    <div class="card exam">
-      <h2>👓 الفحوصات</h2>
-      <div class="dr">د/خواطر 🩺<button class="vac" id="exVac" type="button" title="إجازة">🌴</button></div>
-      <div class="exOff" id="exOff"></div>
-      <div class="cnt" id="exCnt">0</div>
-      <div class="sub2">فحص النهارده</div>
-      <div class="exBtns"><button class="exAdd" id="exAdd" type="button">➕ فحص جديد</button><button class="exMinus" id="exMinus" type="button" title="تراجع">↩️</button></div>
-      <div class="exConv" id="exConv"></div>
-    </div>
-    <div class="card exam tele">
-      <h2>📡 فحوصات Tele</h2>
-      <div class="cnt" id="teCnt">0</div>
-      <div class="sub2">فحص عن بُعد النهارده</div>
-      <div class="exBtns"><button class="exAdd" id="teAdd" type="button">➕ فحص Tele</button><button class="exMinus" id="teMinus" type="button" title="تراجع">↩️</button></div>
-    </div>
-    </div>
+
   </div>
 
   <div class="col c-ac">
@@ -920,6 +924,15 @@ $("copy").onclick=async()=>{const m=build();try{await navigator.clipboard.writeT
 
 /* clock */
 function tick(){const d=new Date();$("clk").textContent=d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}tick();setInterval(tick,15000);
+/* ===== fit whole board to the screen (no scroll) ===== */
+function fit(){const sh=document.querySelector(".shell"),R=document.documentElement;
+  if(innerWidth<1000){R.classList.remove("fit");sh.style.transform="";sh.style.left="";return;}
+  R.classList.add("fit");sh.style.transform="none";
+  let W=1600,H=0;for(let i=0;i<4;i++){sh.style.width=W+"px";H=sh.scrollHeight+6;W=Math.min(2400,Math.max(1300,innerWidth*H/innerHeight));}
+  sh.style.width=W+"px";H=sh.scrollHeight+6;const z=Math.min(innerWidth/W,innerHeight/H);
+  sh.style.transform=`scale(${z})`;sh.style.left=Math.max(0,(innerWidth-W*z)/2)+"px";}
+addEventListener("resize",fit);
+new ResizeObserver(()=>requestAnimationFrame(fit)).observe(document.querySelector(".shell"));
 /* init */
 openTab(target()?(S.get("tbk_tab")||"hype"):"report");
 syncToReport();renderHype();

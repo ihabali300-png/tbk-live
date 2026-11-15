@@ -303,6 +303,46 @@
     .clock{display:none}
     .quick{grid-template-columns:repeat(3,1fr)}
   }
+  /* ===== compact one-screen layout ===== */
+  .shell{padding:10px 18px 14px}
+  .head{margin-bottom:12px;flex-wrap:nowrap}
+  .topRow{margin:0;gap:10px;flex-wrap:nowrap}
+  .switch{width:auto}
+  .mode{font-size:16px;padding:9px 18px}
+  .tgtPill{padding:6px 14px}.tgtPill b{font-size:22px}
+  .heatBar{min-width:240px;padding:6px 12px}.heatBar .deg{min-width:60px;font-size:16px}
+  .brand h1{font-size:20px}.logo{width:44px;height:44px;font-size:22px}
+  .credit{font-size:11px;letter-spacing:3px}.clock b{font-size:18px}
+  .grid3{gap:14px}.col{gap:12px}
+  .card{padding:12px 14px;border-radius:18px}
+  .card h2{font-size:15.5px;margin-bottom:8px}
+  .arena{padding:14px}
+  .gaugeBox{width:min(250px,60vw);margin:2px auto}
+  .pct{font-size:clamp(40px,4.4vw,58px)}.em{font-size:34px}
+  .shout{min-height:44px;font-size:clamp(18px,1.6vw,22px)}
+  .vs{margin:2px 0 4px}.vs .box{padding:6px}.vs .box b{font-size:clamp(22px,2.2vw,28px)}
+  .miles{margin:6px 4px 18px}.ms{width:40px;height:40px;font-size:18px}
+  .stats .st{padding:6px 4px}.st b{font-size:18px}
+  .lb{gap:6px}.lbr{padding:5px 10px}.lbr .vl{font-size:18px}
+  .race{margin-top:6px;font-size:13.5px}.vacHint{display:none}.offLine{margin-top:4px}
+  .badges{grid-template-columns:repeat(3,1fr);gap:6px}.bdg{padding:5px 6px;gap:5px}.bdg i{font-size:19px}.bdg b{font-size:11.5px}.bdg span{font-size:13px}
+  .wk .chart{height:78px}
+  .wk .sum{margin-top:4px;font-size:13px}
+  .wk .wlb{margin-top:4px;gap:4px}.wk .wr{padding:3px 10px;font-size:13.5px}
+  .exRow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .exam h2{justify-content:center}
+  .exam .cnt{font-size:36px}.exam .dr{font-size:15px}
+  .exBtns{margin-top:6px}.exAdd{padding:9px;font-size:14.5px}
+  .exConv{font-size:12px}
+  .dayT .cd{font-size:28px}.tbar{margin:8px 0 2px}.pace{margin-top:4px;font-size:14px}
+  .addRow input{font-size:19px;padding:9px}.fire{font-size:18px}
+  .sellers{margin-bottom:8px}.sel{padding:5px 12px;font-size:14px}
+  .quick{margin-top:8px}.q{padding:7px 2px}
+  .tools{margin-top:8px}.tools button{padding:7px}
+  .chb{padding:7px 4px;font-size:13px}
+  #hype .hint{font-size:12px;margin-top:4px}
+  body.hot #hype .card{padding-bottom:calc(12px + var(--heat,0)*16px)}
+  .flames{height:calc(var(--heat,0)*24px)}
 </style>
 </head>
 <body>
@@ -325,10 +365,6 @@
     <div class="logo">⚡</div>
     <div><h1 dir="ltr">TBK <span>LIVE</span></h1><small>لوحة مبيعات تبوك بارك</small></div>
   </div>
-  <div class="heatBar"><span class="fl" id="hFl">🧊</span><span class="lbl">حرارة الفرع</span><div class="tube"><i id="hTube"></i></div><span class="deg" id="hDeg">بارد</span></div>
-  <div class="leftHead" dir="ltr"><div class="credit">DESIGNED BY IHAB<br>15 NOV 2026</div><div class="clock">TODAY<b id="clk">--:--</b></div></div>
-</div>
-
 <div class="topRow">
 <div class="switch" id="sw">
   <div class="knob"></div>
@@ -337,6 +373,10 @@
 </div>
 <div class="tgtPill"><span>🎯 تارجت النهارده</span><b id="tShow">–</b><a id="goRep">✏️ تعديل</a></div>
 </div>
+  <div class="heatBar"><span class="fl" id="hFl">🧊</span><span class="lbl">حرارة الفرع</span><div class="tube"><i id="hTube"></i></div><span class="deg" id="hDeg">بارد</span></div>
+  <div class="leftHead" dir="ltr"><div class="credit">DESIGNED BY IHAB<br>15 NOV 2026</div><div class="clock">TODAY<b id="clk">--:--</b></div></div>
+</div>
+
 
 <!-- ================= HYPE ================= -->
 <div class="grid3 pane" id="hype">
@@ -360,21 +400,7 @@
       <div class="sum"><span>🎯 تارجت الأسبوع لحد النهارده</span><b id="wkTgt">0</b></div>
       <div class="wlb" id="wkLb"></div>
     </div>
-    <div class="card exam">
-      <h2>👓 الفحوصات</h2>
-      <div class="dr">د/خواطر 🩺<button class="vac" id="exVac" type="button" title="إجازة">🌴</button></div>
-      <div class="exOff" id="exOff"></div>
-      <div class="cnt" id="exCnt">0</div>
-      <div class="sub2">فحص النهارده</div>
-      <div class="exBtns"><button class="exAdd" id="exAdd" type="button">➕ فحص جديد</button><button class="exMinus" id="exMinus" type="button" title="تراجع">↩️</button></div>
-      <div class="exConv" id="exConv"></div>
-    </div>
-    <div class="card exam tele">
-      <h2>📡 فحوصات Tele</h2>
-      <div class="cnt" id="teCnt">0</div>
-      <div class="sub2">فحص عن بُعد النهارده</div>
-      <div class="exBtns"><button class="exAdd" id="teAdd" type="button">➕ فحص Tele</button><button class="exMinus" id="teMinus" type="button" title="تراجع">↩️</button></div>
-    </div>
+
   </div>
   <div class="col c-ar">
     <div class="arena" id="arena">
@@ -424,6 +450,23 @@
         <div class="st"><b id="hneed">–</b><span id="hneedL">أوردرات كمان</span></div>
       </div>
     </div>
+    <div class="exRow">
+    <div class="card exam">
+      <h2>👓 الفحوصات</h2>
+      <div class="dr">د/خواطر 🩺<button class="vac" id="exVac" type="button" title="إجازة">🌴</button></div>
+      <div class="exOff" id="exOff"></div>
+      <div class="cnt" id="exCnt">0</div>
+      <div class="sub2">فحص النهارده</div>
+      <div class="exBtns"><button class="exAdd" id="exAdd" type="button">➕ فحص جديد</button><button class="exMinus" id="exMinus" type="button" title="تراجع">↩️</button></div>
+      <div class="exConv" id="exConv"></div>
+    </div>
+    <div class="card exam tele">
+      <h2>📡 فحوصات Tele</h2>
+      <div class="cnt" id="teCnt">0</div>
+      <div class="sub2">فحص عن بُعد النهارده</div>
+      <div class="exBtns"><button class="exAdd" id="teAdd" type="button">➕ فحص Tele</button><button class="exMinus" id="teMinus" type="button" title="تراجع">↩️</button></div>
+    </div>
+    </div>
   </div>
 
   <div class="col c-ac">
@@ -449,6 +492,15 @@
       </div>
     </div>
     <div class="card">
+      <h2>🧾 أوردرات النهارده</h2>
+      <div class="chips" id="chips"></div>
+      <div class="tools">
+        <button id="undo" type="button">↩️ تراجع عن آخر أوردر</button>
+        <button id="reset" type="button">🗑️ يوم جديد</button>
+      </div>
+      <div class="hint">الأوردرات بتتنقل لوحدها لتاب التقفيلة آخر اليوم</div>
+    </div>
+    <div class="card">
       <h2>🎯 تحدي الساعة</h2>
       <div id="chPick">
         <div class="chbtns">
@@ -464,15 +516,6 @@
         <div class="chDots" id="chDots"></div>
         <button class="x" id="chX" type="button">✖ إلغاء التحدي</button>
       </div>
-    </div>
-    <div class="card">
-      <h2>🧾 أوردرات النهارده</h2>
-      <div class="chips" id="chips"></div>
-      <div class="tools">
-        <button id="undo" type="button">↩️ تراجع عن آخر أوردر</button>
-        <button id="reset" type="button">🗑️ يوم جديد</button>
-      </div>
-      <div class="hint">الأوردرات بتتنقل لوحدها لتاب التقفيلة آخر اليوم</div>
     </div>
   </div>
 </div>

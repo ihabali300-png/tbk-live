@@ -365,7 +365,7 @@
 <canvas id="fx"></canvas>
 <div class="combo" id="combo"></div>
 <div class="wheelM" id="wheelM"><div class="wbox">
-  <h3>🎡 عجلة المكافأة</h3><div style="color:var(--muted);font-weight:700">كسّرتوا التارجت… لفّوا واكسبوا 🎁</div>
+  <h3>🎡 عجلة المكافأة</h3><div style="color:var(--muted);font-weight:700">حققتوا التارجت… لفّوا واربحوا 🎁</div>
   <div class="wwrap"><div class="ptr">🔻</div><canvas id="wheel" width="600" height="600"></canvas></div>
   <div class="wres" id="wres"></div>
   <div class="wbtns"><button class="wspin" id="wspin" type="button">🎡 لفّ</button><button class="wclose" id="wclose" type="button">قفل</button></div>
@@ -386,7 +386,7 @@
   <button class="mode" data-t="hype" type="button">🔥 الحماس</button>
   <button class="mode" data-t="report" type="button">📊 تقفيلة نهاية اليوم</button>
 </div>
-<div class="tgtPill"><span>🎯 تارجت النهارده</span><b id="tShow">–</b><a id="goRep">✏️ تعديل</a></div>
+<div class="tgtPill"><span>🎯 تارجت اليوم</span><b id="tShow">–</b><a id="goRep">✏️ تعديل</a></div>
 </div>
   <div class="heatBar"><span class="fl" id="hFl">🧊</span><span class="lbl">حرارة الفرع</span><div class="tube"><i id="hTube"></i></div><span class="deg" id="hDeg">بارد</span></div>
   <div class="leftHead" dir="ltr"><div class="credit">DESIGNED BY IHAB<br>15 NOV 2026</div><div class="clock">TODAY<b id="clk">--:--</b></div></div>
@@ -397,14 +397,14 @@
 <div class="grid3 pane" id="hype">
   <div class="col c-lb">
     <div class="card">
-      <h2>🏅 لوحة الأبطال <small>(مين قفل أكتر النهارده)</small></h2>
+      <h2>🏅 لوحة الأبطال <small>(مين باع أكثر اليوم)</small></h2>
       <div class="lb" id="lb"></div>
       <div class="race" id="race"></div>
       <div class="offLine" id="offLine"></div>
-      <div class="vacHint">🌴 اضغط على النخلة جنب الاسم: مرة = إجازة النهارده، مرتين = إجازة أسبوعية في نفس اليوم، تالت مرة = إلغاء</div>
+      <div class="vacHint">🌴 اضغط على النخلة بجانب الاسم: مرة = إجازة اليوم، مرتين = إجازة أسبوعية في نفس اليوم، ثالث مرة = إلغاء</div>
     </div>
     <div class="card acc" id="accB">
-      <div class="accHead"><h2>🎖️ ألقاب النهارده</h2><span class="accSum" id="bdgSum"></span><span class="arr">▾</span></div>
+      <div class="accHead"><h2>🎖️ ألقاب اليوم</h2><span class="accSum" id="bdgSum"></span><span class="arr">▾</span></div>
       <div class="accBody"><div class="badges" id="badges"></div></div>
       <button class="wheelBtn hide" id="wheelOpen" type="button">🎡 لفّوا عجلة المكافأة</button>
     </div>
@@ -414,7 +414,7 @@
       <div style="font-size:12.5px;color:var(--muted);font-weight:700;margin-top:6px" id="wkRange"></div>
       <div class="chart" id="wkChart"></div>
       <div class="sum"><span>💰 مبيعات الأسبوع</span><b id="wkTot">0</b></div>
-      <div class="sum"><span>🎯 تارجت الأسبوع لحد النهارده</span><b id="wkTgt">0</b></div>
+      <div class="sum"><span>🎯 تارجت الأسبوع حتى اليوم</span><b id="wkTgt">0</b></div>
       <div class="wlb" id="wkLb"></div>
       </div></div>
     </div>
@@ -425,14 +425,14 @@
       <div class="dr">د/خواطر 🩺<button class="vac" id="exVac" type="button" title="إجازة">🌴</button></div>
       <div class="exOff" id="exOff"></div>
       <div class="cnt" id="exCnt">0</div>
-      <div class="sub2">فحص النهارده</div>
+      <div class="sub2">فحص اليوم</div>
       <div class="exBtns"><button class="exAdd" id="exAdd" type="button">➕ فحص جديد</button><button class="exMinus" id="exMinus" type="button" title="تراجع">↩️</button></div>
       <div class="exConv" id="exConv"></div>
     </div>
     <div class="card exam tele">
       <h2>📡 فحوصات Tele</h2>
       <div class="cnt" id="teCnt">0</div>
-      <div class="sub2">فحص عن بُعد النهارده</div>
+      <div class="sub2">فحص عن بُعد اليوم</div>
       <div class="exBtns"><button class="exAdd" id="teAdd" type="button">➕ فحص Tele</button><button class="exMinus" id="teMinus" type="button" title="تراجع">↩️</button></div>
     </div>
     </div>
@@ -457,12 +457,12 @@
         </div>
       </div>
       <div class="vs">
-        <div class="box tot"><b id="vTot">0</b><span>💰 وصلنا لحد دلوقتي</span></div>
+        <div class="box tot"><b id="vTot">0</b><span>💰 وصلنا حتى الآن</span></div>
         <div class="mid">من</div>
         <div class="box tgt"><b id="vTgt">–</b><span>🎯 التارجت اليومي</span></div>
       </div>
       <div class="diff" id="vDiff"></div>
-      <div class="shout" id="shout">كل عميل داخل هو فرصة… يلا يا أبطال 💪</div>
+      <div class="shout" id="shout">كل عميل يدخل فرصة… يلا يا أبطال 💪</div>
       <div class="miles">
         <div class="ms" data-p="25">🥉<em>25%</em></div>
         <div class="ms" data-p="50">🥈<em>50%</em></div>
@@ -471,7 +471,7 @@
         <div class="ms" data-p="100">🏆<em>100%</em></div>
       </div>
       <div class="bonus" id="bonus">
-        <div class="ttl">🔓 مرحلة الأساطير اتفتحت</div>
+        <div class="ttl">🔓 انفتحت مرحلة الأساطير</div>
         <div class="miles">
           <div class="ms bm" data-p="200">👑<em>200%</em></div>
           <div class="ms bm" data-p="300">🦁<em>300%</em></div>
@@ -480,9 +480,9 @@
         </div>
       </div>
       <div class="stats">
-        <div class="st"><b id="hrem">–</b><span id="hremL">فاضل ريال</span></div>
+        <div class="st"><b id="hrem">–</b><span id="hremL">باقي (ريال)</span></div>
         <div class="st"><b id="hord">0</b><span>أوردرات</span></div>
-        <div class="st"><b id="hneed">–</b><span id="hneedL">أوردرات كمان</span></div>
+        <div class="st"><b id="hneed">–</b><span id="hneedL">أوردرات باقية</span></div>
       </div>
     </div>
 
@@ -490,7 +490,7 @@
 
   <div class="col c-ac">
     <div class="card dayT">
-      <div class="row3"><h2 style="margin:0">⏰ فاضل على القفلة</h2><div class="closeOpts" id="closeOpts">
+      <div class="row3"><h2 style="margin:0">⏰ باقي على الإغلاق</h2><div class="closeOpts" id="closeOpts">
         <button class="co" data-c="23:15" type="button">11:15</button><button class="co" data-c="23:30" type="button">11:30</button><button class="co" data-c="24:00" type="button">12:00</button></div></div>
       <div class="cd" id="cd">--:--:--</div>
       <div class="tbar"><div class="tt" id="tt"></div><div class="ss" id="ss"></div></div>
@@ -498,11 +498,11 @@
       <div class="pace" id="pace"></div>
     </div>
     <div class="card">
-      <h2>💥 أوردر جديد <small>(اختار مين قفل، واكتب القيمة)</small></h2>
+      <h2>💥 أوردر جديد <small>(اختر البائع واكتب القيمة)</small></h2>
       <div class="sellers" id="sellers"></div>
       <div class="addRow">
         <input id="amt" type="number" inputmode="decimal" placeholder="قيمة الأوردر">
-        <button class="fire" id="add" type="button">🔥 كسّر</button>
+        <button class="fire" id="add" type="button">🔥 اكسر</button>
       </div>
       <div class="quick">
         <button class="q" data-v="199">199</button><button class="q" data-v="349">349</button>
@@ -511,13 +511,13 @@
       </div>
     </div>
     <div class="card">
-      <h2>🧾 أوردرات النهارده</h2>
+      <h2>🧾 أوردرات اليوم</h2>
       <div class="chips" id="chips"></div>
       <div class="tools">
         <button id="undo" type="button">↩️ تراجع عن آخر أوردر</button>
         <button id="reset" type="button">🗑️ يوم جديد</button>
       </div>
-      <div class="hint">الأوردرات بتتنقل لوحدها لتاب التقفيلة آخر اليوم</div>
+      <div class="hint">الأوردرات تنتقل تلقائياً لصفحة التقفيلة آخر اليوم</div>
     </div>
     <div class="card">
       <h2>🎯 تحدي الساعة</h2>
@@ -525,9 +525,9 @@
         <div class="chbtns">
           <button class="chb" data-n="1" data-m="30">أوردر واحد<br>في 30 دقيقة</button>
           <button class="chb" data-n="2" data-m="60">أوردرين<br>في ساعة</button>
-          <button class="chb" data-n="3" data-m="90">3 أوردرات<br>في ساعة ونص</button>
+          <button class="chb" data-n="3" data-m="90">3 أوردرات<br>في ساعة ونصف</button>
         </div>
-        <div class="hint">اختار تحدي والعداد يبدأ على طول ⏱️</div>
+        <div class="hint">اختر تحدي ويبدأ العداد مباشرة ⏱️</div>
       </div>
       <div class="chLive hide" id="chLive">
         <div class="goal" id="chGoal"></div>
@@ -565,7 +565,7 @@
       </div>
     </div>
     <div class="card">
-      <h2>📈 المؤشرات <small>(بتتحسب لوحدها)</small></h2>
+      <h2>📈 المؤشرات <small>(تُحسب تلقائياً)</small></h2>
       <div class="kpis">
         <div class="k"><b id="atv">–</b><span>متوسط الفاتورة</span></div>
         <div class="k"><b id="cr">–</b><span>نسبة التحويل</span></div>
@@ -582,9 +582,9 @@
       <label class="chk"><input type="checkbox" id="extra"> إضافة نسبة التحويل والتحقيق للرسالة</label>
       <div class="actions">
         <button class="btn navy" id="copy" type="button">📋 نسخ</button>
-        <button class="btn green" id="send" type="button">📲 ابعت واتساب</button>
+        <button class="btn green" id="send" type="button">📲 أرسل واتساب</button>
       </div>
-      <div class="hint">🔒 هيفتح الواتساب وتختار الجروب وتبعت</div>
+      <div class="hint">🔒 يفتح الواتساب، تختار القروب وترسل</div>
     </div>
   </div>
 </div>
@@ -653,23 +653,23 @@ function ember(){const P=E,big=Math.random()<HEAT*.05;
 
 /* hype texts */
 const LINES={
- 0:["كل عميل داخل هو فرصة… يلا يا أبطال 💪","أول أوردر بيفتح النفس 🔓","النهارده يومنا… مفيش حاجة اسمها مستحيل 🚀","ابتسامة + فحص + عرض قوي = بيعة 😎"],
- 1:["بدأنا نسخّن 🔥 كمّلوا!","الماكينة اشتغلت… متوقفوش ⚙️","حلو أوي… العميل الجاي بتاعنا 🎯","خطوة خطوة بنوصل 👣"],
- 2:["نص الطريق! الفريق ده مختلف 💥","إحنا في النص… والنص التاني أسهل 😤","كده الكلام… ارفعوا الفاتورة شوية 💎","الجو بقى نار 🔥🔥"],
- 3:["قرّبنا جداً… محدش يهدّي دلوقتي ⚡","ريحة التارجت جاية 👃🏆","آخر شوية… كل أوردر بيفرق 💪","يا جماعة إحنا تقريباً هناك 🚀"],
- 4:["ثواني ونكسّره!! 💣","أوردر واحد كمان ويولّع 🔥🔥🔥","التارجت بيترعش قدامنا 😂⚡","كله يدّي أقوى ما عنده دلوقتي 💥"],
- 5:["كسّرناااااه!! 🏆🔥","الفريق ده أسطوري 👑","التارجت اتكسر… يلا على الرقم القياسي 🚀","عاش يا أبطال تبوك بارك 💪🎉"],
- 6:["إحنا في مرحلة تانية خالص 🚀","التارجت بقى ورانا… كمّلوا الطحن 💪","كل ريال دلوقتي بونص 💰","الفرع كله مولّع 🔥🔥🔥"],
- 8:["500%!!! إحنا أسطورة 🌟","مفيش كلام يوصف اللي بيحصل 🤯","تبوك بارك نمبر وان 🥇🌟","ده يوم هيتحكي عنه سنين 📜"],
- 7:["دبل التارجت!!! 👑👑","ده مش فريق… ده جيش 🦁","تبوك بارك بتكتب التاريخ النهارده 📜","محدش يقدر يوقفنا 💎"]};
+ 0:["كل عميل يدخل فرصة… يلا يا أبطال 💪","أول أوردر يفتح النفس 🔓","اليوم يومنا… ما فيه شيء مستحيل 🚀","ابتسامة + فحص + عرض قوي = بيعة 😎"],
+ 1:["بدأنا نسخن 🔥 كمّلوا!","الماكينة اشتغلت… لا توقفون ⚙️","حلو مرّة… العميل الجاي لنا 🎯","خطوة خطوة نوصل 👣"],
+ 2:["نص الطريق! هذا الفريق غير 💥","وصلنا النص… والنص الثاني أسهل 😤","هذا الكلام… ارفعوا الفاتورة شوي 💎","الجو صار نار 🔥🔥"],
+ 3:["قربنا كثير… لا أحد يهدّي الحين ⚡","ريحة التارجت قريبة 👃🏆","آخر شوي… كل أوردر يفرق 💪","يا شباب تقريباً وصلنا 🚀"],
+ 4:["ثواني ونكسره!! 💣","أوردر واحد بعد ويولّع 🔥🔥🔥","التارجت يرجف قدامنا 😂⚡","الكل يعطي أقوى ما عنده الحين 💥"],
+ 5:["كسرناااااه!! 🏆🔥","هذا الفريق أسطوري 👑","انكسر التارجت… يلا على الرقم القياسي 🚀","عاش يا أبطال تبوك بارك 💪🎉"],
+ 6:["صرنا في مرحلة ثانية تماماً 🚀","التارجت صار وراءنا… كمّلوا 💪","كل ريال الحين بونص 💰","الفرع كله مولّع 🔥🔥🔥"],
+ 8:["500%!!! نحن أسطورة 🌟","ما فيه كلام يوصف اللي يصير 🤯","تبوك بارك رقم واحد 🥇🌟","يوم بينحكى عنه سنين 📜"],
+ 7:["دبل التارجت!!! 👑👑","هذا مو فريق… هذا جيش 🦁","تبوك بارك تكتب التاريخ اليوم 📜","ما أحد يقدر يوقفنا 💎"]};
 const STAGES=[["😴","🚀 يلا نبدأ اليوم","#06b6d4","#8b5cf6","linear-gradient(160deg,#eef6ff,#f3eeff)"],
- ["😏","🔥 بدأنا نسخّن","#22c55e","#38bdf8","linear-gradient(160deg,#ecfdf5,#e0f7ff)"],
+ ["😏","🔥 بدأنا نسخن","#22c55e","#38bdf8","linear-gradient(160deg,#ecfdf5,#e0f7ff)"],
  ["😤","💥 نص الطريق","#eab308","#22c55e","linear-gradient(160deg,#fefce8,#ecfccb)"],
- ["🤩","⚡ قرّبنا جداً","#f97316","#facc15","linear-gradient(160deg,#fff7ed,#fef3c7)"],
+ ["🤩","⚡ قربنا كثير","#f97316","#facc15","linear-gradient(160deg,#fff7ed,#fef3c7)"],
  ["🥵","💣 على وشك الانفجار","#ef4444","#f97316","linear-gradient(160deg,#fff1f2,#ffedd5)"],
- ["👑","🏆 كسّرناه!","#facc15","#ec4899","linear-gradient(160deg,#fdf4ff,#fef9c3)"],
+ ["👑","🏆 كسرناه!","#facc15","#ec4899","linear-gradient(160deg,#fdf4ff,#fef9c3)"],
  ["🚀","🚀 مرحلة الأساطير","#facc15","#ec4899","linear-gradient(160deg,#fff7ed,#fce7f3)"],
- ["🦁","👑 دبل التارجت وأكتر","#facc15","#ec4899","linear-gradient(160deg,#faf5ff,#fde68a)"],
+ ["🦁","👑 دبل التارجت وأكثر","#facc15","#ec4899","linear-gradient(160deg,#faf5ff,#fde68a)"],
  ["🌟","🌟 أسطورة تبوك بارك","#facc15","#ec4899","linear-gradient(160deg,#fef9c3,#fbcfe8)"]];
 const LAPS=[["#f59e0b","#db2777"],["#8b5cf6","#06b6d4"],["#ef4444","#f97316"],["#10b981","#3b82f6"]];
 const BONUS=[200,300,400,500];
@@ -678,7 +678,7 @@ let lastStage=-1;
 function shout(st){const a=LINES[st],el=$("shout");el.textContent=a[Math.floor(Math.random()*a.length)];el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");}
 function boom(t,s){$("boomT").textContent=t;$("boomS").textContent=s;const b=$("boom");b.classList.remove("on");void b.offsetWidth;b.classList.add("on");}
 
-const HEATN=[[0,"🧊","بارد"],[.15,"🌤️","دافي"],[.35,"🔥","بيسخن"],[.6,"🔥🔥","نار"],[.85,"🌋","بركان"],[1,"☄️","مولّع!!"]];
+const HEATN=[[0,"🧊","بارد"],[.15,"🌤️","دافي"],[.35,"🔥","يسخن"],[.6,"🔥🔥","نار"],[.85,"🌋","بركان"],[1,"☄️","مولّع!!"]];
 function setHeat(p){const h=Math.min(1,Math.max(0,p/100));HEAT=p>=100?1:h;document.body.style.setProperty("--heat",HEAT.toFixed(2));
   document.body.classList.toggle("hot",HEAT>=.25);
   let lv=HEATN[0];for(const x of HEATN)if(HEAT>=x[0])lv=x;$("hFl").textContent=lv[1].slice(0,2);$("hDeg").textContent=lv[2]+(p>=100?` ${Math.round(p)}%`:"");
@@ -707,29 +707,29 @@ function renderHype(fromAdd){
   const rem=Math.max(T-tot,0),n=day.list.length,atv=n?tot/n:0;
   $("hord").textContent=n;
   if(T&&p>=100){const nx=BONUS.find(b=>p<b);
-    if(nx){const r2=Math.max(T*nx/100-tot,0);$("hremL").textContent=`فاضل لـ ${nx}%`;$("hrem").textContent=Math.round(r2);
+    if(nx){const r2=Math.max(T*nx/100-tot,0);$("hremL").textContent=`باقي لـ ${nx}%`;$("hrem").textContent=Math.round(r2);
     $("hneedL").textContent="أوردرات للمستوى الجاي";$("hneed").textContent=atv?Math.ceil(r2/atv):"?";}
-    else{$("hremL").textContent="كل المستويات";$("hrem").textContent="🌟";$("hneedL").textContent="خلصنا الـ500%";$("hneed").textContent="👑";}}
-  else{$("hremL").textContent="فاضل ريال";$("hneedL").textContent="أوردرات كمان";
+    else{$("hremL").textContent="كل المستويات";$("hrem").textContent="🌟";$("hneedL").textContent="خلصنا 500%";$("hneed").textContent="👑";}}
+  else{$("hremL").textContent="باقي (ريال)";$("hneedL").textContent="أوردرات باقية";
     $("hrem").textContent=T?(rem?Math.round(rem):"✅"):"–";
     $("hneed").textContent=T?(rem?(atv?Math.ceil(rem/atv):"?"):"0"):"–";}
   document.querySelectorAll(".ms").forEach(m=>m.classList.toggle("done",p>=+m.dataset.p));
   document.querySelectorAll(".ms.bm").forEach(m=>m.classList.toggle("lock",p<+m.dataset.p-100));
-  $("chips").innerHTML=n?day.list.map(o=>`<span class="chip">🔥 ${o.v}${o.who?`<small>${o.who}</small>`:""}</span>`).join(""):'<span class="empty">لسه مفيش أوردرات… أول واحد جاي 💪</span>';
+  $("chips").innerHTML=n?day.list.map(o=>`<span class="chip">🔥 ${o.v}${o.who?`<small>${o.who}</small>`:""}</span>`).join(""):'<span class="empty">ما فيه أوردرات للحين… أول واحد جاي 💪</span>';
   if(typeof renderDay==="function")try{renderDay()}catch(e){}
   renderExtras.fromAdd=!!fromAdd;renderExtras();renderExtras.fromAdd=false;
   if(st!==lastStage){shout(st);lastStage=st;}
   if(fromAdd&&T){for(const m of [25,50,75,90,100,...BONUS]){if(p>=m&&!day.hit.includes(m)){day.hit.push(m);saveDay();
-    if(m===100){setTimeout(()=>{if(!day.wheel)openWheel();},3800);boom("كسّرناه!! 🏆","التارجت اتكسر يا أبطال 🔥");emojiRain("🏆",18);emojiRain("🔥",18);
+    if(m===100){setTimeout(()=>{if(!day.wheel)openWheel();},3800);boom("كسرناه!! 🏆","انكسر التارجت يا أبطال 🔥");emojiRain("🏆",18);emojiRain("🔥",18);
       beep([523,659,784,1047,1319],.14,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>14)clearInterval(iv);},280);}
-    else if(m>100){const t={200:["دبل التارجت!! 👑","مستوى 300% اتفتح 🔓"],300:["تريبل!!! 🦁","مستوى 400% اتفتح 🔓"],400:["400%!!! 💎","فاضل مستوى أخير 🔓"],500:["500%!!! 🌟","أسطورة تبوك بارك"]}[m];
+    else if(m>100){const t={200:["دبل التارجت!! 👑","انفتح مستوى 300% 🔓"],300:["تريبل!!! 🦁","انفتح مستوى 400% 🔓"],400:["400%!!! 💎","باقي مستوى أخير 🔓"],500:["500%!!! 🌟","أسطورة تبوك بارك"]}[m];
       boom(t[0],t[1]);emojiRain({200:"👑",300:"🦁",400:"💎",500:"🌟"}[m],24);confetti(220);beep([523,659,784,1047,1319,1568],.12,"square",.07);let k=0;const iv=setInterval(()=>{firework();if(++k>(m>=200?18:8))clearInterval(iv);},260);}
-    else{const t={25:["ربع التارجت! 🥉","البداية القوية"],50:["نص التارجت! 🥈","كمّلوا كده"],75:["75%! 🥇","قرّبنا أوي"],90:["90%! ⚡","أوردر أو اتنين ونكسّره"]}[m];
+    else{const t={25:["ربع التارجت! 🥉","بداية قوية"],50:["نص التارجت! 🥈","كمّلوا كذا"],75:["75%! 🥇","قربنا كثير"],90:["90%! ⚡","أوردر أو اثنين ونكسره"]}[m];
       boom(t[0],t[1]);confetti(180);beep([523,659,784,1047],.12,"square",.06);}}}}
 }
 
 function addOrder(v){v=parseFloat(v);if(!v||v<=0){toast("اكتب قيمة الأوردر");return;}
-  if(!target()){toast("حط التارجت الأول 🎯");openTab("report");$("target").focus();return;}
+  if(!target()){toast("حط التارجت أولاً 🎯");openTab("report");$("target").focus();return;}
   const now=Date.now(),prev=day.list[day.list.length-1],prevMax=day.list.reduce((a,o)=>Math.max(a,o.v),0),before=total();
   day.list.push({v:Math.round(v),who,t:now});saveDay();$("amt").value="";
   // combo
@@ -738,7 +738,7 @@ function addOrder(v){v=parseFloat(v);if(!v||v<=0){toast("اكتب قيمة ال�
     else if(day.list.length>1&&v>prevMax)comboFx("💎 أكبر فاتورة!");
     const pb=prevBest();
     if(pb>0&&before<=pb&&total()>pb&&!day.recHit){day.recHit=1;saveDay();
-      setTimeout(()=>{boom("رقم قياسي جديد!! 🏆","كسّرنا أعلى يوم في تاريخ الفرع");emojiRain("🏆",20);let k=0;const iv=setInterval(()=>{firework();if(++k>10)clearInterval(iv);},260);},1200);}
+      setTimeout(()=>{boom("رقم قياسي جديد!! 🏆","كسرنا أعلى يوم في تاريخ الفرع");emojiRain("🏆",20);let k=0;const iv=setInterval(()=>{firework();if(++k>10)clearInterval(iv);},260);},1200);}
     challengeCheck();},50);
   const r=$("add").getBoundingClientRect();confetti(70,r.left+r.width/2,r.top);
   {const g=document.querySelector(".gaugeBox");g.classList.remove("shakeG");void g.offsetWidth;g.classList.add("shakeG");}
@@ -747,16 +747,16 @@ function addOrder(v){v=parseFloat(v);if(!v||v<=0){toast("اكتب قيمة ال�
 $("add").onclick=()=>addOrder($("amt").value);
 $("amt").addEventListener("keydown",e=>{if(e.key==="Enter")addOrder($("amt").value);});
 document.querySelectorAll(".q").forEach(b=>b.onclick=()=>addOrder(b.dataset.v));
-$("undo").onclick=()=>{if(!day.list.length)return;day.list.pop();day.combo=1;const p=pctNow();day.hit=day.hit.filter(m=>p>=m);saveDay();renderHype();syncToReport();toast("↩️ اتشال آخر أوردر");};
+$("undo").onclick=()=>{if(!day.list.length)return;day.list.pop();day.combo=1;const p=pctNow();day.hit=day.hit.filter(m=>p>=m);saveDay();renderHype();syncToReport();toast("↩️ انحذف آخر أوردر");};
 $("reset").onclick=()=>{const b=$("reset");if(!day.list.length)return;
-  if(b.dataset.c!=="1"){b.dataset.c="1";b.textContent="⚠️ اضغط تاني للتأكيد";setTimeout(()=>{b.dataset.c="";b.textContent="🗑️ يوم جديد";},2500);return;}
+  if(b.dataset.c!=="1"){b.dataset.c="1";b.textContent="⚠️ اضغط مرة ثانية للتأكيد";setTimeout(()=>{b.dataset.c="";b.textContent="🗑️ يوم جديد";},2500);return;}
   day={date:bizDate(),list:[],hit:[]};saveDay();b.dataset.c="";b.textContent="🗑️ يوم جديد";renderHype();syncToReport();toast("بدأنا يوم جديد 🚀");};
 setInterval(()=>{if(!$("hype").classList.contains("hide"))shout(stageOf(pctNow()));},12000);
 
 /* ===== extras: sellers, leaderboard, records, challenge ===== */
 function hist(){try{return JSON.parse(S.get("tbk_hist")||"{}")}catch(e){return{}}}
 function prevBest(){const h=hist();return Math.max(0,...Object.entries(h).filter(([d])=>d!==day.date).map(([,v])=>v));}
-const DAYS=["الأحد","الاتنين","التلات","الأربع","الخميس","الجمعة","السبت"];
+const DAYS=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
 function wd(){const [y,m,d]=day.date.split("-").map(Number);return new Date(y,m-1,d).getDay();}
 function weekly(){try{return JSON.parse(S.get("tbk_weekly")||"{}")}catch(e){return{}}}
 function offState(n){day.off=day.off||{};if(weekly()[n]===wd())return"w";return day.off[n]?"d":"";}
@@ -764,8 +764,8 @@ function cycleOff(n){day.off=day.off||{};const w=weekly(),st=offState(n);
   if(st===""){day.off[n]=1;}else if(st==="d"){delete day.off[n];w[n]=wd();}else{delete w[n];delete day.off[n];}
   S.set("tbk_weekly",JSON.stringify(w));saveDay();
   if(n===who&&offState(n))who="";renderSellers();renderExtras();
-  const ns=offState(n);toast(ns==="d"?`🌴 ${n} إجازة النهارده`:ns==="w"?`🌴 ${n} إجازة كل ${DAYS[wd()]}`:`✅ ${n} موجود النهارده`);}
-function offLabel(n){const st=offState(n);return st==="d"?"🌴 إجازة النهارده":st==="w"?`🌴 إجازة أسبوعية (كل ${DAYS[wd()]})`:"";}
+  const ns=offState(n);toast(ns==="d"?`🌴 ${n} إجازة اليوم`:ns==="w"?`🌴 ${n} إجازة كل ${DAYS[wd()]}`:`✅ ${n} موجود اليوم`);}
+function offLabel(n){const st=offState(n);return st==="d"?"🌴 إجازة اليوم":st==="w"?`🌴 إجازة أسبوعية (كل ${DAYS[wd()]})`:"";}
 function comboFx(t){const c=$("combo");c.textContent=t;c.classList.remove("on");void c.offsetWidth;c.classList.add("on");beep([880,1175,1568],.06,"triangle",.06);}
 function renderSellers(){$("sellers").innerHTML=SELLERS.filter(n=>!offState(n)).map(n=>`<button class="sel${n===who?" on":""}" data-n="${n}" type="button">${n}</button>`).join("");
   $("sellers").querySelectorAll(".sel").forEach(b=>b.onclick=()=>{who=who===b.dataset.n?"":b.dataset.n;S.set("tbk_who",who);renderSellers();});}
@@ -780,18 +780,18 @@ function renderExtras(){
   const ld=arr[0]&&arr[0][1].v>0?arr[0][0]:"";
   if(ld&&day.leader&&ld!==day.leader&&renderExtras.fromAdd)setTimeout(()=>{comboFx(`🔥 ${ld} خطف الصدارة!`);emojiRain("🔥",14);},700);
   if(ld)day.leader=ld;
-  {const a=arr.filter(x=>x[1].v>0);$("race").textContent=a.length>=2?`⚔️ ${a[0][0]} قدام ${a[1][0]} بـ ${Math.round(a[0][1].v-a[1][1].v).toLocaleString("en-US")} ريال… الحق يا ${a[1][0]}!`:a.length===1?`👀 ${a[0][0]} لوحده في الصدارة… مين هيلحقه؟`:"";}
+  {const a=arr.filter(x=>x[1].v>0);$("race").textContent=a.length>=2?`⚔️ ${a[0][0]} متقدم على ${a[1][0]} بفارق ${Math.round(a[0][1].v-a[1][1].v).toLocaleString("en-US")} ريال… يلا يا ${a[1][0]}!`:a.length===1?`👀 ${a[0][0]} لحاله في الصدارة… مين يلحقه؟`:"";}
   arr.sort((a,b)=>(!!offState(a[0])&&!a[1].v)-(!!offState(b[0])&&!b[1].v));
   $("lb").innerHTML=arr.length?arr.map(([k,o],i)=>{const off=offState(k);return `<div class="lbr${i===0&&o.v>0?" first":""}${i===1&&o.v>0?" chase":""}${off&&!o.v?" off":""}"><i style="width:${o.v/mx*100}%"></i><div class="rk">${off&&!o.v?"🌴":o.v>0?(md[i]||"🔥"):"⏳"}</div><div class="nm">${k}<small>${o.n} أوردر</small>${off?`<span class="offT">${offLabel(k)}</span>`:""}</div><div class="vl">${Math.round(o.v).toLocaleString("en-US")}</div>${SELLERS.includes(k)?`<button class="vac" data-n="${k}" type="button" title="إجازة">🌴</button>`:"<span></span>"}</div>`;}).join("")
-    :'<span class="empty">اختار اسمك قبل ما تسجّل الأوردر وتدخل السباق 🏁</span>';
+    :'<span class="empty">اختر اسمك قبل تسجيل الأوردر وادخل السباق 🏁</span>';
   $("lb").querySelectorAll(".vac").forEach(b=>b.onclick=()=>cycleOff(b.dataset.n));
-  {const offs=[...SELLERS,"د/خواطر"].filter(n=>offState(n));$("offLine").textContent=offs.length?`🌴 إجازة النهارده: ${offs.join("، ")}`:"";}
+  {const offs=[...SELLERS,"د/خواطر"].filter(n=>offState(n));$("offLine").textContent=offs.length?`🌴 إجازة اليوم: ${offs.join("، ")}`:"";}
   renderChallenge();renderExam();
   const bd=renderBadges();renderWeek();
   $("lb").querySelectorAll(".lbr").forEach(r=>{const nm=r.querySelector(".nm");const n=nm.childNodes[0].textContent.trim();const e=BDG.filter(([k])=>bd[k]===n).map(x=>x[1]).join("");if(e)nm.insertAdjacentHTML("beforeend",`<span class="bdgs">${e}</span>`);});}
 function renderExam(){const e=(day.ex||0)+(day.tele||0),n=day.list.length;$("exCnt").textContent=day.ex||0;$("teCnt").textContent=day.tele||0;
   const off=offState("د/خواطر");document.querySelector(".exam:not(.tele)").classList.toggle("off",!!off);
-  $("exOff").textContent=off?(off==="d"?"🌴 د/خواطر إجازة النهارده… مفيش فحوصات":`🌴 د/خواطر إجازة كل ${DAYS[wd()]}`):"";
+  $("exOff").textContent=off?(off==="d"?"🌴 د/خواطر إجازة اليوم… ما فيه فحوصات":`🌴 د/خواطر إجازة كل ${DAYS[wd()]}`):"";
   $("exConv").textContent=e?`🎯 تحويل الفحص: ${Math.round(Math.min(n/e,1)*100)}% (${n} أوردر من ${e} فحص${day.tele?" مع الـ Tele":""})`:"";}
 /* challenge */
 function chOrders(){const c=day.ch;return c?day.list.filter(o=>o.t>=c.start&&o.t<=c.end).length:0;}
@@ -801,13 +801,13 @@ function renderChallenge(){const c=day.ch;
   const got=chOrders();$("chGoal").textContent=`🎯 ${c.need===1?"أوردر واحد":c.need===2?"أوردرين":c.need+" أوردرات"} قبل الساعة ${new Date(c.end).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}`;
   $("chDots").innerHTML=Array.from({length:c.need},(_,i)=>`<span class="${i<got?"ok":""}">${i<got?"✅":"⏳"}</span>`).join("");}
 function challengeCheck(){const c=day.ch;if(!c||c.done)return;
-  if(chOrders()>=c.need){c.done=1;saveDay();boom("التحدي اتحقق!! 🎯","عاش يا فريق… اختاروا تحدي جديد");confetti(200);beep([523,784,1047,1568],.12,"square",.07);renderChallenge();}}
+  if(chOrders()>=c.need){c.done=1;saveDay();boom("تحقق التحدي!! 🎯","كفو يا فريق… اختاروا تحدي جديد");confetti(200);beep([523,784,1047,1568],.12,"square",.07);renderChallenge();}}
 function tickChallenge(){const c=day.ch;if(!c||c.done)return;const left=c.end-Date.now();
-  if(left<=0){c.done=1;saveDay();toast("⌛ وقت التحدي خلص… جرّبوا تاني 💪");renderChallenge();return;}
+  if(left<=0){c.done=1;saveDay();toast("⌛ خلص وقت التحدي… جربوا مرة ثانية 💪");renderChallenge();return;}
   const mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);$("chTm").textContent=`${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
   $("chTm").classList.toggle("hurry",left<5*60000);}
 document.querySelectorAll(".chb").forEach(b=>b.onclick=()=>{const n=+b.dataset.n,mi=+b.dataset.m,now=Date.now();
-  day.ch={need:n,start:now,end:now+mi*60000};saveDay();renderChallenge();tickChallenge();beep([660,880],.08,"square",.05);toast("⏱️ التحدي بدأ… يلا!");});
+  day.ch={need:n,start:now,end:now+mi*60000};saveDay();renderChallenge();tickChallenge();beep([660,880],.08,"square",.05);toast("⏱️ بدأ التحدي… يلا!");});
 $("chX").onclick=()=>{if(day.ch){day.ch.done=1;saveDay();renderChallenge();}};
 setInterval(tickChallenge,1000);
 $("exAdd").onclick=()=>{day.ex=(day.ex||0)+1;saveDay();renderExam();syncToReport();beep([520,780],.07,"triangle",.05);
@@ -830,10 +830,10 @@ function badgeData(){const L=day.list.filter(o=>o.who),res={};
     const top=o=>{const e=Object.entries(o).sort((a,b)=>b[1]-a[1]);return e.length?e[0][0]:"";};
     res.count=top(cnt);res.combo=top(cmb);res.late=top(late);}
   return res;}
-const BDG=[["first","🌅","أول بيعة النهارده"],["big","💎","صياد الفواتير الكبيرة"],["count","📦","ملك العدد"],["combo","⚡","ملك الكومبو"],["late","🌙","قنّاص آخر ساعة"]];
+const BDG=[["first","🌅","أول بيعة اليوم"],["big","💎","صيّاد الفواتير الكبيرة"],["count","📦","ملك العدد"],["combo","⚡","ملك الكومبو"],["late","🌙","قنّاص آخر ساعة"]];
 function renderBadges(){const d=badgeData();
-  {const w=BDG.filter(([k])=>d[k]);$("bdgSum").textContent=w.length?w.map(([k,e])=>`${e} ${d[k]}`).join("  ·  "):"لسه محدش أخد لقب…";}
-  $("badges").innerHTML=BDG.map(([k,e,t])=>`<div class="bdg${d[k]?" won":""}"><i>${e}</i><div><b>${t}</b><span>${d[k]||"لسه…"}</span></div></div>`).join("");
+  {const w=BDG.filter(([k])=>d[k]);$("bdgSum").textContent=w.length?w.map(([k,e])=>`${e} ${d[k]}`).join("  ·  "):"ما أحد أخذ لقب للحين…";}
+  $("badges").innerHTML=BDG.map(([k,e,t])=>`<div class="bdg${d[k]?" won":""}"><i>${e}</i><div><b>${t}</b><span>${d[k]||"للحين…"}</span></div></div>`).join("");
   $("wheelOpen").classList.toggle("hide",!(pctNow()>=100));
   return d;}
 /* ===== weekly ===== */
@@ -842,7 +842,7 @@ function saveToday2(){const h=hist2(),sel={};day.list.forEach(o=>{if(o.who)sel[o
   h[day.date]={t:Math.round(total()),g:target()||0,s:sel};S.set("tbk_hist2",JSON.stringify(h));return h;}
 function renderWeek(){const h=saveToday2();const [y,m,dd]=day.date.split("-").map(Number);const today=new Date(y,m-1,dd);
   const start=new Date(today);start.setDate(today.getDate()-today.getDay()); // الأسبوع من الأحد
-  const days=[],SH=["أحد","اتنين","تلات","أربع","خميس","جمعة","سبت"];let wt=0,wg=0;const ws={};
+  const days=[],SH=["أحد","اثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"];let wt=0,wg=0;const ws={};
   for(let i=0;i<7;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
     const r=h[k]||null;days.push({k,lab:SH[i],r,fut:d>today});if(r&&d<=today){wt+=r.t;wg+=r.g||0;Object.entries(r.s||{}).forEach(([n,v])=>ws[n]=(ws[n]||0)+v);}}
   const mx=Math.max(1,...days.map(x=>Math.max(x.r?x.r.t:0,x.r?x.r.g:0)));
@@ -851,10 +851,10 @@ function renderWeek(){const h=saveToday2();const [y,m,dd]=day.date.split("-").ma
   $("wkTot").textContent=wt.toLocaleString("en-US");$("wkTgt").textContent=wg.toLocaleString("en-US");
   const f=d=>`${d.getDate()}/${d.getMonth()+1}`;const e=new Date(start);e.setDate(start.getDate()+6);$("wkRange").textContent=`الأسبوع من ${f(start)} لـ ${f(e)}`;
   const arr=Object.entries(ws).sort((a,b)=>b[1]-a[1]);
-  $("wkHero").textContent=arr.length?`👑 ${arr[0][0]} — ${Math.round(arr[0][1]).toLocaleString("en-US")} ريال`:"لسه…";
-  $("wkLb").innerHTML=arr.length?arr.map(([n,v],i)=>`<div class="wr${i===0?" first":""}"><span>${["👑","🥈","🥉"][i]||"🔥"} ${n}</span><b>${Math.round(v).toLocaleString("en-US")}</b></div>`).join(""):'<span class="empty">الترتيب الأسبوعي هيظهر لما تسجّلوا أوردرات بأسماءكم</span>';}
+  $("wkHero").textContent=arr.length?`👑 ${arr[0][0]} — ${Math.round(arr[0][1]).toLocaleString("en-US")} ريال`:"للحين…";
+  $("wkLb").innerHTML=arr.length?arr.map(([n,v],i)=>`<div class="wr${i===0?" first":""}"><span>${["👑","🥈","🥉"][i]||"🔥"} ${n}</span><b>${Math.round(v).toLocaleString("en-US")}</b></div>`).join(""):'<span class="empty">الترتيب الأسبوعي يظهر لما تسجلون أوردرات بأسمائكم</span>';}
 /* ===== wheel ===== */
-const DEF_REW=["☕ عزومة قهوة من المدير","🍕 العشا على الفرع","🏃 تمشي بدري 15 دقيقة","🍰 حلويات للفريق","🎧 تختار الأغاني بكرة","⭐ نجمة الأسبوع","🥤 مشروب على حساب الفرع","🎁 مفاجأة من المدير"];
+const DEF_REW=["☕ عزومة قهوة من المدير","🍕 العشاء على الفرع","🏃 تطلع بدري 15 دقيقة","🍰 حلويات للفريق","🎧 تختار الأغاني بكرة","⭐ نجمة الأسبوع","🥤 مشروب على حساب الفرع","🎁 مفاجأة من المدير"];
 function rewards(){const r=S.get("tbk_rew");return r?r.split("\n").map(x=>x.trim()).filter(Boolean):DEF_REW;}
 let wRot=0,spinning=false;
 function drawWheel(){const c=$("wheel"),x=c.getContext("2d"),R=rewards(),n=R.length,W2=300,cols=["#f97316","#8b5cf6","#06b6d4","#db2777","#22c55e","#f59e0b","#3b82f6","#ef4444"];
@@ -863,7 +863,7 @@ function drawWheel(){const c=$("wheel"),x=c.getContext("2d"),R=rewards(),n=R.len
     x.save();x.translate(W2,W2);x.rotate((a0+a1)/2);x.textAlign="right";x.fillStyle="#fff";x.font="bold 22px Tajawal, sans-serif";
     let t=R[i];if(t.length>18)t=t.slice(0,17)+"…";x.fillText(t,270,8);x.restore();}
   x.beginPath();x.arc(W2,W2,38,0,7);x.fillStyle="#fff";x.fill();x.font="40px serif";x.textAlign="center";x.fillText("🎁",W2,W2+14);}
-function openWheel(){drawWheel();$("wres").textContent=day.wheel?`🎉 مكافأة النهارده: ${day.wheel}`:"";$("wheelM").classList.add("on");}
+function openWheel(){drawWheel();$("wres").textContent=day.wheel?`🎉 مكافأة اليوم: ${day.wheel}`:"";$("wheelM").classList.add("on");}
 $("wheelOpen").onclick=openWheel;
 $("wclose").onclick=()=>$("wheelM").classList.remove("on");
 $("wspin").onclick=()=>{if(spinning)return;spinning=true;const R=rewards(),n=R.length,k=Math.floor(Math.random()*n);
@@ -885,7 +885,7 @@ function renderDay(){const st=540,en=closeMin(),nm=nowMin();
   document.querySelectorAll(".co").forEach(b=>b.classList.toggle("on",b.dataset.c===(day.close||S.get("tbk_close")||"23:15")));
   const h=Math.floor(en/60)%24,mm=en%60;$("tEnd").textContent=`${((h+11)%12)+1}:${String(mm).padStart(2,"0")} ${h>=12?"PM":"AM"}`;
   const left=(en-nm)*60;
-  if(nm<st){$("cd").textContent="لسه مفتحناش ☕";$("cd").classList.remove("late");}
+  if(nm<st){$("cd").textContent="ما فتحنا للحين ☕";$("cd").classList.remove("late");}
   else if(left<=0){$("cd").textContent="وقت إضافي 🔥";$("cd").classList.add("late");}
   else{const H=Math.floor(left/3600),M=Math.floor(left%3600/60),Sx=Math.floor(left%60);$("cd").textContent=`${H}:${String(M).padStart(2,"0")}:${String(Sx).padStart(2,"0")}`;$("cd").classList.toggle("late",left<1800);}
   const tf=Math.min(1,Math.max(0,(nm-st)/(en-st)));$("tt").style.width=tf*100+"%";
@@ -893,9 +893,9 @@ function renderDay(){const st=540,en=closeMin(),nm=nowMin();
   const exp=nm<=st?0:Math.min(1,wsum(st,Math.min(nm,en))/wsum(st,en))*100;
   const el=$("pace");if(!target()||nm<st){el.textContent="";return;}
   const d=p-exp;el.className="pace "+(d>=0?"ok":"bad");
-  el.textContent=p>=100?"🏆 التارجت اتحقق… كل اللي جاي بونص":d>=0?`🚀 متقدمين على الخطة… كمّلوا كده`:`⚠️ متأخرين عن الخطة… شدّوا حيلكم 💪`;
-  el.innerHTML+=`<div style="font-size:13px;font-weight:700;color:var(--muted);margin-top:2px">إحنا عند ${Math.round(p)}٪ والمفروض نكون عند ${Math.round(exp)}٪ في الوقت ده</div>`;}
-document.querySelectorAll(".co").forEach(b=>b.onclick=()=>{day.close=b.dataset.c;S.set("tbk_close",b.dataset.c);saveDay();renderDay();toast(`⏰ القفلة الساعة ${b.textContent}`);});
+  el.textContent=p>=100?"🏆 تحقق التارجت… كل اللي جاي بونص":d>=0?`🚀 متقدمين على الخطة… كمّلوا كذا`:`⚠️ متأخرين عن الخطة… شدّوا حيلكم 💪`;
+  el.innerHTML+=`<div style="font-size:13px;font-weight:700;color:var(--muted);margin-top:2px">نحن عند ${Math.round(p)}٪ والمفروض نكون عند ${Math.round(exp)}٪ في هذا الوقت</div>`;}
+document.querySelectorAll(".co").forEach(b=>b.onclick=()=>{day.close=b.dataset.c;S.set("tbk_close",b.dataset.c);saveDay();renderDay();toast(`⏰ الإغلاق الساعة ${b.textContent}`);});
 setInterval(renderDay,1000);
 
 /* report */
@@ -911,7 +911,7 @@ function build(){
   $("atv").textContent=atv??"–";$("cr").textContent=cr!=null?cr.toFixed(1)+"%":"–";$("ach").textContent=ach!=null?Math.round(ach)+"%":"–";
   $("barI").style.width=Math.min(ach||0,100)+"%";
   $("barI").style.background=ach==null?"var(--green)":ach>=100?"var(--green)":ach>=70?"var(--amber)":"var(--red)";
-  $("rem").textContent=(T&&Sa!=null)?(Sa>=T?"✅ التارجت اتحقق":`المتبقي للتارجت: ${Math.round(T-Sa)} ريال`):"";
+  $("rem").textContent=(T&&Sa!=null)?(Sa>=T?"✅ تحقق التارجت":`المتبقي للتارجت: ${Math.round(T-Sa)} ريال`):"";
   const L=["TBK",fmtDate($("date").value),`Target:${T??""}`,`Sales: ${Sa??""}`,`Orders:${O??""}`,`Traffic:${V??""}`,`ATV: ${atv??""}`,`E.t :${E??""}`];
   {const Te=n("tele");if(Te)L.push(`Tele :${Te}`);}
   if($("extra").checked){L.push(`CR: ${cr!=null?cr.toFixed(1)+"%":""}`);L.push(`Ach: ${ach!=null?Math.round(ach)+"%":""}`);}
@@ -920,7 +920,7 @@ function build(){
   if(id==="target"){S.set("tbk_target",$("target").value);renderHype();}build();}));
 $("extra").addEventListener("change",()=>{S.set("tbk_extra",$("extra").checked?"1":"0");build();});
 $("send").onclick=()=>window.open("https://wa.me/?text="+encodeURIComponent(build()),"_blank");
-$("copy").onclick=async()=>{const m=build();try{await navigator.clipboard.writeText(m);}catch(e){const r=document.createRange();r.selectNode($("msg"));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand("copy");}toast("✅ اتنسخ");};
+$("copy").onclick=async()=>{const m=build();try{await navigator.clipboard.writeText(m);}catch(e){const r=document.createRange();r.selectNode($("msg"));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand("copy");}toast("✅ تم النسخ");};
 
 /* clock */
 function tick(){const d=new Date();$("clk").textContent=d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}tick();setInterval(tick,15000);

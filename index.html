@@ -230,6 +230,14 @@
   .wedit{width:100%;margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:10px;font-family:inherit;font-size:14px;min-height:110px;direction:rtl}
   .wlink{background:none;border:0;color:#7c3aed;font-family:inherit;font-weight:800;cursor:pointer;font-size:13px;margin-top:6px}
   .wheelBtn{width:100%;margin-top:10px;border:0;border-radius:14px;padding:12px;font-family:inherit;font-size:17px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(135deg,#f97316,#db2777);animation:flash 1.3s ease-in-out infinite}
+  .topRow{display:flex;justify-content:center;align-items:center;gap:16px;margin:0 auto 20px;flex-wrap:wrap}
+  .topRow .switch{margin:0}
+  .tgtPill{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 18px;box-shadow:0 6px 20px rgba(60,50,140,.08)}
+  .tgtPill span{font-weight:900;font-size:15px}
+  .tgtPill b{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:26px;color:#d97706;line-height:1;direction:ltr}
+  .tgtPill a{color:#0891b2;font-weight:800;font-size:13px;cursor:pointer}
+  .exam.tele .cnt{color:#7c3aed}
+  .exam.tele .exAdd{background:linear-gradient(135deg,#8b5cf6,#db2777)}
   .bonus{display:none;margin-top:4px}
   .bonus.on{display:block;animation:pop .6s}
   .bonus .miles{justify-content:center;gap:clamp(14px,5vw,60px)}
@@ -321,10 +329,13 @@
   <div class="leftHead" dir="ltr"><div class="credit">DESIGNED BY IHAB<br>15 NOV 2026</div><div class="clock">TODAY<b id="clk">--:--</b></div></div>
 </div>
 
+<div class="topRow">
 <div class="switch" id="sw">
   <div class="knob"></div>
   <button class="mode" data-t="hype" type="button">🔥 الحماس</button>
   <button class="mode" data-t="report" type="button">📊 تقفيلة نهاية اليوم</button>
+</div>
+<div class="tgtPill"><span>🎯 تارجت النهارده</span><b id="tShow">–</b><a id="goRep">✏️ تعديل</a></div>
 </div>
 
 <!-- ================= HYPE ================= -->
@@ -357,6 +368,12 @@
       <div class="sub2">فحص النهارده</div>
       <div class="exBtns"><button class="exAdd" id="exAdd" type="button">➕ فحص جديد</button><button class="exMinus" id="exMinus" type="button" title="تراجع">↩️</button></div>
       <div class="exConv" id="exConv"></div>
+    </div>
+    <div class="card exam tele">
+      <h2>📡 فحوصات Tele</h2>
+      <div class="cnt" id="teCnt">0</div>
+      <div class="sub2">فحص عن بُعد النهارده</div>
+      <div class="exBtns"><button class="exAdd" id="teAdd" type="button">➕ فحص Tele</button><button class="exMinus" id="teMinus" type="button" title="تراجع">↩️</button></div>
     </div>
   </div>
   <div class="col c-ar">
@@ -406,18 +423,10 @@
         <div class="st"><b id="hord">0</b><span>أوردرات</span></div>
         <div class="st"><b id="hneed">–</b><span id="hneedL">أوردرات كمان</span></div>
       </div>
-      <div class="rec">
-        <div><b id="rBig">–</b><span>💎 أكبر فاتورة النهارده</span></div>
-        <div><b id="rRec">–</b><span>🏆 أعلى يوم للفرع</span></div>
-      </div>
     </div>
   </div>
 
   <div class="col c-ac">
-    <div class="card">
-      <div class="tline"><span>🎯 تارجت النهارده</span><b id="tShow">–</b></div>
-      <div class="hint">تقدر تغيّره من تاب التقفيلة <a id="goRep">✏️ تعديل</a></div>
-    </div>
     <div class="card dayT">
       <div class="row3"><h2 style="margin:0">⏰ فاضل على القفلة</h2><div class="closeOpts" id="closeOpts">
         <button class="co" data-c="23:15" type="button">11:15</button><button class="co" data-c="23:30" type="button">11:30</button><button class="co" data-c="24:00" type="button">12:00</button></div></div>
@@ -487,6 +496,10 @@
       <div class="row2">
         <div class="f"><label>🚶 الزوار</label><input id="traffic" type="number" inputmode="numeric"></div>
         <div class="f"><label>👓 الفحوصات</label><input id="et" type="number" inputmode="numeric"></div>
+      </div>
+      <div class="row2" style="margin-top:12px">
+        <div class="f"><label>📡 فحوصات Tele</label><input id="tele" type="number" inputmode="numeric"></div>
+        <div class="f"></div>
       </div>
     </div>
     <div class="card">
@@ -696,9 +709,9 @@ function renderSellers(){$("sellers").innerHTML=SELLERS.filter(n=>!offState(n)).
   $("sellers").querySelectorAll(".sel").forEach(b=>b.onclick=()=>{who=who===b.dataset.n?"":b.dataset.n;S.set("tbk_who",who);renderSellers();});}
 function renderExtras(){
   // records
-  const big=day.list.reduce((a,o)=>Math.max(a,o.v),0);$("rBig").textContent=big?big.toLocaleString("en-US"):"–";
+  
   const h=hist();h[day.date]=Math.round(total());S.set("tbk_hist",JSON.stringify(h));
-  const best=Math.max(0,...Object.values(h));$("rRec").textContent=best?best.toLocaleString("en-US"):"–";
+  
   // leaderboard
   const m={};SELLERS.forEach(k=>m[k]={v:0,n:0});day.list.forEach(o=>{const k=o.who||"بدون اسم";m[k]=m[k]||{v:0,n:0};m[k].v+=o.v;m[k].n++;});
   const arr=Object.entries(m).filter(([k,o])=>o.n||SELLERS.includes(k)).sort((a,b)=>b[1].v-a[1].v),mx=Math.max(1,arr.length?arr[0][1].v:1),md=["👑","🥈","🥉"];
@@ -714,10 +727,10 @@ function renderExtras(){
   renderChallenge();renderExam();
   const bd=renderBadges();renderWeek();
   $("lb").querySelectorAll(".lbr").forEach(r=>{const nm=r.querySelector(".nm");const n=nm.childNodes[0].textContent.trim();const e=BDG.filter(([k])=>bd[k]===n).map(x=>x[1]).join("");if(e)nm.insertAdjacentHTML("beforeend",`<span class="bdgs">${e}</span>`);});}
-function renderExam(){const e=day.ex||0,n=day.list.length;$("exCnt").textContent=e;
-  const off=offState("د/خواطر");document.querySelector(".exam").classList.toggle("off",!!off);
+function renderExam(){const e=(day.ex||0)+(day.tele||0),n=day.list.length;$("exCnt").textContent=day.ex||0;$("teCnt").textContent=day.tele||0;
+  const off=offState("د/خواطر");document.querySelector(".exam:not(.tele)").classList.toggle("off",!!off);
   $("exOff").textContent=off?(off==="d"?"🌴 د/خواطر إجازة النهارده… مفيش فحوصات":`🌴 د/خواطر إجازة كل ${DAYS[wd()]}`):"";
-  $("exConv").textContent=e?`🎯 تحويل الفحص: ${Math.round(Math.min(n/e,1)*100)}% (${n} أوردر من ${e} فحص)`:"";}
+  $("exConv").textContent=e?`🎯 تحويل الفحص: ${Math.round(Math.min(n/e,1)*100)}% (${n} أوردر من ${e} فحص${day.tele?" مع الـ Tele":""})`:"";}
 /* challenge */
 function chOrders(){const c=day.ch;return c?day.list.filter(o=>o.t>=c.start&&o.t<=c.end).length:0;}
 function renderChallenge(){const c=day.ch;
@@ -737,6 +750,9 @@ $("chX").onclick=()=>{if(day.ch){day.ch.done=1;saveDay();renderChallenge();}};
 setInterval(tickChallenge,1000);
 $("exAdd").onclick=()=>{day.ex=(day.ex||0)+1;saveDay();renderExam();syncToReport();beep([520,780],.07,"triangle",.05);
   const r=$("exAdd").getBoundingClientRect();confetti(40,r.left+r.width/2,r.top);};
+$("teAdd").onclick=()=>{day.tele=(day.tele||0)+1;saveDay();renderExam();syncToReport();beep([520,780],.07,"triangle",.05);
+  const r=$("teAdd").getBoundingClientRect();confetti(40,r.left+r.width/2,r.top);};
+$("teMinus").onclick=()=>{if(!day.tele)return;day.tele--;saveDay();renderExam();syncToReport();};
 $("exVac").onclick=()=>cycleOff("د/خواطر");
 $("exMinus").onclick=()=>{if(!day.ex)return;day.ex--;saveDay();renderExam();syncToReport();};
 renderSellers();
@@ -819,7 +835,7 @@ setInterval(renderDay,1000);
 $("date").value=bizDate();
 {const t=S.get("tbk_target");if(t)$("target").value=t;}
 $("extra").checked=S.get("tbk_extra")==="1";
-function syncToReport(){if(day.list.length){$("sales").value=Math.round(total());$("orders").value=day.list.length;}if(day.ex)$("et").value=day.ex;build();}
+function syncToReport(){if(day.list.length){$("sales").value=Math.round(total());$("orders").value=day.list.length;}if(day.ex)$("et").value=day.ex;if(day.tele)$("tele").value=day.tele;build();}
 function n(id){const v=parseFloat($(id).value);return isNaN(v)?null:v;}
 function fmtDate(v){if(!v)return"";const[y,m,d]=v.split("-");return`${d}-${m}-${y}`;}
 function build(){
@@ -830,9 +846,10 @@ function build(){
   $("barI").style.background=ach==null?"var(--green)":ach>=100?"var(--green)":ach>=70?"var(--amber)":"var(--red)";
   $("rem").textContent=(T&&Sa!=null)?(Sa>=T?"✅ التارجت اتحقق":`المتبقي للتارجت: ${Math.round(T-Sa)} ريال`):"";
   const L=["TBK",fmtDate($("date").value),`Target:${T??""}`,`Sales: ${Sa??""}`,`Orders:${O??""}`,`Traffic:${V??""}`,`ATV: ${atv??""}`,`E.t :${E??""}`];
+  {const Te=n("tele");if(Te)L.push(`Tele :${Te}`);}
   if($("extra").checked){L.push(`CR: ${cr!=null?cr.toFixed(1)+"%":""}`);L.push(`Ach: ${ach!=null?Math.round(ach)+"%":""}`);}
   const m=L.join("\n");$("msg").textContent=m;return m;}
-["date","target","sales","orders","traffic","et"].forEach(id=>$(id).addEventListener("input",()=>{
+["date","target","sales","orders","traffic","et","tele"].forEach(id=>$(id).addEventListener("input",()=>{
   if(id==="target"){S.set("tbk_target",$("target").value);renderHype();}build();}));
 $("extra").addEventListener("change",()=>{S.set("tbk_extra",$("extra").checked?"1":"0");build();});
 $("send").onclick=()=>window.open("https://wa.me/?text="+encodeURIComponent(build()),"_blank");
